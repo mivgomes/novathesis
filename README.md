@@ -203,31 +203,6 @@ This template is the result of hundreds (yes! *many hundreds*) of hours of work 
   * [Instituto Superior Técnico](https://tecnico.ulisboa.pt) (ULISBOA IST)
   * [Faculdade de Ciências](https://ciencias.ulisboa.pt) (ULISBOA FC)
   * [Faculdade de Medicina Veterinária](https://www.fmv.ulisboa.pt) (ULISBOA FMV)
-* University of Minho
-  * [Escola de Arquitetura](https://www.arquitetura.uminho.pt) (UMIMHO EA)
-  * [Escola de Ciências](https://www.ecum.uminho.pt) (UMIMHO EC)
-  * [Escola de Direito](https://www.direito.uminho.pt) (UMIMHO ED)
-  * [Escola de Economia e Gestão](https://www.eeg.uminho.pt) (UMIMHO EEG)
-  * [Escolha de Engenharia](https://www.eng.uminho.pt) (UMIMHO EE)
-  * [Escola de Medicina](https://www.med.uminho.pt) (UMIMHO EM)
-  * [Escola de Psicologia](https://www.psi.uminho.pt) (UMIMHO EP)
-  * [Escola Superior de Enfermagem](https://www.ese.uminho.pt) (UMIMHO ESE)
-  * [Instituto de Ciências Sociais](https://www.ese.uminho.pt) (UMIMHO ICS)
-  * [Instituto de Educação](https://www.ie.uminho.pt) (UMIMHO IE)
-  * [Instituto de Letras e Ciências Humanas](https://www.elach.uminho.pt) (UMIMHO ILCH)
-  * [Instituto de Investigação em Biomateriais, Biodegradáveis e Biomiméticos](https://i3bs.uminho.pt) (UMIMHO I3Bs)
-* Universidade Lusófona de Humanidades e Tecnologias
-  * [Departamento de Engenharia Informática e Sistemas de Informação](http://informatica.ulusofona.ptpt) (ULHT DEISI)
-  * [Escola de Ciências Econômicas e das Organizações](https://www.ulusofona.pt/faculdades-e-escolas/cul/eceo) (ULHC ECEO)
-    
-    <!-- * ISCTE – Instituto Universitário de Lisboa -->
-  <!-- * [Escola de Tecnologia e Arquitectura](https://ciencia.iscte-iul.pt/schools/escola-tecnologias-arquitectura) (ETA-ISCTE-IUL) _NOTE: this template is outdated (there are new covers/specifications)_ -->
-* Instituto Politécnico de Lisboa
-  * [Instituto Superior de Engenharia de Lisboa](https://www.isel.pt) (ISEL IPL)
-* Instituto Politécnico de Setúbal  
-  <!-- * [Escola Superior de Saúde](https://www.ess.ips.pt) (ESS IPS) -->
-  * [Escola Superior de Tecnologia do Barreiro](https://www.estbarreiro.ips.pt) (ESTB-IPS)
-
 * Other Schools/Degrees
   * [Escola Superior de Enfermagem do Porto](https://www.esenf.pt/pt/) (ESEP)
 
@@ -247,8 +222,3 @@ These are not official templates for NOVA FCT nor any other School, although we 
 
 All [contributors](https://github.com/joaomlourenco/novathesis/wiki#help-with-the-project-patches-and-new-features), both sporadic and regular, are welcome. :) Please [contact me](http://docentes.fct.unl.pt/joao-lourenco) to join the team.
 
---------
-
-## Word Templates
-
-*If you are here looking for the (deprecated) Word templates (not maintained anymore), please go to [this other repository](https://github.com/joaomlourenco/novathesis_word).*
