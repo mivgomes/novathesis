@@ -22,7 +22,7 @@
 \input{NOVAthesisFiles/fitbox2.sty}
 
 % \def\def@ult#1(#2)=#3{\ifdatadefined{#1}(#2){}{\csname#1\endcsname(#2)={#3}}}
-\spine(author)=?{\thedocauthor(name,short)}
+\spine(author)=?{\thedocauthor(name)}
 
 \datamatch{\match}{doctitle}({\@LANG@COVER,spine,cover},{\@LANG@COVER,spine})%
 \spine(title):=?{\match}
@@ -80,7 +80,6 @@
 \spine(box,date,align):=?{\thespine(text,align)}
 \spine(box,date,margin,left):=?{0pt}
 \spine(box,date,margin,right):=?{0pt}
-
 
 
 \newif\ifisdim

@@ -1193,8 +1193,9 @@
 \ifoptionequal{/novathesis/print/webography}{}{%
   \ntsetprintorder{mainmatter}{
     chapters;        % Print document chapters
-    bib;             % Print the bibliography.  Change to
-     %    “bib[title=⟨title⟩]” to redefine the title!
+    %bib 
+    \printbibliography[title=References];             % Print the bibliography.  Change to
+     %    “bib[title=⟨title⟩]” to redefine the title! (https://github.com/joaomlourenco/novathesis/discussions/411)
     appendices;      % Print appendices; if any!
     annexes;         % Print annexes; if any!
   }%
