@@ -8,7 +8,7 @@
 %% To view a copy of this license, visit
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
-%% Version 2024-11-03 [7.2.5]
+%% Version 2025-01-20 [7.3.1]
 %% Departamento de Informática (www.di.fct.unl.pt)
 %% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
@@ -54,7 +54,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ProvidesClass{novathesis}[2024-11-03 novathesis template]
+\ProvidesClass{novathesis}[2025-01-20 novathesis template]
 \NeedsTeXFormat{LaTeX2e}[2020-02-02]
 
 
@@ -156,7 +156,7 @@
   % \typeout{#2(#3)}%
   % \ifdatadefinedor{\@match}{#2}(#3)%
   %   {\protect\gdef#1{\csuse{the#2}(\@match)}#4}%
-  %   {\protect\gdef#1{}#5}%
+  %   {\protect\gdef#1{}#5}%  
   \ifdatadefinedor{\@match}{#2}(#3)%
     {\protect\xdef#1{\expanded{\csuse{the#2}(\@match)}}#4}%
     {\protect\xdef#1{}#5}%

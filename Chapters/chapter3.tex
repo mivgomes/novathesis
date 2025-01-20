@@ -33,7 +33,7 @@ The Table ~\ref{tab:dataset_summary} provides a summary od the datasets used in 
 %\rowcolors{1}{}{GhostWhite}
 \begin{xltabular}{\textwidth}{Xccccc}
     \caption{Datasets summary.}
-    \label{tab:dataset_summary} \\
+    \label{tab:dataset_summary}\\
     \toprule
     %\rowcolor{Gainsboro}%
     \textbf{Dataset}                & \textbf{Perturbagen}     & \textbf{Perturbation}  & \textbf{N. of perturbagens}    & \textbf{Signature} \\
@@ -71,49 +71,47 @@ The Table ~\ref{tab:algorithm_summary} provides a summary od the algorithms used
 \bgroup
 %\rowcolors{1}{}{GhostWhite}
 \begin{xltabular}{\textwidth}{Xccccc}
-    \caption{Algorithm summary.}
-    \label{tab:algorithm_summary} \\
-    \toprule
-    %\rowcolor{Gainsboro}%
+\caption{Algorithm summary.}
+\label{tab:algorithm_summary}\\
+\toprule
+%\rowcolor{Gainsboro}%
 \textbf{Tool}  & \textbf{Algorithm}   & \textbf{Description}   & \textbf{Resource}   & \textbf{Dataset}   & \textbf{Reference}   \\
-    \midrul
-\textbf{Causal}     & CARNIVAL            & Description  & Network    & DEG/Full  & ~\cite{carnival} \\
-\textbf{Reasoning}  & CausalR             & Description  &            &           & ~\cite{causalr} \\
-                    & ProTINA             & Description  &            &           & ~\cite{protina} \\
-                    & CIE                 & Description  &            &           & ~\cite{cie} \\
-                    & NicheNet            & Description  &            &           & ~\cite{nichenet} \\
-                    & causalReasoning     & Description  &            &           & ~\cite{cbdd} \\
-                    & Signatures          & Description  &            &           & ~\cite{cbdd} \\
-                    & quaternaryProd      & Description  &            &           & ~\cite{cbdd} \\    
-    \midrule
+\midrul
+\multicolumn{8}{*}{\multirow{2}{*}{\textbf{Causal Reasoning}}}    & CARNIVAL            & Description  & Network    & DEG/Full  & ~\cite{carnival} \\
+                & CausalR             & Description  &            &           & ~\cite{causalr} \\
+                & ProTINA             & Description  &            &           & ~\cite{protina} \\
+                & CIE                 & Description  &            &           & ~\cite{cie} \\
+                & NicheNet            & Description  &            &           & ~\cite{nichenet} \\
+                & causalReasoning     & Description  &            &           & ~\cite{cbdd} \\
+                & Signatures          & Description  &            &           & ~\cite{cbdd} \\
+                & quaternaryProd      & Description  &            &           & ~\cite{cbdd} \\    
+\midrule
 \textbf{Causal}     & randomWalk          & Description  & Network    & DEG/Full  & ~\cite{cbdd} \\
 \textbf{Reasoning}  & networkPropagation  & Description  &            &           & ~\cite{cbdd} \\
 (baseline)          & overconnectivity    & Description  &            &           & ~\cite{cbdd} \\
-                    & hiddenNodes         & Description  &            &           & ~\cite{cbdd} \\
-                    & interconnectivity   & Description  &            &           & ~\cite{cbdd} \\
-                    & overconnectivity    & Description  &            &           & ~\cite{cbdd} \\
-    \midrule
+                & hiddenNodes         & Description  &            &           & ~\cite{cbdd} \\
+                & interconnectivity   & Description  &            &           & ~\cite{cbdd} \\
+                & overconnectivity    & Description  &            &           & ~\cite{cbdd} \\
+\midrule
 \textbf{CMap}       & KS             & Description & Signatures   & DEG/Full     & ~\cite{cmap} \\
-                    & XCos           & Description &              &              & ~\cite{cmap} \\
-                    & XSum           & Description &              &              & ~\cite{cmap} \\
-                    & ZhangScore     & Description &              &              & ~\cite{cmap} \\
-                    & GSEAweight0    & Description &              &              & ~\cite{cmap} \\
-                    & GSEAweight1    & Description &              &              & ~\cite{cmap} \\
-    \midrule
+                & XCos           & Description &              &              & ~\cite{cmap} \\
+                & XSum           & Description &              &              & ~\cite{cmap} \\
+                & ZhangScore     & Description &              &              & ~\cite{cmap} \\
+                & GSEAweight0    & Description &              &              & ~\cite{cmap} \\
+                & GSEAweight1    & Description &              &              & ~\cite{cmap} \\
+\midrule
 \textbf{Enrichment} & wmean   & Description  & Regulons     & Signatures  & ~\cite{cbdd} \\
-                    & fgsea   & Description  &              &             & ~\cite{fgsea} \\
-                    & viper   & Description  &              &             & ~\cite{viper} \\
-                    & ulm     & Description  &              &             & ~\cite{cbdd} \\
-                    & mlm     & Description  &              &             & ~\cite{cbdd} \\
-                    & udt     & Description  &              &             & ~\cite{cbdd} \\
-                    & mdt     & Description  &              &             & ~\cite{cbdd} \\
-                    & wsum    & Description  &              &             & ~\cite{fgsea} \\
-    %\rowcolor{Gainsboro}%
-    \bottomrule
-    \end{xltabular}
+                & fgsea   & Description  &              &             & ~\cite{fgsea} \\
+                & viper   & Description  &              &             & ~\cite{viper} \\
+                & ulm     & Description  &              &             & ~\cite{cbdd} \\
+                & mlm     & Description  &              &             & ~\cite{cbdd} \\
+                & udt     & Description  &              &             & ~\cite{cbdd} \\
+                & mdt     & Description  &              &             & ~\cite{cbdd} \\
+                & wsum    & Description  &              &             & ~\cite{fgsea} \\
+%\rowcolor{Gainsboro}%
+\bottomrule
+\end{xltabular}
 \egroup
 
 
-
 %\end{newpdflayout}
-
