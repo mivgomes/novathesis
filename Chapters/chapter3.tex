@@ -19,7 +19,7 @@
 \section{Benchmarking architecture setup} % (fold)
 \label{sec:benchmarking_architecture_setup}
 Several tools and algorithms are available for most research tasks in computational biology, and new algorithms and tools are published every week. Systematic benchmarking of tools is a time- and resource-consuming endeavor, while a lack of benchmarking carries several potential risks. Finding the right computational tool for a given research question is essential. Researchers usually carry out published benchmarking to demonstrate that their tool performs better than others. ABC is a consortium created in 2021 that aims to help members reduce R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC is a consortium established in 2021 that aims to assist members in reducing R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC maintains the same workflow regardless of the case study. It consists of three main steps: (1) Voting, (2) Curation, and (3) Coding. The consortium members suggest and vote on the use case (1). Once the use case is determined, the curation phase begins, where Clarivate collects the most appropriate datasets and algorithms according to the voted use case (2). Again, the members vote on the final selection of datasets and algorithms (1). Finally, the last phases - implementation, execution, and reporting - are conducted by Clarivate (3). 
-The project description will fall within the third phase of the workflow, specifically concerning some of the algorithm’s implementation and execution, where I actively participated since all the data was already collected and voted on when I started the project. A visual representation of the study workflow is provided ~\ref{fig:fig4} and will be explained in detail in the following sections. The entire workflow was implemented in \gls{R} Statistical Software (v4.4.1) [96].
+The project description will fall within the third phase of the workflow, specifically concerning some of the algorithm's implementation and execution, where I actively participated since all the data was already collected and voted on when I started the project. A visual representation of the study workflow is provided ~\ref{fig:fig4} and will be explained in detail in the following sections. The entire workflow was implemented in \gls{R} Statistical Software (v4.4.1) [96].
 
 \begin{figure}[htbp]
     \centering
@@ -93,26 +93,32 @@ The concept of causal inference can be described as the ability of algorithms to
 
 One type of input that can serve as a reference is prior knowledge data for contextualizing gene expression signatures. 
 The benchmarking framework depends on three complementary types of this data: 
-PKN (global interaction networks), regulons (regulator-target gene sets), and pathway-derived linear maps (Table 4). 
+PKN (global interaction networks), regulons (regulator-target gene sets), and pathway-derived linear maps (Table~\ref{tab:table4}). 
 Although these resources vary in their coverage, they are related, as illustrated in Figure 4. Including sources of different 
 sizes and densities is particularly important for understanding how topology-based algorithms manage that in terms of performance. 
 Additionally, an increase in network size can introduce noise that may disturb the rationale. 
-The interactions are driven by two databases, OmniPath [68] and MetaBase [69].
-OmniPath is a public database with protein-protein, transcriptional, and RNA-related interactions. MetaBase™ is a manually curated systems biology database, proprietary Clarivate, containing over 4 million directional molecular interactions, such as protein-protein, 
-protein-RNA, compound-protein, etc. 
-From each of these two sources, PKN and regulons were used as input. Canonical linear pathways were extracted only from MetaBase. 
-Four concepts that are important to distinguish in this section related to interactions are directionality, effect, mechanism, and weight. 
-Directionality indicates the intended flow of signal, from the source to the target node. The effect (or edge type) denotes whether the 
-interaction is inhibition (-1), unknown (0), or activation (1). Mechanism distinguishes generic molecular interactions (interactions from 
-receptors upstream to the transcription factors downstream, 0) from transcriptional regulation edges (transcription factors with their target genes, 1). 
-Finally, weight determines interaction confidence based, for instance, on literature support. Regardless of the database source used, the mandatory
- annotation for each interaction is directionality information, other columns may be present but may not be used by algorithms. 
-OmniPath PKN was constructed by integrating signaling and TF-target interactions using OmniPathR (v. 3.14.0) R package. Signaling interactions were obtained using the import_omnipath_interactions () function, and it was assigned mechanism = 0, and for transcriptional regulatory interactions using import_transcriptional_interactions () function with mechanism = 1.
-These were combined into a single network, and interactions with effect = 0 were kept only if mechanism = 0. Nodes in OmniPath are proteins or protein complexes (UniProt IDs) with the corresponding gene symbol(s). 
-For using MetaBase as another source of PKN, the global network was extracted using the networkFromMetabase () function, via the metabaser (v. 5.1.0) and CBDD (version 20.0.3) R packages. 
-Unlike OmniPath, it already includes both signaling interactions (mechanism = 0) and transcription regulation interactions (mechanism = 1). Only high-confidence interactions with defined effects (activation or inhibition) were kept. 
-Originally, the network contained specific MetaBase network objects. The corresponding gene symbols have been added to the network (metabaser::annotate.nwobj2gene ()).
-Another way of representing interactions that can be used as reference data for both topology-based and enrichment-based tools are the regulons. In this case, they were extracted in the same way for both sources. Causal reasoning was used, through the CBDD::hypothesisGeneration () function, indicating as parameters how far to look downstream (in this case, 4 steps) and that transcription regulation links can appear anywhere in the path, not just at the end of the path. Bearing in mind that both networks used as input contain the directionality of the signal, this function will then predict which targets are influenced (by activation or inhibition) by which regulators. At the end, instead of having all possible interactions, only the interactions where a certain node and all genes activated or repressed downstream of it are present. The final number of nodes and interactions of the regulons is also detailed in Table 4. In addition to the network and the regulons, canonical linear pathways, available from MetaBase were also included. Those are linear sequences of biological entities and interactions between them. They are automatically generated from pathway maps and represent highly curated canonical signaling paths. They start from an important signaling molecule and end, usually with a transcription regulation event or another downstream molecular response. 
+
+
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream‐derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge‐type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
+\label{tab:table4}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllllll}
+\multicolumn{2}{l}{}                             & \multicolumn{3}{l}{Nodes}       & \multicolumn{4}{l}{Edges}                                         \\
+\multicolumn{2}{l}{Resource}                     & Regulator & Target & Gene space & Activation & Inhibition & Transcriptional regulation & Total      \\
+\multirow{2}{*}{OmniPath} & Network              & 6,166     & 6,723  & 7,809      & 119,113    & 13,680     & 64,367                     & 145,896    \\
+                          & Regulons             & 4,442     & 6,723  & 5,622      & 5,842,390  & 4,270,032  & 10,112,422                 & 10,112,422 \\
+\multirow{3}{*}{MetaBase} & Network              & 3,3927    & 1,5229 & 1,7693     & 81,866     & 61,214     & 101,752                    & 657,746    \\
+                          & Regulons             & 1,1739    & 1,0476 & 9,988      & 23,844,526 & 21,469,352 & 45,313,878                 & 45,313,878 \\
+                          & Linear Path Regulons & 2,922     & 9,465  & 3,185      & 3,493,007  & 1,361,149  & 4,854,156                  & 4,854,156 
+\end{tabular}%
+}
+\end{table}
+
+
+
 
 \section{Algortithms} % (fold)
 \label{sec:algorithms}
@@ -142,7 +148,7 @@ value of score, and activation/repression status is stored in separate column ef
 
 
 
-The Table ~\ref{tab:algorithm_summary} provides a summary od the algorithms used in the study.
+The Table~\ref{tab:algorithm_summary} provides a summary of the algorithms used in the study.
 
 %% If I need to change this table to a horizontal layout, just uncomment the next line and the line after the table:
 %% \begin{newpdflayout}{210mm}{297mm}%{420mm}
@@ -157,40 +163,40 @@ The Table ~\ref{tab:algorithm_summary} provides a summary od the algorithms used
 \textbf{Tool}  & \textbf{Algorithm}   & \textbf{Description}   & \textbf{Resource}   & \textbf{Dataset}   & \textbf{Reference}   \\
 \midrule
 \multicolumn{6}{l}{\textbf{Causal Reasoning}} \\
-CARNIVAL            & Description  & Network    & DEG/Full  & \cite{carnival} \\
-CausalR             & Description  &            &           & ~\cite{causalr} \\
-ProTINA             & Description  &            &           & ~\cite{protina} \\
-CIE                 & Description  &            &           & ~\cite{cie} \\
-NicheNet            & Description  &            &           & ~\cite{nichenet} \\
-causalReasoning     & Description  &            &           & ~\cite{cbdd} \\
-Signatures          & Description  &            &           & ~\cite{cbdd} \\
-quaternaryProd      & Description  &            &           & ~\cite{cbdd} \\    
+CARNIVAL            & Description  & Network    & DEG/Full  & ~\cite{RN41} \\
+CausalR             & Description  &            &           & ~\cite{RN32} \\
+ProTINA             & Description  &            &           & ~\cite{RN80} \\
+CIE                 & Description  &            &           & ~\cite{RN81} \\
+NicheNet            & Description  &            &           & ~\cite{RN42} \\
+causalReasoning     & Description  &            &           & ~\cite{RN36} \\
+Signatures          & Description  &            &           & ~\cite{RN36} \\
+quaternaryProd      & Description  &            &           & ~\cite{RN36} \\    
 \midrule
 \textbf{Causal Reasoning (baseline)} \\
-randomWalk          & Description  & Network    & DEG/Full  & ~\cite{cbdd} \\
-networkPropagation  & Description  &            &           & ~\cite{cbdd} \\
-overconnectivity    & Description  &            &           & ~\cite{cbdd} \\
-hiddenNodes         & Description  &            &           & ~\cite{cbdd} \\
-interconnectivity   & Description  &            &           & ~\cite{cbdd} \\
-overconnectivity    & Description  &            &           & ~\cite{cbdd} \\
+randomWalk          & Description  & Network    & DEG/Full  & ~\cite{RN36} \\
+networkPropagation  & Description  &            &           & ~\cite{RN36} \\
+overconnectivity    & Description  &            &           & ~\cite{RN36} \\
+hiddenNodes         & Description  &            &           & ~\cite{RN36} \\
+interconnectivity   & Description  &            &           & ~\cite{RN36} \\
+overconnectivity    & Description  &            &           & ~\cite{RN36} \\
 \midrule
 \textbf{CMap} \\
-KS             & Description & Signatures   & DEG/Full     & ~\cite{cmap} \\
-XCos           & Description &              &              & ~\cite{cmap} \\
-XSum           & Description &              &              & ~\cite{cmap} \\
-ZhangScore     & Description &              &              & ~\cite{cmap} \\
-GSEAweight0    & Description &              &              & ~\cite{cmap} \\
-GSEAweight1    & Description &              &              & ~\cite{cmap} \\
+KS             & Description & Signatures   & DEG/Full     & ~\cite{RN79} \\
+XCos           & Description &              &              & ~\cite{RN79} \\
+XSum           & Description &              &              & ~\cite{RN79} \\
+ZhangScore     & Description &              &              & ~\cite{RN79} \\
+GSEAweight0    & Description &              &              & ~\cite{RN79} \\
+GSEAweight1    & Description &              &              & ~\cite{RN79} \\
 \midrule
 \textbf{Enrichment} \\
-wmean   & Description  & Regulons     & Signatures  & ~\cite{cbdd} \\
-fgsea   & Description  &              &             & ~\cite{fgsea} \\
-viper   & Description  &              &             & ~\cite{viper} \\
-ulm     & Description  &              &             & ~\cite{cbdd} \\
-mlm     & Description  &              &             & ~\cite{cbdd} \\
-udt     & Description  &              &             & ~\cite{cbdd} \\
-mdt     & Description  &              &             & ~\cite{cbdd} \\
-wsum    & Description  &              &             & ~\cite{fgsea} \\
+wmean   & Description  & Regulons     & Signatures  & ~\cite{RN36} \\
+fgsea   & Description  &              &             & ~\cite{RN35} \\
+viper   & Description  &              &             & ~\cite{RN35} \\
+ulm     & Description  &              &             & ~\cite{RN36} \\
+mlm     & Description  &              &             & ~\cite{RN36} \\
+udt     & Description  &              &             & ~\cite{RN36} \\
+mdt     & Description  &              &             & ~\cite{RN36} \\
+wsum    & Description  &              &             & ~\cite{RN35} \\
 %\rowcolor{Gainsboro}%
 \bottomrule
 \end{xltabular}
