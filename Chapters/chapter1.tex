@@ -25,29 +25,28 @@
 
 
 \gls{DD} and development is a time-consuming, resource-intensive, multidisciplinary effort that can be challenging from many points of view. 
-Over half of clinical trial failures are attributed to lack of efficacy, underscoring the importance of identifying and validating pharmacological targets, and highlighting the lack of knowledge of the drug's \gls{Mechanism of Action (MoA)} as one of the major barriers to clinical efficacy ~\cite{RN1, RN2, RN3}. 
+Over half of clinical trial failures are attributed to lack of efficacy, underscoring the importance of identifying and validating pharmacological targets, and highlighting the lack of knowledge of the drug's \gls{Mechanism of Action (MoA)} as one of the major barriers to clinical efficacy~\cite{RN3, RN1, RN2}. 
 As thorough understanding of the \gls{MoA} is such a critical step, computational methods can accelerate the identification of pharmacologically active agents by providing more efficient and cost-effective alternatives to traditional approaches (for example phenotyping screening). 
-Computation methods can accurately identify a new target or propose new indications for a known molecule, thereby reducing the time dedicated to in cell and in vitro target validation ~\cite{RN29}.
+Computation methods can accurately identify a new target or propose new indications for a known molecule, thereby reducing the time dedicated to in cell and in vitro target validation~\cite{RN29}.
 
 A key to understanding a compound's \gls{MoA} lies in transcriptomic profiling, which captures the changes in gene expression triggered by a perturbagen. 
-While traditional RNA sequencing methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay ~\cite{RN30}, enable the cost-effective generation and analysis of large-scale omics datasets. 
+While traditional RNA sequencing methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay~\cite{RN30}, enable the cost-effective generation and analysis of large-scale omics datasets. 
 Several existing databases provide public access to transcriptomic data from experiments exposing cell lines to range of chemical and genetic perturbagens. 
 These datasets can be leveraged, using various computational tools, to establish the causal chain of gene expression changes triggered by a specific compound. 
-Three primary approaches have emerged: causal reasoning, connectivity mapping, and enrichment tools ~\cite{RN38}.
+Three primary approaches have emerged: causal reasoning, connectivity mapping, and enrichment tools~\cite{RN31}.
 
 Causal reasoning is a topology-based method, that determines potential causes for an observed gene expression profile, starting from a perturbation signature and a biological interaction network. 
 The network is defined as a signed and directed graph describing relations between nodes (e.g., proteins or genes). 
 Efforts to compile causal molecular relation networks have increased, resulting in several publicly accessible databases (such as OmniPath), which offers curated prior knowledge networks. 
-Among the networks commercially available ~\cite{RN32} we can find MetaBase\textsuperscript{TM}, developed and curated by Clarivate.
-
+Among the networks commercially available~\cite{RN32} we can find MetaBase\textsuperscript{TM}, developed and curated by Clarivate.
 
 The \gls{CMap} method is instead focused on collecting and analyzing perturbation signatures. 
-In this case, a similarity score is used to compare a set of known MoA/compound reference signatures, with a query gene expression profile from a perturbagen of interest ~\cite{RN34, RN38}.
+In this case, a similarity score is used to compare a set of known MoA/compound reference signatures, with a query gene expression profile from a perturbagen of interest~\cite{RN34, RN31}.
 The principle behind \gls{CMap} is that the higher the similarity between the query and the reference signature, the more likely it is that the underlying mechanism is the same. 
 
 On the other hand, enrichment tools take perturbation signatures as query input and utilize prior knowledge, such as a regulon network or collections of perturbation-induced \gls{DEGs}, as a reference. 
 The primary function of these tools is to assess whether certain regulons or gene sets (e.g., those associated with \gls{TF}) are significantly enriched in the perturbed data. 
-Several algorithms have been developed based on this approach, each producing specific enrichment scores ~\cite{RN35}.
+Several algorithms have been developed based on this approach, each producing specific enrichment scores~\cite{RN35}.
 
 With a comprehensive systematic benchmarking approach, this study guides on selecting the most suitable tool for addressing diverse research questions and evaluating a plethora of current solutions for causal regulation assessment. 
 The evaluation process relies on three inputs:
@@ -62,9 +61,9 @@ These data are used to feed the evaluated methods, serving as the reference, que
 This study analyzes the three types of tools depicted below: 
 
 \begin{enumerate}
-\item[\textbf{Topology-based tools}] Eight algorithms for causal reasoning (\gls{CARNIVAL}, CausalR, ProTINA, \gls{CIE}, NicheNet, plus causalReasoning, SigNet, quaternaryProd from the \gls{CBDD} \gls{R} package ~\cite{RN36} , and 5 algorithms for node prioritization (networkPropagation, randomWalk, Overconnectivity, hiddenNodes, interconnectivity - from \gls{CBDD}) were also included as baseline topology-based tools for node prioritization. 
+\item[\textbf{Topology-based tools}] Eight algorithms for causal reasoning (\gls{CARNIVAL}, CausalR, ProTINA, \gls{CIE}, NicheNet, plus causalReasoning, SigNet, quaternaryProd from the \gls{CBDD} \gls{R} package~\cite{RN36} , and 5 algorithms for node prioritization (networkPropagation, randomWalk, Overconnectivity, hiddenNodes, interconnectivity - from \gls{CBDD}) were also included as baseline topology-based tools for node prioritization. 
 \item[\textbf{Similarity-based tools }] Six algorithms are built into the \gls{RCSM} R package.
-\item[\textbf{Enrichment-based tools}] Eight algorithms implemented under the decoupleR package ~\cite{RN35}.
+\item[\textbf{Enrichment-based tools}] Eight algorithms implemented under the decoupleR package~\cite{RN35}.
 \end{enumerate}
 
 Performance is assessed in terms of results obtained, comparing against golden standard datasets, along with the robustness, and the computational efficiency (runtime and memory footprint). 

@@ -13,7 +13,7 @@
 \label{cha:materials_and_methods}
 
 
-\textit{The following section describes the workflow of the benchmarking study. It begins by describing the input data used, both transcriptomic data and prior knowledge data. Further emphasis is given to the implementation of the selected algorithms. Finally, the description of the algorithm’s execution, as well as the methods used to assess their performance.}
+\textit{The following section describes the workflow of the benchmarking study. It begins by describing the input data used, both transcriptomic data and prior knowledge data. Further emphasis is given to the implementation of the selected algorithms. Finally, the description of the algorithm's execution, as well as the methods used to assess their performance.}
 
 
 \section{Benchmarking architecture setup} % (fold)
@@ -29,7 +29,6 @@ The project description will fall within the third phase of the workflow, specif
 \end{figure}
 
 
-
 \section{Data Description} % (fold)
 \label{sec:data_description}
 
@@ -38,41 +37,56 @@ As represented in Figure~\ref{fig:fig4}, each algorithm should receive two types
 \subsection{Gene expression data: Perturbation signatures}
 \label{sub:gene_expression_data_perturbation_signatures}
 
-Currently, there are several publicly available perturbation-driven gene expression datasets. This study comprehends transcriptomic datasets from 10 different public sources, summarized in Table 3. Chemical and genetic perturbagens were included, spanning bulk microarray, bulk RNA seq, and single-cell RNA seq assays. Each dataset contains more than hundreds of perturbation signatures. For each collection, the perturbagen type, the total number of unique perturbagens profiled, and the subset for which a gold standard target annotation is available were recorded. The gold standard is necessary for the evaluation. It is a set of known targets, whether drug‐protein interactions or genes deliberately perturbed which were used to assess the ability of the algorithms to recover true upstream regulators from observed expression changes. 
-The LINCS expands upon the original CMap by leveraging the cost-effective L1000 platform, which directly measures 978 “landmark” transcripts and imputes the remaining transcriptome to reconstruct genome‐wide expression profiles. LINCS comprises several distinct collections of perturbations in human cell lines: over 30,000 unique small‐molecule treatments, CRISPR knockouts targeting 5,156 genes, cDNA overexpression of 3,780 genes, and shRNA knockdowns of 4,854 genes. The level 5 data were retrieved from the CLUE platform (available at: \url{https://clue.io/data/CMap2020#LINCS2020}). This level already contains the differential expression signatures with z‐scores aggregated across biological replicates without p‐values. Since each perturbagen usually appears under multiple conditions (different doses, time points, and cell lines), these were condensed into a single consensus signature per perturbagen by extracting every available gene’s z‐score and then using the median value across signatures. For the gold standard, directional effects were assigned as follows: for chemical perturbations, CDDI (Cortellis Drug Discovery Intelligence) database annotations (i.e. if the drug is annotated as the antagonist of target X, that target would be assigned negative effect in golden standard); for CRISPR and shRNA datasets, the target genes were assigned with inhibition effect, and for OE, each target was assigned with activation effect.
+Currently, there are several publicly available perturbation-driven gene expression datasets. This study comprehends transcriptomic datasets from 10 different public sources, summarized in Table~\ref{tab:gene_expression_datasets}. Chemical and genetic perturbagens were included, analyzed by bulk microarray, bulk RNA seq, and single-cell RNA seq assays. Each dataset contains more than hundreds of perturbation signatures. For each collection, the perturbagen type, the total number of unique perturbagens profiled, and the subset for which a gold standard target annotation is available were recorded. The gold standard is necessary for the evaluation and it consists of a set of known targets (drug-protein interactions or genes deliberately perturbed), used to assess the ability of the algorithms to recover true upstream regulators from observed expression changes. 
+The LINCS expands upon the original CMap by leveraging the cost-effective L1000 platform, which directly measures 978 “landmark” transcripts and imputes the remaining transcriptome to reconstruct genome-wide expression profiles. LINCS comprises several distinct collections of perturbations in human cell lines: over 30,000 unique small-molecule treatments, CRISPR knockouts targeting 5,156 genes, cDNA overexpression of 3,780 genes, and shRNA knockdowns of 4,854 genes. The level 5 data were retrieved from the CLUE platform (available at \href{https://clue.io/data/CMap2020#LINCS2020}{CLUE}). This level already contains the differential expression signatures with z-scores aggregated across biological replicates without p-values. Since each perturbagen usually appears under multiple conditions (different doses, time points, and cell lines), these were condensed into a single consensus signature per perturbagen by extracting every available gene's z-score and then using the median value across signatures. For the gold standard, directional effects were assigned as follows: for chemical perturbations CDDI annotations were used to identify molecular targets inhibited by specific compounds; for CRISPR and shRNA datasets, the target genes were assigned with inhibition effect, and for OE, each target was assigned with activation effect.
 ChemPert is a manually curated compendium of 82,256 transcriptional signatures derived from non-cancer cell compound perturbation experiments. Most signatures originate from bulk expression studies in various cell lines, and each is represented as a list of DEGs indicating only up- or down-regulation (no fold-change values or p-values). From the total number of signatures, only 2,587 have distinct compounds. A set of consensus DEG lists were derived to reduce redundancy and runtime. For each compound, only genes appearing as DEGs in at least two signatures and with the same regulation direction were kept. As well as only signatures with at least 50 consensus DEGs. This resulted in 1,304 signatures which was the dataset used instead of the original ChemPert.
-CDS-DB contains 78 cancer patient-derived, paired pre- and post-treatment transcriptomic datasets, all with associated metadata such as drug dosages, sampling times, and locations. 181 study‐level gene perturbation signatures (85 therapeutic regimens across 39 cancer subtypes) were extracted. The perturbagen consists of drugs, and the expression is measured as microarray or RNA-Seq, and each signature contains full expression with fold change and p-values. 
-The sci-Plex dataset is based on a single-cell transcriptomic method that uses nuclear hashing. Sci-Plex dataset profiled three cancer cell lines treated with 188 small-molecule compounds. The data contains full transcriptomic signatures with around 11,000 genes each, containing dose-response effect estimates and associated p-values. Only signatures linked to compounds with known CDDI targets were kept. For each of the 135 perturbagen with a target, the gene expression responses were measured across 3 cell lines, resulting in 405 signatures. 
-CREEDS is a crowd-sourced, manually curated collection of perturbation signatures from GEO. Includes both small-molecule and genetic perturbations in mouse and human with the expression from different bulk gene expression platforms. These signatures are represented as DEG lists indicating the regulation direction without fold change values. Only perturbations with CDDI target annotations were retained, and all mouse data were mapped to human orthologs using the metabaser package.
-PertOrg is a curated collection of in vivo genetic perturbation (such as knockdown, knockout, and overexpression) signatures across eight model organisms. Only mouse signatures with more than 5,000 genes were kept and mapped to human orthologs using the metabaser package. For the golden standard, perturbation effects were considered as activation for knockin, overexpression and activation, and inhibition for the remaining ones. Since PertOrg originally contained 7,398 signatures but only 2,321 distinct target genes, a filtering criteria was applied. Each signature should have at least 50 DEGs, and the target gene’s fold change should be ranked in the top 5% by absolute value among all measured genes within that signature. Then, the selected signature was the one with the highest number of DEGs per target and perturbation type combination. This resulted in 951 signatures used as PertOrg dataset.
+CDS-DB contains 78 cancer patient-derived, paired pre- and post-treatment transcriptomic datasets, all with associated metadata such as drug dosages, sampling times, and locations. 181 study-level gene perturbation signatures (85 therapeutic regimens across 39 cancer subtypes) were extracted. The perturbagen consists of drugs, and the expression is measured by microarray or RNA-Seq (including fold change and p-values). 
+The sci-Plex dataset is based on a single-cell transcriptomics method that uses nuclear hashing. Sci-Plex dataset profiled three cancer cell lines treated with 188 small-molecule compounds. The data contains full transcriptomic signatures with around 11,000 genes each, containing dose-response effect estimates and associated p-values. Only signatures linked to compounds with known CDDI targets were kept. For each of the 135 perturbagen with a target, the gene expression responses were measured across 3 cell lines, resulting in 405 signatures. 
+CREEDS is a crowd-sourced, manually curated collection of perturbation signatures from GEO. Includes both small-molecule and genetic perturbations in mouse and human with the expression from different bulk gene expression platforms. These signatures are represented as DEG lists indicating the regulation direction without fold change values. Only perturbations with CDDI target annotations were retained, and all mouse data were mapped to human orthologs, using the metabaser package.
+PertOrg is a curated collection of in vivo genetic perturbation (such as knockdown, knockout, and overexpression) signatures across eight model organisms. Only mouse signatures with more than 5,000 genes were kept and mapped to human orthologs. For the golden standard, perturbation effects were considered as activation in the case  of knock-in, overexpression and activation, and inhibition for all the remaining ones. Since PertOrg originally contained 7,398 signatures but only 2,321 distinct target genes, a filtering criteria was applied. Each signature should have at least 50 DEGs, and the target gene's fold change should be ranked in the top 5% by absolute value among all measured genes within that signature. Then, the selected signature was the one with the highest number of DEGs per target and perturbation type combination. This resulted in 951 signatures used as PertOrg dataset.
 The GWPS dataset represents a large-scale effort for single-cell CRISPRi profiling across more than 2.5 million human cells. It targets 9,866 genes and was generated using the 10x Genomics platform. The dataset includes 1,946 perturbation signatures corresponding to gene knockdowns. Each signature consists of full transcriptomic profiles by z-scores without p-values. Although the DEGs per signature were also provided by the authors, only the full signatures were used in the analysis.
 
-The Table~\ref{tab:dataset_summary} provides a summary of the datasets used in the study.
+% Please add the following required packages to your document preamble:
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{longtable}[c]{lllllll}
+\caption{Summary of gene expression datasets used in this study. Each dataset includes transcriptomic signatures derived from chemical or genetic perturbations. The “Perturbagen” column specifies the type of compound or gene perturbation applied, while the “Type” column labels it as either chemical or genetic. The number of perturbagens refers to the unique compounds or genes perturbed in the dataset. The signatures with the golden standard column indicate how many signatures have associated targets that can be used for benchmarking. The signature type describes the format and content of the signature, such as full profiles or DEG lists.}
+\label{tab:gene_expression_datasets} \\
 
-\bgroup
-%\rowcolors{1}{}{GhostWhite}
-\begin{xltabular}{\textwidth}{Xccccc}
-    \caption{Datasets summary.}
-    \label{tab:dataset_summary}\\
-    \toprule
-    %\rowcolor{Gainsboro}%
-    \textbf{Dataset}                & \textbf{Perturbagen}     & \textbf{Perturbation}  & \textbf{N. of perturbagens}    & \textbf{Signature} \\
-    \midrule
-LINCS compounds            & Chemical        & Compound      & 3499                  & Full      \\
-LINCS CRISPR               & Genetic         & CRISPR KO     & \emph{2B, 1C}         & Full      \\
-LINCS OE                   & Genetic         & ?             & \emph{A}              & Full      \\
-LINCS shRNA a375           & Genetic         & ?             & ---                   & Full      \\
-ChemPert                   & Chemical        & 2             & \emph{C}              & DEGs      \\
-CREEDs                     & Chemical        & 2             & \emph{1A, 1C}         & 0 \\
-CDS-DB                     & Chemical        & 1             & ---                   & 0 \\
-PertOrg                    & Genetic         & 1             & \emph{1A}             & 0 \\
-GWPS                       & Genetic         & 2             & \emph{C}              & 0 \\
-Sci-Plex                   & Chemical        & 3             & \emph{2B}             & 0 \\
-%\midrule
-%\rowcolor{Gainsboro}%
-    \bottomrule
-    \end{xltabular}
-\egroup
+\textbf{Data set} &
+  \textbf{Perturbagen} &
+  \textbf{Type} &
+  \textbf{Number of perturbagens} &
+  \textbf{Signatures with golden standard} &
+  \textbf{Signature type} &
+  \textbf{Ref.} \\
+\endfirsthead
+%
+\endhead
+%
+LINCS compounds & Compound (small molecules)                            & Chemical & 33627 & 3540 & Full              & ~\cite{RN30} \\
+ChemPert &
+  Compound (small molecules, ligands, drugs) &
+  Chemical &
+  2508 &
+  1304 &
+  DEGs (up/down gene sets) &
+  ~\cite{RN86} \\
+CDS-DB          & Compound (small molecules) Patient-derived            & Chemical & 181   & 181  & Full              & ~\cite{RN84} \\
+Sci-Plex        & Compound (Single cell; Different doses)               & Chemical & 189   & 405  & Full (scRNA-seq ) & ~\cite{RN88} \\
+CREEDs &
+  Disease, small molecules, single gene perturbations &
+  Chemical Genetic &
+  3051 (875 drugs, 2176 genes) &
+  2642 &
+  DEGs (up/down gene sets) &
+  ~\cite{RN87} \\
+LINCS CRISPR    & CRISPR KO                                             & Genetic  & 5156  & 5156 & Full              & ~\cite{RN30} \\
+LINCS OE        & cDNA over-expression                                  & Genetic  & 3780  & 3780 & Full              & ~\cite{RN30} \\
+LINCS shRNA     & shRNA interference                                    & Genetic  & 4854  & 4854 & Full              & ~\cite{RN30} \\
+PertOrg         & shRNA interference; CRISPR knockdown; Over-expression & Genetic  & 7398  & 951  & DEGs              & ~\cite{RN85} \\
+GWPS            & CRISPR interference                                   & Genetic  & 1946  & 1946 & Full (scRNA-seq ) & ~\cite{RN89}
+\end{longtable}
 
 %\includegraphics[width=0.9\linewidth]{Chapters/Figures/lincs_shrna_a375_head(signature)}\hfill
 
@@ -102,7 +116,7 @@ Additionally, an increase in network size can introduce noise that may disturb t
 % \usepackage{graphicx}
 \begin{table}[]
 \centering
-\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream‐derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge‐type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
+\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream-derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge-type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
 \label{tab:table4}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lllllllll}
