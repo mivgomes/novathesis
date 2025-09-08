@@ -18,6 +18,7 @@
 
 \section{Benchmarking architecture setup} % (fold)
 \label{sec:benchmarking_architecture_setup}
+
 Several tools and algorithms are available for most research tasks in computational biology, and new algorithms and tools are published every week. Systematic benchmarking of tools is a time- and resource-consuming endeavor, while a lack of benchmarking carries several potential risks. Finding the right computational tool for a given research question is essential. Researchers usually carry out published benchmarking to demonstrate that their tool performs better than others. ABC is a consortium created in 2021 that aims to help members reduce R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC is a consortium established in 2021 that aims to assist members in reducing R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC maintains the same workflow regardless of the case study. It consists of three main steps: (1) Voting, (2) Curation, and (3) Coding. The consortium members suggest and vote on the use case (1). Once the use case is determined, the curation phase begins, where Clarivate collects the most appropriate datasets and algorithms according to the voted use case (2). Again, the members vote on the final selection of datasets and algorithms (1). Finally, the last phases - implementation, execution, and reporting - are conducted by Clarivate (3). 
 The project description will fall within the third phase of the workflow, specifically concerning some of the algorithm's implementation and execution, where I actively participated since all the data was already collected and voted on when I started the project. A visual representation of the study workflow is provided~\ref{fig:fig4} and will be explained in detail in the following sections. The entire workflow was implemented in \gls{R} Statistical Software (v4.4.1) [96].
 
@@ -37,7 +38,7 @@ As represented in Figure~\ref{fig:fig4}, each algorithm should receive two types
 \subsection{Gene expression data: Perturbation signatures}
 \label{sub:gene_expression_data_perturbation_signatures}
 
-Currently, there are several publicly available perturbation-driven gene expression datasets. This study comprehends transcriptomic datasets from 10 different public sources, summarized in Table~\ref{tab:gene_expression_datasets}. Chemical and genetic perturbagens were included, analyzed by bulk microarray, bulk RNA seq, and single-cell RNA seq assays. Each dataset contains more than hundreds of perturbation signatures. For each collection, the perturbagen type, the total number of unique perturbagens profiled, and the subset for which a gold standard target annotation is available were recorded. The gold standard is necessary for the evaluation and it consists of a set of known targets (drug-protein interactions or genes deliberately perturbed), used to assess the ability of the algorithms to recover true upstream regulators from observed expression changes. 
+Currently, there are several publicly available perturbation-driven gene expression datasets. This study comprehends transcriptomic datasets from 10 different public sources, summarized in Table~\ref{tab:tabel3}. Chemical and genetic perturbagens were included, analyzed by bulk microarray, bulk RNA seq, and single-cell RNA seq assays. Each dataset contains more than hundreds of perturbation signatures. For each collection, the perturbagen type, the total number of unique perturbagens profiled, and the subset for which a gold standard target annotation is available were recorded. The gold standard is necessary for the evaluation and it consists of a set of known targets (drug-protein interactions or genes deliberately perturbed), used to assess the ability of the algorithms to recover true upstream regulators from observed expression changes. 
 The LINCS expands upon the original CMap by leveraging the cost-effective L1000 platform, which directly measures 978 “landmark” transcripts and imputes the remaining transcriptome to reconstruct genome-wide expression profiles. LINCS comprises several distinct collections of perturbations in human cell lines: over 30,000 unique small-molecule treatments, CRISPR knockouts targeting 5,156 genes, cDNA overexpression of 3,780 genes, and shRNA knockdowns of 4,854 genes. The level 5 data were retrieved from the CLUE platform (available at \href{https://clue.io/data/CMap2020#LINCS2020}{CLUE}). This level already contains the differential expression signatures with z-scores aggregated across biological replicates without p-values. Since each perturbagen usually appears under multiple conditions (different doses, time points, and cell lines), these were condensed into a single consensus signature per perturbagen by extracting every available gene's z-score and then using the median value across signatures. For the gold standard, directional effects were assigned as follows: for chemical perturbations CDDI annotations were used to identify molecular targets inhibited by specific compounds; for CRISPR and shRNA datasets, the target genes were assigned with inhibition effect, and for OE, each target was assigned with activation effect.
 ChemPert is a manually curated compendium of 82,256 transcriptional signatures derived from non-cancer cell compound perturbation experiments. Most signatures originate from bulk expression studies in various cell lines, and each is represented as a list of DEGs indicating only up- or down-regulation (no fold-change values or p-values). From the total number of signatures, only 2,587 have distinct compounds. A set of consensus DEG lists were derived to reduce redundancy and runtime. For each compound, only genes appearing as DEGs in at least two signatures and with the same regulation direction were kept. As well as only signatures with at least 50 consensus DEGs. This resulted in 1,304 signatures which was the dataset used instead of the original ChemPert.
 CDS-DB contains 78 cancer patient-derived, paired pre- and post-treatment transcriptomic datasets, all with associated metadata such as drug dosages, sampling times, and locations. 181 study-level gene perturbation signatures (85 therapeutic regimens across 39 cancer subtypes) were extracted. The perturbagen consists of drugs, and the expression is measured by microarray or RNA-Seq (including fold change and p-values). 
@@ -46,182 +47,241 @@ CREEDS is a crowd-sourced, manually curated collection of perturbation signature
 PertOrg is a curated collection of in vivo genetic perturbation (such as knockdown, knockout, and overexpression) signatures across eight model organisms. Only mouse signatures with more than 5,000 genes were kept and mapped to human orthologs. For the golden standard, perturbation effects were considered as activation in the case  of knock-in, overexpression and activation, and inhibition for all the remaining ones. Since PertOrg originally contained 7,398 signatures but only 2,321 distinct target genes, a filtering criteria was applied. Each signature should have at least 50 DEGs, and the target gene's fold change should be ranked in the top 5% by absolute value among all measured genes within that signature. Then, the selected signature was the one with the highest number of DEGs per target and perturbation type combination. This resulted in 951 signatures used as PertOrg dataset.
 The GWPS dataset represents a large-scale effort for single-cell CRISPRi profiling across more than 2.5 million human cells. It targets 9,866 genes and was generated using the 10x Genomics platform. The dataset includes 1,946 perturbation signatures corresponding to gene knockdowns. Each signature consists of full transcriptomic profiles by z-scores without p-values. Although the DEGs per signature were also provided by the authors, only the full signatures were used in the analysis.
 
-% Please add the following required packages to your document preamble:
-% \usepackage{longtable}
-% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
-\begin{longtable}[c]{lllllll}
-\caption{Summary of gene expression datasets used in this study. Each dataset includes transcriptomic signatures derived from chemical or genetic perturbations. The “Perturbagen” column specifies the type of compound or gene perturbation applied, while the “Type” column labels it as either chemical or genetic. The number of perturbagens refers to the unique compounds or genes perturbed in the dataset. The signatures with the golden standard column indicate how many signatures have associated targets that can be used for benchmarking. The signature type describes the format and content of the signature, such as full profiles or DEG lists.}
-\label{tab:gene_expression_datasets} \\
 
+\begin{table}[]
+\centering
+\caption{Summary of gene expression datasets used in this study. Each dataset includes transcriptomic signatures derived from chemical or genetic perturbations. The “Perturbagen” column specifies the type of compound or gene perturbation applied, while the “Type” column labels it as either chemical or genetic. The number of perturbagens refers to the unique compounds or genes perturbed in the dataset. The signatures with the golden standard column indicate how many signatures have associated targets that can be used for benchmarking. The signature type describes the format and content of the signature, such as full profiles or DEG lists.}
+\label{tab:tabel3}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllllll}
+\hline
 \textbf{Data set} &
   \textbf{Perturbagen} &
   \textbf{Type} &
-  \textbf{Number of perturbagens} &
-  \textbf{Signatures with golden standard} &
-  \textbf{Signature type} &
-  \textbf{Ref.} \\
-\endfirsthead
-%
-\endhead
-%
-LINCS compounds & Compound (small molecules)                            & Chemical & 33627 & 3540 & Full              & ~\cite{RN30} \\
+  \textbf{\begin{tabular}[c]{@{}l@{}}Number of \\ perturbagens\end{tabular}} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Signatures with \\ golden standard\end{tabular}} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Signature \\ type\end{tabular}} &
+  \textbf{Ref.} \\ \hline
+\begin{tabular}[c]{@{}l@{}}LINCS \\ compounds\end{tabular} &
+  Compound (small molecules) &
+  Chemical &
+  33627 &
+  3540 &
+  Full &
+  \cite{RN30} \\
 ChemPert &
-  Compound (small molecules, ligands, drugs) &
+  \begin{tabular}[c]{@{}l@{}}Compound (small molecules, \\ ligands, drugs)\end{tabular} &
   Chemical &
   2508 &
   1304 &
-  DEGs (up/down gene sets) &
-  ~\cite{RN86} \\
-CDS-DB          & Compound (small molecules) Patient-derived            & Chemical & 181   & 181  & Full              & ~\cite{RN84} \\
-Sci-Plex        & Compound (Single cell; Different doses)               & Chemical & 189   & 405  & Full (scRNA-seq ) & ~\cite{RN88} \\
+  \begin{tabular}[c]{@{}l@{}}DEGs \\ (up/down \\ gene sets)\end{tabular} &
+  \cite{RN86} \\
+CDS-DB &
+  \begin{tabular}[c]{@{}l@{}}Compound (small molecules) \\ Patient-derived\end{tabular} &
+  Chemical &
+  181 &
+  181 &
+  Full &
+  \cite{RN84} \\
+Sci-Plex &
+  \begin{tabular}[c]{@{}l@{}}Compound (Single cell; \\ Different doses)\end{tabular} &
+  Chemical &
+  189 &
+  405 &
+  \begin{tabular}[c]{@{}l@{}}Full \\ (scRNA-seq )\end{tabular} &
+  \cite{RN88} \\
 CREEDs &
-  Disease, small molecules, single gene perturbations &
-  Chemical Genetic &
-  3051 (875 drugs, 2176 genes) &
+  \begin{tabular}[c]{@{}l@{}}Disease, small molecules, \\ single gene perturbations\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Chemical \\ Genetic\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}3051 (875 drugs, \\ 2176 genes)\end{tabular} &
   2642 &
-  DEGs (up/down gene sets) &
-  ~\cite{RN87} \\
-LINCS CRISPR    & CRISPR KO                                             & Genetic  & 5156  & 5156 & Full              & ~\cite{RN30} \\
-LINCS OE        & cDNA over-expression                                  & Genetic  & 3780  & 3780 & Full              & ~\cite{RN30} \\
-LINCS shRNA     & shRNA interference                                    & Genetic  & 4854  & 4854 & Full              & ~\cite{RN30} \\
-PertOrg         & shRNA interference; CRISPR knockdown; Over-expression & Genetic  & 7398  & 951  & DEGs              & ~\cite{RN85} \\
-GWPS            & CRISPR interference                                   & Genetic  & 1946  & 1946 & Full (scRNA-seq ) & ~\cite{RN89}
-\end{longtable}
+  \begin{tabular}[c]{@{}l@{}}DEGs \\ (up/down \\ gene sets)\end{tabular} &
+  \cite{RN87} \\
+\begin{tabular}[c]{@{}l@{}}LINCS \\ CRISPR\end{tabular} &
+  CRISPR KO &
+  Genetic &
+  5156 &
+  5156 &
+  Full &
+  \cite{RN30} \\
+LINCS OE &
+  cDNA over-expression &
+  Genetic &
+  3780 &
+  3780 &
+  Full &
+  \cite{RN30} \\
+\begin{tabular}[c]{@{}l@{}}LINCS \\ shRNA\end{tabular} &
+  shRNA interference &
+  Genetic &
+  4854 &
+  4854 &
+  Full &
+  \cite{RN30} \\
+PertOrg &
+  \begin{tabular}[c]{@{}l@{}}shRNA interference; CRISPR \\ knockdown; Over-expression\end{tabular} &
+  Genetic &
+  7398 &
+  951 &
+  DEGs &
+  \cite{RN85} \\
+GWPS &
+  CRISPR interference &
+  Genetic &
+  1946 &
+  1946 &
+  \begin{tabular}[c]{@{}l@{}}Full \\ (scRNA-seq )\end{tabular} &
+  \cite{RN89} \\ \hline
+\end{tabular}%
+}
+\end{table}
 
-%\includegraphics[width=0.9\linewidth]{Chapters/Figures/lincs_shrna_a375_head(signature)}\hfill
-
-The concept of causal inference can be described as the ability of algorithms to find the target candidates of a perturbation, in this study, based on gene expression data. Each dataset described in this section feeds into the benchmarking workflow as the query or reference dataset and as a gold standard (signature associated with the set of known targets). Golden standard target annotations are mandatory, not for running the algorithms, but for the evaluation step. During the evaluation, the performance of each algorithm will be assessed based on how well the target was recovered. When using signatures derived from drug perturbation, it can be hard to identify the exact compound used just from gene expression. Instead, it's easier and more meaningful to infer the target(s) of the compound (e.g., a protein the drug binds to). Although MetaBase also contains compound information, most networks do not, but they do include gene or protein targets. Even for connectivity scoring methods, knowing the drug targets helps when querying compound perturbations versus gene perturbation references (or vice versa). Five chemical perturbation datasets (LINCS compounds, ChemPert, CDS-DB, Sci-Plex, and CREEDs) were subjected to this mapping through three approaches. (1) The authors' target information was extracted from the dataset/database whenever possible. All target gene symbols were extracted. (2) Small molecules were mapped against the drugs in Clarivate's CDDI database. (3) The target lists from the database and from CDDI were then merged to form the final set of targets for each drug or small molecule.
-
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[height=2in]{lincs_shrna_a375_head(signature)}
-    \caption{Transctipotomic signatures perturbation from LINCS shRNA, cell line a375.}
-    \label{fig:example_signatures}
-\end{figure}
+The concept of causal inference can be described as the ability of algorithms to find the target candidates of a perturbation, based on gene expression data generated from a specific experimental study. 
+Each dataset described in this section feeds into the benchmarking workflow as the query (or reference dataset) and as a gold standard (signature associated with the set of known targets). 
+Golden standard target annotations are mandatory, not for running the algorithms, but for the evaluation step. 
+During the evaluation, the performance of each algorithm will be assessed based on how well the targets were identified. 
+When using signatures derived from drug perturbation, it can be hard to identify the exact compound used only from gene expression. 
+Instead, it's easier and more meaningful to infer the target(s) of the compound (i.e. the biologically active protein that the drug binds to). 
+Although MetaBase also contains compound information, most networks do not, but they do include gene or protein targets that can be used as proxy instead.  
+Even for connectivity scoring methods, knowing the drug targets helps when querying compound perturbations versus gene perturbation references (or vice versa). 
+Five chemical perturbation datasets (LINCS compounds, ChemPert, CDS-DB, Sci-Plex, and CREEDs) were subjected to this mapping through three approaches. 
+(1) The authors' target information was extracted from the dataset/database whenever possible, including all target gene symbols. 
+(2) Small molecules were mapped against the drugs in the CDDI database,  then,  depending on the annotation level, one or more of the following information were included for downstream analyses: target drug annotation, names, synonyms or structural information. 
+(3) The target lists provided by the authors and the one from \gls{CDDI} were then merged to form the final set of targets for each therapeutic agents.
 
 
 
 \subsection{Prior Knowledge: Interaction Networks} % (fold)
 \label{sec:prior_knowledge_interaction_networks}
 
-One type of input that can serve as a reference is prior knowledge data for contextualizing gene expression signatures. 
-The benchmarking framework depends on three complementary types of this data: 
-PKN (global interaction networks), regulons (regulator-target gene sets), and pathway-derived linear maps (Table~\ref{tab:table4}). 
-Although these resources vary in their coverage, they are related, as illustrated in Figure 4. Including sources of different 
-sizes and densities is particularly important for understanding how topology-based algorithms manage that in terms of performance. 
-Additionally, an increase in network size can introduce noise that may disturb the rationale. 
+One of inputs that can serve as a reference is the prior knowledge data, required for contextualizing gene expression signatures. 
+The benchmarking framework depends on three complementary types of this data: \gls{PKN} (global interaction networks), regulons (regulator-target gene sets), and pathway-derived linear maps (Table~\ref{tab:table4}). 
+Although these resources vary in their coverage, they are interconnected, as illustrated in Figure~\ref{fig:fig4}. 
+Including sources of different sizes and densities is particularly important for understanding how the performance of topology-based algorithms is affected by the type of the input. 
+Additionally, an increase in network size can also introduce noise that may disturb the extraction of biologically relevant information. 
 
+The interactions are obtained from two databases, OmniPath~\cite{RN91} and MetaBase~\cite{RN33}. 
+OmniPath is a public database with protein-protein, transcriptional, and \gls{RNA}-related interactions. MetaBase™ is a manually curated systems-biology database, provided by Clarivate, containing over 4 million directional molecular interactions, such as protein-protein, protein-\gls{RNA}, compound-protein, etc. 
+From each of these two sources, PKN and regulons were obtained as used as input in the benchmarking process. Canonical linear pathways were extracted only from MetaBase and annotated according to four main concepts: directionality, effect, mechanism, and weight. 
+Directionality indicates the intended flow of signal, from the source to the target node. 
+The effect (or edge type) denotes whether the interaction is inhibition (-1), unknown (0), or activation (1). 
+Mechanism distinguishes generic molecular interactions (interactions from receptors upstream to the transcription factors downstream, coded as 0) from transcriptional regulation edges (transcription factors with their target genes, coded as 1). 
+Finally, weight determines interaction confidence based, among the others, on literature support. Regardless of the database source used, the mandatory annotation for each interaction is directionality information, whereas any other information will not be used by algorithms. 
 
-% \usepackage{graphicx}
+OmniPath \gls{PKN} was constructed by integrating signaling and \gls{TF}-target interactions using OmniPathR (v. 3.14.0) \gls{R} package. 
+Signaling interactions were obtained using the import \_ omnipath \_ interactions function and with assigned mechanism = 0, whereas transcriptional regulatory interactions imported using import \_ transcriptional \_ interactions were annotated as mechanism = 1. 
+These were combined into a single network, and interactions with effect = 0 were kept only if mechanism = 0. Nodes in OmniPath are proteins or protein complexes (UniProt IDs), with the corresponding gene symbol(s). 
+For using MetaBase as another source of PKN, the global network was extracted using the networkFromMetabase function, via the metabaser (v. 5.1.0) and \gls{CBDD} (version 20.0.3) R packages. 
+Unlike OmniPath, it already includes both signaling interactions (mechanism = 0) and transcription regulation interactions (mechanism = 1). 
+Only high-confidence interactions with defined effect (activation or inhibition) were kept. 
+Originally, the network contained specific MetaBase network objects, that were processed to add only the corresponding gene symbols to the network (using the function metabaser::annotate.nwobj2gene).
+
+Another way of representing interactions that can be used as reference data for both topology-based and enrichment-based tools are the regulons. For both the resources regulons were extracted using the causal reasoning algorithm. through the \gls{CBDD}::hypothesisGeneration function, providing as parameters the downstream depth for the search (in this case, 4 steps) and the position in the pathway where transcription regulation links may appear (set to anywhere in the path). 
+Bearing in mind that both networks used as input contain the directionality of the signal, this function will then predict which targets are influenced (by activation or inhibition) by each specific regulator. 
+Finally, all possible interactions were filtered to retain only those where a node and all downstream activated or repressed genes are present. The final number of nodes and interactions of the regulons is also detailed in Table~\ref{tab:table4}. 
+In addition to the network and the regulons, canonical linear pathwayss, available from MetaBase were also included. Those are linear sequences of biological entities and interactions between them. They are automatically generated from pathway maps and represent highly curated canonical signaling paths. 
+They start from an important signaling molecule and end, usually with a transcription regulation event or another downstream molecular response.
+
 \begin{table}[]
 \centering
-\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream-derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge-type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
+\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream‐derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge‐type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
 \label{tab:table4}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lllllllll}
-\multicolumn{2}{l}{}                             & \multicolumn{3}{l}{Nodes}       & \multicolumn{4}{l}{Edges}                                         \\
-\multicolumn{2}{l}{Resource}                     & Regulator & Target & Gene space & Activation & Inhibition & Transcriptional regulation & Total      \\
-\multirow{2}{*}{OmniPath} & Network              & 6,166     & 6,723  & 7,809      & 119,113    & 13,680     & 64,367                     & 145,896    \\
-                          & Regulons             & 4,442     & 6,723  & 5,622      & 5,842,390  & 4,270,032  & 10,112,422                 & 10,112,422 \\
-\multirow{3}{*}{MetaBase} & Network              & 3,3927    & 1,5229 & 1,7693     & 81,866     & 61,214     & 101,752                    & 657,746    \\
-                          & Regulons             & 1,1739    & 1,0476 & 9,988      & 23,844,526 & 21,469,352 & 45,313,878                 & 45,313,878 \\
-                          & Linear Path Regulons & 2,922     & 9,465  & 3,185      & 3,493,007  & 1,361,149  & 4,854,156                  & 4,854,156 
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{cl|lll|llll}
+\multicolumn{2}{l|}{}                         & \multicolumn{3}{c|}{\textbf{Nodes}} & \multicolumn{4}{c}{\textbf{Edges}}        \\ \hline
+\multicolumn{2}{l|}{\textbf{Resource}} &
+  Regulator &
+  Target &
+  Gene\\ space &
+  Activation &
+  Inhibition &
+  \begin{tabular}[c]{@{}l@{}}Transcriptional\\ regulation\end{tabular} &
+  Total \\ \hline
+\multirow{2}{*}{\textbf{OmniPath}} & Network  & 6,166       & 6,723       & 7,809      & 119,113   & 13,680    & 64,367    & 145,896   \\
+                                   & Regulons & 4,442       & 6,723       & 5,622      & 5,842,390  & 4,270,032  & 10,112,422 & 10,112,422 \\
+\multirow{3}{*}{\textbf{Metabase}} & Network  & 33,927      & 15,229      & 17,693     & 81,866    & 61,214    & 101,752   & 657,746   \\
+                                   & Regulons & 11,739      & 10,476      & 9,988      & 23,844,526 & 21,469,352 & 45,313,878 & 45,313,878 \\
+ &
+  \begin{tabular}[c]{@{}l@{}}Linear Path \\ Regulons\end{tabular} &
+  2,922 &
+  9,465 &
+  3,185 &
+  3,493,007 &
+  1,361,149 &
+  4,854,156 &
+  4,854,156 \\ \hline
 \end{tabular}%
 }
 \end{table}
 
 
 
-\section{Algortithms} % (fold)
+
+\section{Algorithms: implementation and wrapper function's architecture} % (fold)
 \label{sec:algorithms}
 
-To carry out a systematic and robust comparative evaluation of inference algorithms, wrapper functions were developed to standardize the input data 
-and output formatting in different computational approaches. Each algorithm has specific data requirements and processing methods, requiring 
-adaptation to ensure compatibility in the common framework. A wrapper is nothing more than a function that serves as an intermediary layer. 
-These are important to handle data type conversions, parameter standardization, and result formatting, allowing diverse algorithms to be executed 
-consistently regardless of their underlying implementation differences. This approach addresses the inherent complexity of having algorithms coming 
-from different approaches. Here there are two types of wrappers: shared and individual. The shared wrapper architecture incorporates an already 
-established package that bundles several algorithms inside, unlike the individual ones that incorporate single algorithms. The connectivity mapping 
-approaches from the RCSM package, enrichment methods from decoupleR, and topology-based algorithms from CBDD were implemented in shared wrappers. 
-On the other hand, causal reasoning CARNIVAL, CausalR, ProTINA, CIE, and NicheNet were incorporated in individual wrappers. Table 5 provides a 
-complete list of algorithms together with their annotations.
-Some supporting helper functions were also implemented to facilitate essential data conversions across all wrappers. Those functions include mapping 
-identifiers between transcriptomic datasets and network nodes to ensure the same IDs and converting the input data when necessary. For the query 
-input data, the tool may need a full signature or DEGs. When DEGs are required, the full signature can be filtered using a fold change and p-value 
-threshold or by simply taking the top threshold for differentially expressed genes by fold change magnitude. Regarding reference, the workflow can 
-start with PKN or full signatures, and for topology, enrichment, and CMap tools, require networks, regulons/gene sets, and full signatures, respectively. 
-To use this large variety of input data and tools, some conversions are required to run them uniformly. All the conversions are indicated by the 
-arrows in Figure 4 B. The parameters selected for each algorithm can be found in Supplementary table 2. 
-As the input data, the output should also have the same format, so it is possible to evaluate the performance of each algorithm. For that reason, 
-at the end of each run, all algorithm wrappers return a table with all prioritized regulators identified without any significance filtering applied. 
-The output contains a score column, and the larger score reflects greater confidence in this regulator being causal for observed differential 
-expression patterns. Score may be signed if the tools can predict directionality of perturbation. In that case, regulators are ranked by absolute 
-value of score, and activation/repression status is stored in separate column effect (-1/1 values). 
+To carry out a systematic and robust comparative evaluation of inference algorithms, wrapper functions were developed to build a common framework and to standardize the input data and output, so to ensure compatibility between each algorithm data requirements and processing methods. 
+A wrapper is a function that serves as an intermediary layer. 
+These are required to handle data type conversions, parameter standardization, and result formatting, allowing diverse algorithms to be executed consistently regardless of their underlying implementation differences. This approach addresses the inherent complexity of having algorithms coming from different approaches. Here there are two types of wrappers: shared and individual. The shared wrapper architecture incorporates an already established package that bundles several algorithms inside, unlike the individual ones that incorporate single algorithms. The connectivity mapping from the RCSM package, enrichment methods from decoupleR, and topology-based algorithms from CBDD were implemented in shared wrappers. On the other hand, causal reasoning CARNIVAL, CausalR, ProTINA, CIE, and NicheNet were incorporated in individual wrappers. Table~\ref{tab:table5} provides a complete list of algorithms together with their annotations.
+
+Some supporting helper functions were also implemented to facilitate essential data conversions across all wrappers. Those functions include mapping identifiers between transcriptomic datasets and network nodes, to ensure matching IDs and converting the input data, if necessary. For the query input data, the tool may need a full signature or DEGs. When DEGs are required, the full signature can be filtered using a fold change and p-value threshold, or by simply taking the top threshold for differentially expressed genes by fold change magnitude. As reference datasets, the workflow can start with PKN or full signatures, whereas for topology, enrichment, and CMap tools respectively require networks, regulons/gene sets, and full signatures. To use this large variety of input data and tools, some conversions are required. All the conversions are indicated by the arrows in Figure~\ref{fig:fig4} B. 
+The parameters selected for each algorithm can be found in Supplementary table 2.
+
+As for the input data, the output should also have a similar shared format, so to make it possible to evaluate the performance of each algorithm. For that reason, at the end of each run, all algorithm wrappers return a table with all prioritized regulators identified without any significance filtering applied. The output contains a score column, with the larger score reflects greater confidence in this regulator being causal for the observed differential expression patterns. Score may also be signed if the tools can predict directionality of perturbation. In that case, regulators are ranked by absolute value of score, and activation/repression status is stored in separate column effect (coded as -1 or 1 respectively). 
 
 
-
-The Table~\ref{tab:algorithm_summary} provides a summary of the algorithms used in the study.
-
-%% If I need to change this table to a horizontal layout, just uncomment the next line and the line after the table:
-%% \begin{newpdflayout}{210mm}{297mm}%{420mm}
-
-\bgroup
-%\rowcolors{1}{}{GhostWhite}
-\begin{xltabular}{\textwidth}{Xcccccc}
-\caption{Algorithm summary.}
-\label{tab:algorithm_summary}\\
-\toprule
-%\rowcolor{Gainsboro}%
-\textbf{Tool}  & \textbf{Algorithm}   & \textbf{Description}   & \textbf{Resource}   & \textbf{Dataset}   & \textbf{Reference}   \\
-\midrule
-\multicolumn{6}{l}{\textbf{Causal Reasoning}} \\
-CARNIVAL            & Description  & Network    & DEG/Full  & ~\cite{RN41} \\
-CausalR             & Description  &            &           & ~\cite{RN32} \\
-ProTINA             & Description  &            &           & ~\cite{RN80} \\
-CIE                 & Description  &            &           & ~\cite{RN81} \\
-NicheNet            & Description  &            &           & ~\cite{RN42} \\
-causalReasoning     & Description  &            &           & ~\cite{RN36} \\
-Signatures          & Description  &            &           & ~\cite{RN36} \\
-quaternaryProd      & Description  &            &           & ~\cite{RN36} \\    
-\midrule
-\textbf{Causal Reasoning (baseline)} \\
-randomWalk          & Description  & Network    & DEG/Full  & ~\cite{RN36} \\
-networkPropagation  & Description  &            &           & ~\cite{RN36} \\
-overconnectivity    & Description  &            &           & ~\cite{RN36} \\
-hiddenNodes         & Description  &            &           & ~\cite{RN36} \\
-interconnectivity   & Description  &            &           & ~\cite{RN36} \\
-overconnectivity    & Description  &            &           & ~\cite{RN36} \\
-\midrule
-\textbf{CMap} \\
-KS             & Description & Signatures   & DEG/Full     & ~\cite{RN79} \\
-XCos           & Description &              &              & ~\cite{RN79} \\
-XSum           & Description &              &              & ~\cite{RN79} \\
-ZhangScore     & Description &              &              & ~\cite{RN79} \\
-GSEAweight0    & Description &              &              & ~\cite{RN79} \\
-GSEAweight1    & Description &              &              & ~\cite{RN79} \\
-\midrule
-\textbf{Enrichment} \\
-wmean   & Description  & Regulons     & Signatures  & ~\cite{RN36} \\
-fgsea   & Description  &              &             & ~\cite{RN35} \\
-viper   & Description  &              &             & ~\cite{RN35} \\
-ulm     & Description  &              &             & ~\cite{RN36} \\
-mlm     & Description  &              &             & ~\cite{RN36} \\
-udt     & Description  &              &             & ~\cite{RN36} \\
-mdt     & Description  &              &             & ~\cite{RN36} \\
-wsum    & Description  &              &             & ~\cite{RN35} \\
-%\rowcolor{Gainsboro}%
-\bottomrule
-\end{xltabular}
-\egroup
-
-
+\begin{table}[]
+\centering
+\caption{Summary of computational methods evaluated in the benchmarking study. A total of 27 algorithms categorized into the following methodological approaches: 1) Enrichment, 2) Connectivity Mapping, 3) Topology with Causal Reasoning, and 4) Topology with Node Prioritization. For each algorithm, the corresponding R package implementation and version used are reported. The “Reference” and “Query” columns indicate the required input data types to run the algorithm. The “Output” column specifies whether algorithms produce node rankings (prioritized lists of potential regulators) or subnetworks (connected components representing regulatory cascades involved in the MoA). }
+\label{tab:table5}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllllll}
+\hline
+Method                                                                                       & Algorithm(s)       & R Package                                                                         & Reference                                                                   & Query                                                                           & Output                                                                   & Ref.                          \\ \hline
+\multicolumn{1}{c}{\multirow{8}{*}{Enrichment}}                                              & fgsea              & \multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}decoupleR \\ (v. 2.12.0)\end{tabular}} & \multirow{8}{*}{Regulons}                                                   & \multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}Full\\ signatures\end{tabular}}      & \multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}} & \multirow{8}{*}{~\cite{RN35}} \\
+\multicolumn{1}{c}{}                                                                         & viper              &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & ulm                &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & mlm                &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & udt                &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & mdt                &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & wsum               &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+\multicolumn{1}{c}{}                                                                         & wmean              &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\ \hline
+\multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Connectivity \\ Mapping\end{tabular}}             & KS                 & \multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}RCSM\\    \\ (v. 0.3.0)\end{tabular}}  & \multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Full \\ Signatures\end{tabular}} & \multirow{6}{*}{DEGs}                                                           & \multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Node\\ Ranking\end{tabular}}  & \multirow{6}{*}{~\cite{RN79}} \\
+                                                                                             & XCos               &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+                                                                                             & XSum               &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+                                                                                             & GSEAweight0        &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+                                                                                             & GSEAweight1        &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+                                                                                             & ZhangScore         &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\ \hline
+\multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}Topology \\ (Causal \\ Reasoning)\end{tabular}}   & CARNIVAL           & \begin{tabular}[c]{@{}l@{}}CARNIVAL\\    \\ (v. 2.16.0)\end{tabular}              & Network                                                                     & \begin{tabular}[c]{@{}l@{}}DEG/Full \\ Signatures\end{tabular}                  & Subnetwork                                                               & ~\cite{RN41}                  \\
+                                                                                             & CausalR            & \begin{tabular}[c]{@{}l@{}}CausalR\\    \\ (v. 1.38.0)\end{tabular}               &                                                                             &                                                                                 &                                                                          & ~\cite{RN32}                  \\
+                                                                                             & ProTINA            & \begin{tabular}[c]{@{}l@{}}Protina\\    \\ (v. 0.1.0)\end{tabular}                &                                                                             &                                                                                 & \begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}                  & ~\cite{RN80}                  \\
+                                                                                             & CIE                & \begin{tabular}[c]{@{}l@{}}CIE\\    \\ (v. 1.0.0)\end{tabular}                    &                                                                             &                                                                                 & \begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}                  & ~\cite{RN81}                  \\
+                                                                                             & NicheNet           & \begin{tabular}[c]{@{}l@{}}Nichenetr\\    \\ (v. 2.2.0)\end{tabular}              &                                                                             &                                                                                 & \begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}                  & ~\cite{RN42}                  \\
+                                                                                             & causalReasoning    & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}CBDD\\ (v. 21.0.0)\end{tabular}}       &                                                                             &                                                                                 & \begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}                  & ~\cite{RN73}                  \\
+                                                                                             & SigNet             &                                                                                   &                                                                             &                                                                                 & \begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}                  & ~\cite{RN74}                  \\
+                                                                                             & quaternaryProd     &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\ \hline
+\multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}Topology\\ (Node \\ Prioritization)\end{tabular}} & networkPropagation & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}CBDD \\ (v. 21.0.0)\end{tabular}}      & \multirow{5}{*}{Network}                                                    & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}DEG/Full \\ Signatures\end{tabular}} & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}Node \\ ranking\end{tabular}} & ~\cite{RN75}                  \\
+                                                                                             & randomWalk         &                                                                                   &                                                                             &                                                                                 &                                                                          & ~\cite{RN76}                  \\
+                                                                                             & overconnectivity   &                                                                                   &                                                                             &                                                                                 &                                                                          & ~\cite{RN77}                  \\
+                                                                                             & hiddenNodes        &                                                                                   &                                                                             &                                                                                 &                                                                          &                               \\
+                                                                                             & interconnectivity  &                                                                                   &                                                                             &                                                                                 &                                                                          & ~\cite{RN78}                  \\ \hline
+\end{tabular}%
+}
+\end{table}
 
 \subsection{Connectivity Mapping} % (fold)
 \label{sub:connectivity_mapping}
 
-The~\ref{fig:fig5} represents the wrapper function framework for running connectivity mapping algorithms from the RCSM package [87]. This package provides uniform implementations of several CMap scoring methods including Kolmogorov-Smirnov (KS), and GSEA-based approaches. The function is designed to accept filtered DEG lists as query input and full perturbation signatures as reference data. If full signatures are used as the query, they are converted to DEGs using the filtering parameters (Supplementary table 2), as well as the additional parameters. RCSM R package includes a variety of algorithms already implemented, each designed to quantify the similarity or dissimilarity between query and reference perturbation signatures. Those algorithms include the Kolmogorov-Smirnov (KS) statistic which was used in the original Connectivity Map [9]; Xcos, a cosine similarity metric between query and reference fold-changes; Xsum connectivity map statistic based on the sum of reference fold-change values of query genes; GSEAweight0 is a GSEA weighted KS  ES with parameter p = 0, meaning that the fold-change magnitude is not taken into account; GSEAweight1 with parameter p = 1, fold-change magnitude contributes linearly; Zhang, a connectivity mapping score first suggested in [105].
-The function handles the different algorithm requirements by preparing either separate up- and down-regulated gene lists for most methods or simple gene vectors for XCos. The function also includes optional regulator filtering for TF mode. The output is formatted to return regulator rankings with similarity scores, directional effects, and optional statistical significance measures. The results are sorted by absolute score magnitude to prioritize the most relevant regulatory relationships regardless of similarity direction. For these algorithms, the regulator score measures the similarity of the query versus the reference perturbation signature.
+Figure~\ref{fig:fig5} represents the wrapper function framework for running \gls{CMap} algorithms from the \gls{RCSM} package~\cite{RN79}. 
+This package provides uniform implementations of several \gls{CMap} scoring methods including \gls{KS}, and \gls{GSEA}-based approaches. 
+The function is designed to receive filtered \gls{DEGs} lists as query input and full perturbation signatures as reference data. 
+If full signatures are used as the query, they are internally converted to \gls{DEGs} using the filtering parameters (Supplementary table 2), as well as the additional parameters. \gls{RCSM} \gls{R} package includes a variety of algorithms already implemented, designed to quantify the similarity between query and reference perturbation signatures. 
+Those algorithms include the \gls{KS} statistic, used in the original \gls{CMap}~\cite{RN34}; Xcos, a cosine similarity metric between query and reference fold-changes; Xsum connectivity map statistic based on the sum of reference fold-change values of query genes; GSEAweight0 is a \gls{GSEA} weighted KS ES with parameter p = 0, which ignore the fold-change magnitude for computation; GSEAweight1 with parameter p = 1, where fold-change magnitude contributes linearly to the final score; and Zhang, a \gls{CMap} score first suggested in~\cite{RN161}. 
+The wrapper function handles the different algorithm requirements by preparing either separate up- and down-regulated gene lists or simple gene vectors for XCos, also including optional regulator filtering for \gls{TF} mode. 
+The output is formatted to return regulator rankings with similarity scores, directional effects, and optional statistical significance measures. 
+The results are sorted by absolute score magnitude to prioritize the most relevant regulatory relationships regardless of similarity direction. 
+For these algorithms, the regulator score measures the similarity of the query versus the reference perturbation signature.
+
 
 \begin{figure}[htbp]
     \centering
@@ -236,16 +296,14 @@ The function handles the different algorithm requirements by preparing either se
 \subsection{Pathway Enrichment} % (fold)
 \label{sub:pathway_enrichment}
 
-
-For running the enrichment-based algorithms, the decoupleR package [10] was used. 
-It contains 12 algorithms already implemented to extract biological activities from omics data using prior knowledge resources (gene sets or regulons).
+For running the enrichment-based algorithms, the decoupleR package~\cite{RN35} was used. 
+The package was initially used to benchmark approaches for \gls{TF} activity inference. 
+It contains 12 algorithms already implemented to extract biological activities from omics data using prior knowledge resources (gene sets or regulons). 
 Some of them take directionality into account (i.e., can work with regulon-gene set with activated and repressed genes). 
-The package was initially used to benchmark approaches for TF activity inference. From those, only GSEA and the others that respect directionality 
-were used. As for connectivity-mapping algorithms, a shared wrapper function (Figure~\ref{fig:fig6}) was built to prepare the input and 
-output data for these algorithms. It is designed to accept full signatures as query and regulon table or a gene regulatory network as reference data. 
-If the reference is a list of signatures or DEGs, it is converted to directed regulatory networks using the common filtering parameters described above. 
-The implementation supports TF-mode by filtering the network to keep only transcription-regulation edges. The query signatures are converted to an 
-fold change matrix and perform ID space conversions when necessary to match network node identifiers. 
+Of all the algorithms already implemented in decoupleR, only \gls{GSEA} and the others that respect directionality were considered for this benchmarking effort. As for \gls{CMap} algorithms, a shared wrapper function (Figure~\ref{fig:fig6}) was built to prepare the input and output data, designed to accept full signatures as query and regulon table or a gene regulatory network as reference data. If the reference is a list of signatures or \gls{DEGs}, it is converted to directed regulatory networks using the common filtering parameters described above. 
+The implementation supports \gls{TF}-mode by filtering the network to keep only transcription-regulation edges. 
+The query signatures are converted to an FC matrix and ID space conversions can also performed, if required to match network node identifiers. 
+For algorithms that support directional information, the wrapper uses the edge type from the network. Extra parameters can be supplied to the argument list (Supplementary table 2). The output of the wrapper function consists of regulator rankings with scores, effects, and p-values (if returned by the algorithm) organized by signature name and sorted by absolute score magnitude
 
 \begin{figure}[htbp]
     \centering
@@ -254,3 +312,13 @@ fold change matrix and perform ID space conversions when necessary to match netw
     \label{fig:fig6}
 \end{figure}
 %\end{newpdflayout}
+
+
+\subsection{Topology-based methods} % (fold)
+\label{sub:topology_based_methods}
+
+\gls{CARNIVAL}~\cite{RN41} integrates different sources of \gls{PKN}, including signed and directed \gls{PPI}, \gls{TF} targets, and pathway signatures, to yield a causal subnetwork explaining the MoA behind the observed omics data. This algorithm expects query \gls{DEGs} as input and a network as reference. \gls{CARNIVAL} wrapper (Figure 7) begins by validating essential inputs, including the CBC solver path required for the optimization engine. 
+It determines the execution mode based on whether perturbation targets and pathway weights are provided, enabling either the standard CARNIVAL or the inverse \gls{CARNIVAL} algorithms. 
+For reference network preparation, the wrapper handles multiple input formats by converting if needed signature collections or DEG lists into networks (with source-interaction-target). The full signatures are also converted into the matrix format. \gls{CARNIVAL} performs \gls{TF} activity inference with either a network-derived approach, if effect and mechanism are present, or using DoRothEA regulons from decoupleR. 
+As an option, depending on the execution mode selected, a pathway activity score can be calculated using PROGENy from decoupleR. 
+The network is filtered to contain a subset of the interactions, keeping only nodes reachable from relevant \gls{TF}. When the \gls{CARNIVAL} algorithm is executed, the results are provided with regulator scores representing the proportion of solutions where each node appears in the causal subnetwork.
