@@ -272,7 +272,7 @@ Method                                                                          
 \subsection{Connectivity Mapping} % (fold)
 \label{sub:connectivity_mapping}
 
-Figure~\ref{fig:fig5} represents the wrapper function framework for running \gls{CMap} algorithms from the \gls{RCSM} package~\cite{RN79}. 
+Figure~\ref{fig:fig3.2.RCSM} represents the wrapper function framework for running \gls{CMap} algorithms from the \gls{RCSM} package~\cite{RN79}. 
 This package provides uniform implementations of several \gls{CMap} scoring methods including \gls{KS}, and \gls{GSEA}-based approaches. 
 The function is designed to receive filtered \gls{DEGs} lists as query input and full perturbation signatures as reference data. 
 If full signatures are used as the query, they are internally converted to \gls{DEGs} using the filtering parameters (Supplementary table 2), as well as the additional parameters. \gls{RCSM} \gls{R} package includes a variety of algorithms already implemented, designed to quantify the similarity between query and reference perturbation signatures. 
@@ -285,12 +285,11 @@ For these algorithms, the regulator score measures the similarity of the query v
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=5in]{RCSM}
+    \includegraphics[height=5in]{fig3.2.RCSM}
     \caption{Flowchart representing the main steps for implementing connectivity mapping algorithms pre-built in the RCSM R package. The general computational pipeline for executing connectivity-based methods, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicate required inputs, while red highlight potential errors.}
-    \label{fig:fig5}
+    \label{fig:fig3.2.RCSM}
 \end{figure}
 %\end{newpdflayout}
-
 
 
 \subsection{Pathway Enrichment} % (fold)
@@ -300,18 +299,21 @@ For running the enrichment-based algorithms, the decoupleR package~\cite{RN35} w
 The package was initially used to benchmark approaches for \gls{TF} activity inference. 
 It contains 12 algorithms already implemented to extract biological activities from omics data using prior knowledge resources (gene sets or regulons). 
 Some of them take directionality into account (i.e., can work with regulon-gene set with activated and repressed genes). 
-Of all the algorithms already implemented in decoupleR, only \gls{GSEA} and the others that respect directionality were considered for this benchmarking effort. As for \gls{CMap} algorithms, a shared wrapper function (Figure~\ref{fig:fig6}) was built to prepare the input and output data, designed to accept full signatures as query and regulon table or a gene regulatory network as reference data. If the reference is a list of signatures or \gls{DEGs}, it is converted to directed regulatory networks using the common filtering parameters described above. 
+Of all the algorithms already implemented in decoupleR, only \gls{GSEA} and the others that respect directionality were considered for this benchmarking effort. As for \gls{CMap} algorithms, a shared wrapper function (Figure~\ref{fig:fig3.3.decoupleR}) was built to prepare the input and output data, designed to accept full signatures as query and regulon table or a gene regulatory network as reference data. If the reference is a list of signatures or \gls{DEGs}, it is converted to directed regulatory networks using the common filtering parameters described above. 
 The implementation supports \gls{TF}-mode by filtering the network to keep only transcription-regulation edges. 
 The query signatures are converted to an FC matrix and ID space conversions can also performed, if required to match network node identifiers. 
 For algorithms that support directional information, the wrapper uses the edge type from the network. Extra parameters can be supplied to the argument list (Supplementary table 2). The output of the wrapper function consists of regulator rankings with scores, effects, and p-values (if returned by the algorithm) organized by signature name and sorted by absolute score magnitude
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=5in]{decoupleR}
+    \includegraphics[height=5in]{fig3.3.decoupleR}
     \caption{Flowchart representing the main steps for implementing enrichment algorithms pre-built in the decoupleR package. The general computational pipeline for executing enrichment-based methods, showing the main input requirements, data preprocessing. Green indicates required inputs, while red highlights potential errors.}
-    \label{fig:fig6}
+    \label{fig:fig3.3.decoupleR}
 \end{figure}
 %\end{newpdflayout}
+
+
+
 
 
 \subsection{Topology-based methods} % (fold)
@@ -322,5 +324,91 @@ It determines the execution mode based on whether perturbation targets and pathw
 For reference network preparation, the wrapper handles multiple input formats by converting if needed signature collections or DEG lists into networks (with source-interaction-target). The full signatures are also converted into the matrix format. \gls{CARNIVAL} performs \gls{TF} activity inference with either a network-derived approach, if effect and mechanism are present, or using DoRothEA regulons from decoupleR. 
 As an option, depending on the execution mode selected, a pathway activity score can be calculated using PROGENy from decoupleR. 
 The network is filtered to contain a subset of the interactions, keeping only nodes reachable from relevant \gls{TF}. When the \gls{CARNIVAL} algorithm is executed, the results are provided with regulator scores representing the proportion of solutions where each node appears in the causal subnetwork.
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.4.CARNIVAL}
+    \caption{Flowchart representing the main steps for implementing the CARNIVAL R package. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \label{fig:fig3.4.CARNIVAL}
+\end{figure}
+%\end{newpdflayout}
+
+\gls{ProTINA}~\cite{RN80} algorithm generates protein activity scores based on gene expression changes through network perturbation analysis. The wrapper (Figure~\ref{fig:fig3.5.ProTINA}) starts by checking if the query is a collection of full signatures and if the reference data is a network. If the reference is a signatures or a DEGs list, it is then converted to a network. Then, query data is filtered to remove entire signatures without any DEGs, as ProTINA cannot process full profiles with only zero fold-change expression. After that, the full signatures are converted to a matrix of fold changes, to remove genes with zero standard deviation across all signatures. ProTINA was originally designed to handle experiments with multiple replicates, time points, or dosages for each perturbation. Since none of the data used for benchmarking has measurements in different conditions, the function only creates a vector with consecutive integers starting from 1 to the number of signatures, representing the number of groups. Reference data is processed to construct a PGN, which combines PPI from the input network with TF-target gene relationships. From the PGN it is calculated an adjacency matrix where rows represent proteins, columns represent genes, and matrix elements indicate the regulatory relationships. Finally, the algorithm returns a matrix of protein (regulator) activity scores (signed Z-scores) for each perturbation group. The wrapper converts the results back to gene symbols and ranks regulators by their activity scores, providing both magnitude and directionality of predicted protein activities.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.5.ProTINA}
+    \caption{Flowchart representing the main steps of ProTINA algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \label{fig:fig3.5.ProTINA}
+\end{figure}
+%\end{newpdflayout}
+
+
+
+To identify DEGs, the CausalR~\cite{RN82} wrapper (Figure~\ref{fig:fig3.6.CausalR}) starts by processing the query signatures using the common filtering parameters described above. The resulting data is then converted to the required CausalR format where genes are assigned with regulation status values (1 for upregulation, -1 for downregulation, 0 for unchanged). Non-DEGs within the signature are marked as unchanged, rather than excluded. The final format for the query dataset is a matrix with two columns for each experiment, reporting gene name and regulation status (1, -1, or 0) instead of fold-change values. As for ProTINA, signatures that do not have any DEGs are removed. If reference data are not already provided in the correct format, the function can convert signature collections or DEG lists into directed causal networks. Edges connect the regulators (signature names) to their targets (DEGs) with edge effects corresponding to DEG fold-change signs. After having a network as reference, CausalR requires the construction of a Computational Causal Graph (CCG), which contains twice the number of vertices and edges as each regulators is reported both as up and down/regulated. CausalR allows two options of algorithms, RankTheHypotheses and runSCANR. RankTheHypotheses algorithms use the configurable path-length parameter delta, to control how many network edges can be traversed from regulator hypotheses to the observed gene expression data, enabling from a direct transcriptional regulation (delta = 1) analysis to a multi-step causal cascade (delta > 1). Finally, the algorithm returns, per each signature, a regulator ranking with the regulator name, and the corresponding score (difference between correctly and incorrectly predicted DEGs), p-value, and the predicted regulatory effect.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.6.CausalR}
+    \caption{Flowchart representing the main steps of CausalR algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \label{fig:fig3.6.CausalR}
+\end{figure}
+%\end{newpdflayout}
+
+
+The \gls{CIE}~\cite{RN81} wrapper (Figure~\ref{fig:fig3.7.CIE}) starts by converting (if needed) full signatures to DEGs, then transforming reference data into a network format. A key aspect of this implementation involves preparing the network data structure to create two essential inputs: network entities (nodes) and network relations (edges). The entities data frame contains unique gene identifiers classified as “mRNA” or “Protein” based on the targets of the transcriptional regulation edges (mechanism = 1). The relations data frame links source and target nodes using their distinct identifiers and maps the network edges with their regulatory effects. The function supports three CIE algorithms: Fisher for unsigned networks, Ternary for completely signed networks, and Quaternary for partially signed networks (default). The results from CIE are the regulators and the corresponding causal reasoning scores, regulatory effects, and a p-value ranking.
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.7.CIE}
+    \caption{Flowchart representing the main steps of CIE algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \label{fig:fig3.7.CIE}
+\end{figure}
+%\end{newpdflayout}
+
+As the other wrappers, also the one implemented for NicheNet~\cite{RN42} (Figure~\ref{fig:fig3.8.NicheNet}) initially ensure that the input formats are correct by converting the input signatures to DEGs and reference data to networks. From the reference network, three sub-networks are created based on the regulatory mechanism: one ligand-receptor network and one signaling network from the signaling interactions (mechanism = 0) and one transcriptional network from gene regulatory interactions (mechanism = 1). Ligand-receptor and signaling networks are created based on an optional regulator's vector, providing a list of source nodes to be used for filtering signaling interactions. If this the filtering  vector is not provided, only unique source nodes are used to create the set of regulators. The ligand-receptor network includes only edges where the source node is a regulator, whereas the remaining edges are presented in the signaling network, with the downstream signaling cascades down to the target genes. In the next step, a weighted network is constructed (construct_weighted_networks function from nichenetr \gls{R} package~\cite{RN42}), by merging the three subnetworks into one graph structure and assigning each edge a baseline weight (1 for both gene regulatory and ligand-receptor network edges). To down-weight the influence of highly connected nodes, hub correction is applied to the network (apply_hub_corrections). With the weighted network, a ligand-target matrix is built (construct_ligand_target_matrix) containing target genes as rows, ligands as columns and scores for each entry (inferred signaling strength), from each ligand to each gene. At this point, the inputs required to run NicheNet core function (predict_ligand_activities) are ready: a vector of DEG, the full set of genes present in the ligand-target matrix (used as the background), the ligand-target matrix of regulatory scores and the list of ligands (regulators) to prioritize. The output from NicheNet is ranked by corrected \gls{AUPR} scores and identifiers are converted back if needed.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.8.NicheNet}
+    \caption{Flowchart representing the main steps of NicheNet algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \label{fig:fig3.8.NicheNet}
+\end{figure}
+%\end{newpdflayout}
+
+
+
+The implementation of the \gls{CBDD} wrapper functions (CBDD baseline and CBDD causal reasoning) follows an identical structure, with both functions sharing the same core preprocessing pipeline and output handling. For this reason, they are both represented in a single schema, with the differences highlighted (Figure~\ref{fig:fig3.9.CBDD}). Both starts with validation and preprocessing of input data, converting query datasets to DEG lists, handling reference networks as described previously and performing ID conversion to map query genes/regulators to network-specific identifiers. The wrapper functions then execute their respective algorithms, and the results are returned after ID conversion. Despite the similarities, there are differences between the implementations that reflect their distinct computational requirements. The CBDD baseline function supports randomWalk, overconnectivity, interconnectivity, networkPropagation, and hiddenNodes algorithms, while CBDD causal reasoning runs causalReasoning, SigNet, and quaternaryProd. The causal reasoning wrapper requires network attributes such as the effect and mechanism, reflecting the need for directed, signed edges for causal inference. Moreover, CBDD baseline converts networks to igraph objects, while CBDD causal reasoning creates a causal graph. Essentially, both wrappers return regulator scores, but since CBDD causal reasoning considers directionality, the results contain additional information about the effect of the relationships (predicted activation or inhibition).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=5in]{fig3.9.CBDD}
+    \caption{Flowchart representing the main steps of the wrapper function of both the CBDD baseline and CBDD causal reasoning algorithms implementation. General computation pipeline and color coding as previously.}
+    \label{fig:fig3.9.CBDD}
+\end{figure}
+%\end{newpdflayout}
+
+
+\section{Evaluation} % (fold)
+\label{sec:evaluation}
+
+
+The final part of the study pipeline involves evaluating the algorithms by comparing the outputs from the algorithms' runs with the golden standard data. This evaluation process involves three main steps: configuration, running the algorithm, and evaluating performance against the standards. The configuration step includes selecting the input data (both the query and reference), as well as the standard with the verified list of the targets. Then, the execution requires defining the algorithm's parameters. Finally, metrics and methods are defined to assess performance of each algorithm, considering the known targets provided by the golden standard data. 
+
+The evaluation was performed at the level of each signature, aggregating results to obtain an average assessment by dataset. In general, the algorithms return all the ranked and scored regulators, so the threshold for considering which regulators are significant was also defined in two ways. If an algorithm provides p-values for the regulators, the threshold of 0.05 is used to consider that regulator as significant (if p-value > 0.05). If this is not the case, the top 1% of regulators with the highest scores are selected. In the case of CARNIVAL, which returns a sub-network, all the regulators in that network are already considered significant.
+
+The performance was measured at a target and pathway level. The former considers target recovery as the percentage of golden standard targets among all significant regulators, top 1% and top 100 regulators. Target enrichment was calculated using hypergeometric test enrichment (-log10 p-value), for the intersection of significant regulators and the gold standard targets. It was also analyzed the rank of the top predicted golden standard target and target effect correctness, when directional information was available. The target recall was measured at multiple percentage cutoffs (0.001% to 1% in 0.001% steps) to enable the calculation of the area under the precision-recall curve (AUPR). This led to three general classifications:
+
+\begin{enumerate}
+\item Overall recovery: average of target recovery percentages, enrichment scores, and scaled AUPR (for the top 1 %) across all signatures.
+
+\item Recoverable signatures only: target recovery percentage calculated only on the subset of signatures whose true targets appear in the reference network.
+
+\item	Win rate: to assess each algorithm's ability to identify actual target genes, the win rate represents how frequently a given output ranking contains a true target higher than all other competing algorithms. The win percentage above expected (WPAE) is obtained deducting the expected win rate under random chance (1 divided by the number of algorithms), as the number of competing algorithms can change between runs. 
+\end{enumerate}
+
+The assessment of performance at the pathway level is equally important to understand whether the algorithm not only recovers the target itself, but also the biological pathways to which these targets are connected. From the selected significant regulators, an enrichment analysis of the biological pathways was performed using the CBDD enr function, with MetaBase mapping gene sets to the pathways that are most associated with the targets predicted by the algorithms. The statistical significance of the overlap between biological pathways identified from the targets and those manually annotated via Metabase was calculated with a hypergeometric test (hh.pvalue function from CBDD). The result was recorded as a pathway enrichment score (-log10(p-value)), where a higher score indicates that the algorithm is able to identify pathways directly affected by the perturbation. For comparing the results, the mean pathway enrichment score for each algorithm was computed by averaging those signatures whose true targets appear in at least one MetaBase pathway. 
 
 

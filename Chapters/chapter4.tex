@@ -8,9 +8,50 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\glsresetall
+%\glsresetall
 
 \chapter{Results}
 \label{cha:results}
 
-Here write the results
+\textit{In the following section, the results of the benchmarking study are presented across three main levels: the algorithms, the reference and the query dataset. For each level, the metrics to assess the performance are analyzed to capture both computational feasibility and biological relevance. A final ranking combines all the scores, aiming to identify the best algorithm providing real-world applicability at each dimension of data.}
+
+A full evaluation was conducted with 86 runs (Table~\ref{tab:table6}), resulting from the combination of 10 query datasets and 9 reference datasets (excluding self-comparisons). Given the extensive number of individual runs, the results will be presented as performance summaries of the four key dimensions: algorithms, datasets, reference, and target identification performance. Table~\ref{tab:table6} presents the runs that were evaluated, detailing which combination of query and reference datasets was used, and some characteristics of each query dataset.
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\caption{Summary of evaluated runs. Tool category: C = Connectivity mapping tools, N = Network tools, E = Enrichment tools; Query dataset characteristics: D = Drug perturbation, G = Gene perturbation, C = Cell lines, T = Tissues/in vivo models, Sc = Single-cell data. *: Selected impact signatures from 7390 signatures, **: Generated consensus signatures from 82256 signatures.}
+\label{tab:table6}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllllllllllll}
+\hline
+\textbf{Query / Reference} & \textbf{Perturbation} & \textbf{Origin} & \textbf{Signatures} & \textbf{MetaBase} & \textbf{OmniPath} & \textbf{MetaBase (linear path)} & \textbf{MetaBase (regulons)} & \textbf{OmniPath (regulons)} & \textbf{LINCS CRISPR} & \textbf{LINCS OE} & \textbf{LINCS shRNA} & \textbf{GWPS Perturb-Seq} \\ \hline
+\textbf{CDS-DB}            & D                     & T               & 181                 & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
+\textbf{Sci-Plex}          & D                     & C (Sc)          & 405                 & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
+\textbf{PertOrg}           & G                     & T               & 951*                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
+\textbf{ChemPert}          & D                     & C               & 1304**              & N                 & N                 & N                               & N                            & N                            & CN                    & CN                & CN                   & CN                        \\
+\textbf{GWPS}              & G                     & C (Sc)          & 1980                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & -                         \\
+\textbf{CREEDS}            & DG                    & T               & 2642                & N                 & N                 & N                               & N                            & N                            & CN                    & CN                & CN                   & CN                        \\
+\textbf{LINCS Compounds}   & D                     & C               & 3540                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
+\textbf{LINCS OE}          & G                     & C               & 3780                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & -                 & CNE                  & CNE                       \\
+\textbf{LINCS shRNA}       & G                     & C               & 4854                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & -                    & CNE                       \\
+\textbf{LINCS CRISPR}      & G                     & C               & 5156                & N                 & N                 & NE                              & NE                           & NE                           & -                     & CNE               & CNE                  & CNE                       \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+
+\section{Algorithms} % (fold)
+\label{sec:algorithms}
+
+To evaluate the performance of the 27 algorithms, several metrics were used describe  the output generated from each package. One is the practical scalability of each tool, and the other is the biological accuracy of the results. To address the first aspect, the scalability (runtime) and the reliability were measured. To evaluate the biological relevance of the predictions, the AUC, the win rate, and the pathway enrichment scores were measured.
+
+Execution time and algorithm failures can prevent the use of algorithms in research settings. For this reason, evaluating those metrics is important for understanding the feasibility of each computational approach. The runtime represents the time in seconds that each tool took to execute, and it is directly correlated with query and reference datasets size. In this context, a mean runtime captures how long on average each tool takes to generate the desired output. Whilst this value can be informative, a better approach to present these data is to consider mean runtime per signature (Figure 13) or a value normalized considering the size of the reference dataset (the final runtime score in Figure 17). The final runtime score was calculated as follows. First, within each reference, each tool’s per‐signature times were rescaled from 0 (slower) to 1 (faster). Then, those values were averaged across all references and inverted, so that faster algorithms get higher scores. As shown in Figure 17, the majority of topology and enrichment methods topped the rankings with scores greater than 0.90, except for the enrichment methods udt and viper, which had lower scores (0.63 and 0.39, respectively). The topology methods, causal reasoning, interconnectivity, and network propagation, along with the enrichment methods ulm, wmean, and wsum, topped the rank with scores near 1, providing final output on average in 1-2s per signature. Connectivity-mapping tools stayed in the middle of the ranking with scores ranging from 0.80 to 0.90, and mean runtimes ~13-~24s per signature. In contrast, methods like NicheNet and ProTINA (respectively 416s and 126s per signature) were markedly slower, thus obtaining a score close to 0. 
+
+To complement the runtime evaluation, a reliability score was also computed to assess how often each algorithm failed. The final reliability score is an average of a success rate (runs that returned results) and a run rate (runs launched) from a scale of 0 to 1, where scores close to 1 indicate more reliable algorithms. The rates can be found in Table 7, while the final reliability scores are represented in Figure 17. At the top of the rank, some of the topology and enrichment methods, with  causalReasoning, randomWalk, and ulm topped scoring close to 0.99 (i.e. returning results in 98% of the launched runs). Next in the ranking it can be found overconnectivity (score of 0.98) and wmean/wsum (scores of 0.91). Consistent with the runtime, the connectivity methods are in the middle with scores between 0.80 and 0.82, with XCos further down with 0.75. At the bottom of the ranking, NicheNet, which although it achieved total success when launched, only ran in 2 out of 86 runs (run rate of 0.02), resulting in a reliability score of 0.51. The worst performers in this category were CARNIVAL (score of 0.06) and CIE (score of 0.05), which were skipped or failed in every single run. 
+
+
+
+
