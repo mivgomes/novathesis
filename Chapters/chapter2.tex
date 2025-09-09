@@ -35,15 +35,15 @@ A well-known example is Sildenafil; initially identified in the 1980s as a candi
 Another classic example is Thalidomide, originally used for sedation and morning sickness, and afterward repurposed for multiple myeloma, leprosy~\cite{RN54, RN64}, and to minimize the hippocampal neuronal loss~\cite{RN50}. Moreover, the low success rate (5\%) for phase I clinical studies of cancer treatments led to increased attention in DR for oncology, resulting in several promising findings~\cite{RN64, RN63}. 
 Noteworthy cases include the schizophrenia drug Spiperone, which has been studied for its ability to induce apoptosis in \gls{CRC} cells~\cite{RN51}, and Raloxifene, indicated for osteoporosis, which proved to be effective in reducing breast cancer risk in postmenopausal women~\cite{RN64, RN61}.
 
-Understanding how cellular signaling (Figure~\ref{fig:cellular_signaling_cascade}) is modulated upon a stimulus is essential for identifying potential drug targets and finding new indications for an existing drug. 
+Understanding how cellular signaling (Figure~\ref{fig:fig2.1.cellular_signaling_cascade}) is modulated upon a stimulus is essential for identifying potential drug targets and finding new indications for an existing drug. 
 When a drug enters a biological system, it typically interacts directly or indirectly with cellular targets, regulating the activity of signaling networks and pathways. 
 This is commonly referred as the \gls{MoA}~\cite{RN52, RN53}. These interactions are relevant across the whole \gls{DD} process, from initial investigation to clinical trials. 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=4in]{cellular_signaling_cascade}
+    \includegraphics[height=4in]{fig2.1.cellular_signaling_cascade}
     \caption{Schematic representation of a compound-induced cellular signaling cascade, where binding of the perturbing compound to its extracellular receptor domain triggers downstream intracellular signal transduction events through various signaling proteins, ultimately altering gene expression levels in the nucleus. The red nodes represent upregulated genes, the green nodes represent downregulated genes, arrows denote activation events, and T-bar edges indicate inhibitory interactions.}
-    \label{fig:cellular_signaling_cascade}
+    \label{fig:fig2.1.cellular_signaling_cascade}
 \end{figure}
 
 
@@ -256,7 +256,7 @@ Furthermore, edges can be signed, indicating whether a causal node employs a pos
 In causal graphs that model biological networks, multi-edge connections are common, with two or more edges linked to the same node. 
 
 Networks can be classified based on interaction types and node characteristics. \gls{PPI} networks show direct interactions between proteins. 
-\gls{GRN} (Figure~\ref{fig:figure2}) illustrate how \gls{TF} influence gene expression~\cite{RN145}. 
+\gls{GRN} (Figure~\ref{fig:fig2.2.regulons}) illustrate how \gls{TF} influence gene expression~\cite{RN145}. 
 Signal transduction networks describe how cells process external signals. Metabolic networks display relationships between enzymes and metabolites. 
 Furthermore, networks are not always composed of molecular entities, as is the case with the disease network model, which links diseases using genes and mutations as connections. 
 These networks fit experimental data to predictions from causal graphs describing the system. The choice of \gls{PKN} should match the data type. 
@@ -267,16 +267,16 @@ This principle also applies to drugs that cause similar transcriptional response
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=4in]{figure2_regulons}
+    \includegraphics[height=4in]{fig2.2.regulons}
     \caption{Gene regulatory network based on regulon representation of human transcriptional interactions. CollecTRI-derived regulons were extracted from the decoupleR (v. 2.12.0) package, which provided 43,178 interactions. CollecTRI collection~\cite{RN145} is a comprehensive, curated resource of \gls{TF}s and their target genes, expanding on DoRothEA. This figure illustrates a subset of those 1,000 interactions, with edge color indicating the mode of regulation (green for activation and red for repression) using RCy3 (v. 2.26.0) R package.}
-    \label{fig:figure2}
+    \label{fig:fig2.2.regulons}
 \end{figure}
 
 
 Biological interactions can be described with different levels of complexity. A network is an intricate representation of the global interactome, linking all entities in the system. These interactions are initially characterized in published experimental research with a varying amount of associated information. Based on supporting studies, each interaction may include details about direction, signal, and confidence level. This helps filter data, creating a network with more reliable relationships. 
 Still, networks can be noisy and incomplete, with high rates of false positives and false negatives and a tendency for well-researched entities to become overrepresented~\cite{RN131, RN38, RN136}. In contrast, a pathway is a simpler version of a network. It illustrates a series of molecular interactions that begin with one entity and follow a specific signaling cascade. This arrangement helps classify entities by their common biological roles. 
 Yet, pathways often do not capture crosstalk among them, providing a static view of a dynamic process~\cite{RN38}. The entities' overrepresentation issue also applies. Another way to show interactions is, for example, through regulons. 
-Regulons are groups of co-regulated genes controlled by a common \gls{TF} and are usually represented as \gls{GRN} (Figure~\ref{fig:figure2}). The choice of network type should be tailored on the scientific question and the type of data with which the network is used. The interactions between biological entities and the complexity of these interactions should be considered. For example, if pathways are used instead of a full network, they might miss some interactions and changes over time. On the other hand, if a study targets a specific cell type or tissue, it's important to use tissue-specific networks.
+Regulons are groups of co-regulated genes controlled by a common \gls{TF} and are usually represented as \gls{GRN} (Figure~\ref{fig:fig2.2.regulons}). The choice of network type should be tailored on the scientific question and the type of data with which the network is used. The interactions between biological entities and the complexity of these interactions should be considered. For example, if pathways are used instead of a full network, they might miss some interactions and changes over time. On the other hand, if a study targets a specific cell type or tissue, it's important to use tissue-specific networks.
 
 Databases like TissueNet~\cite{RN137} can provide molecular interactions specific to a particular cellular context. The use of large-scale causal graphs for gene expression data interpretation was first introduced by Pollard \textit{et al.}~\cite{RN131, RN135}. This study aimed to infer the molecular causes of the changes in oxidative phosphorylation gene expression in skeletal muscle from type \gls{DM2} patients. For this purpose, the gene expression data were integrated with a large-scale model created from over 210,000 molecular relationships based on \gls{DM2} literature. 
 Computer-aided causal reasoning on these complementary data identified that the observed changes are linked to decreased glucose transport, impaired insulin signaling, and increased risk of post-transplant diabetes~\cite{RN131}.
@@ -290,15 +290,15 @@ Two resources, public and commercial, that provide composite networks are OmniPa
 It combines data from over 100 resources and builds five integrated databases with different types of data: Interactions (several molecular interactions organized into sub-networks), Post-Translational Modifications (enzyme-substrate reactions), Complexes (35,000+ protein complexes), Annotations (proteins and complexes annotations, such as the function, localization, tissue, etc.) and Intercell (inter-cellular signaling roles, such as, if a protein is a ligand, a receptor, an extracellular matrix component,  etc.)~\cite{RN91}. 
 The interactions database is a composite signaling network that offers several manually curated subnetworks, encompassing a total of 282,504 unique interactions. 
 Each subnetwork has different types of interactions, including post-translational interactions, transcriptional interactions, post-transcriptional interactions, and other interactions involving small molecules. 
-The number of interactions per subnetwork is described in Figure~\ref{fig:figure3}. One of the GRNs that is provided by this database is the CollecTRI-derived regulons~\cite{RN145} (Figure~\ref{fig:figure2}). 
+The number of interactions per subnetwork is described in Figure~\ref{fig:fig2.3.omnipath}. One of the GRNs that is provided by this database is the CollecTRI-derived regulons~\cite{RN145} (Figure~\ref{fig:fig2.2.regulons}). 
 This collection contains high-confidence signed \gls{TF} - target gene interactions. 
 These interactions were compiled from 12 resources, including information inferred from text mining, manual curations, and several publicly available databases.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=6in]{figure3_omnipath}
+    \includegraphics[height=6in]{fig2.3.omnipath}
     \caption{OmniPath molecular interactions database. This figure presents a hierarchical visualization of human molecular interactions curated by OmniPath, which compiles data from diverse resources. The sunburst graph displays the numbers of distinct interaction types, including post-translational interactions (physical \gls{PPI}), transcriptional interactions (gene regulatory interactions), post-transcriptional interactions (such as miRNA-mRNA, \gls{TF}-miRNA, and lncRNA-mRNA interactions), and other interactions involving small molecules (encompassing drug-target, ligand-receptor, enzyme-metabolite, among others).}
-    \label{fig:figure3}
+    \label{fig:fig2.3.omnipath}
 \end{figure}
 
 MetaBase~\cite{RN33} is a proprietary, commercial database from Clarivate that offers one of the most comprehensive, manually curated systems biology datasets available. It contains over 4.2 million molecular interactions, including protein-protein, protein-RNA, compound-protein, compound-compound interactions, and transport reactions, with details on directionality, mechanisms, and effects. In addition, MetaBase provides more than 1,500 pathway maps that cover regulatory, disease, metabolic, and toxicity characteristics, alongside over 10,000 disease-related networks and 1,000+ validated networks. Each interaction is assigned a trust score that reflects its reliability, helping users distinguish well-established interactions from those obtained via high-throughput screening. MetaBase is accessible through SQL queries or via the metabaseR package in R, which simplifies visualization, functional analysis, and network manipulation. Furthermore, the CBDD R package offers 73 advanced algorithm implementations for analyzing and extracting insights from networks.
