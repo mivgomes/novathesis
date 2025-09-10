@@ -25,7 +25,7 @@ The project description will fall within the third phase of the workflow, specif
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=6in]{fig3.1.ABC_workflow}
-    \caption{Schematic of the study architecture. A. Perturbation signatures collected from seven public sources are used in the benchmarking framework either as reference, query, and gold standard (known targets) datasets. Prior knowledge networks, used as reference, were derived from two sources: OmniPath (public) and MetaBase™ (commercial). From OmniPath, a global network, and regulons were used as references. From MetaBase, it was also used a full network, regulons, and, in addition to the regular regulons, regulons derived from linear paths. B. Three classes of computational methods were evaluated: topology-based, connectivity-based, and enrichment-based, comprising a total of 27 algorithms. Depending on the method, input data may consist of a global interactome (network), curated signaling pathways, or perturbation signatures (typically directional gene sets or full transcriptomic profiles, which can be reduced to gene sets if needed). These input types are often interrelated, and the arrows in the diagram indicate the required data transformations specific to each algorithm. The output of each method is systematically compared to the gold standard targets for evaluation.}
+    \caption[Schematic of the study architecture.]{Schematic of the study architecture. A. Perturbation signatures collected from seven public sources are used in the benchmarking framework either as reference, query, and gold standard (known targets) datasets. Prior knowledge networks, used as reference, were derived from two sources: OmniPath (public) and MetaBase™ (commercial). From OmniPath, a global network, and regulons were used as references. From MetaBase, it was also used a full network, regulons, and, in addition to the regular regulons, regulons derived from linear paths. B. Three classes of computational methods were evaluated: topology-based, connectivity-based, and enrichment-based, comprising a total of 27 algorithms. Depending on the method, input data may consist of a global interactome (network), curated signaling pathways, or perturbation signatures (typically directional gene sets or full transcriptomic profiles, which can be reduced to gene sets if needed). These input types are often interrelated, and the arrows in the diagram indicate the required data transformations specific to each algorithm. The output of each method is systematically compared to the gold standard targets for evaluation.}
     \label{fig:fig3.1.ABC_workflow}
 \end{figure}
 
@@ -50,7 +50,7 @@ The GWPS dataset represents a large-scale effort for single-cell CRISPRi profili
 
 \begin{table}[]
 \centering
-\caption{Summary of gene expression datasets used in this study. Each dataset includes transcriptomic signatures derived from chemical or genetic perturbations. The “Perturbagen” column specifies the type of compound or gene perturbation applied, while the “Type” column labels it as either chemical or genetic. The number of perturbagens refers to the unique compounds or genes perturbed in the dataset. The signatures with the golden standard column indicate how many signatures have associated targets that can be used for benchmarking. The signature type describes the format and content of the signature, such as full profiles or DEG lists.}
+\caption[Summary of gene expression datasets used in this study.]{Summary of gene expression datasets used in this study. Each dataset includes transcriptomic signatures derived from chemical or genetic perturbations. The “Perturbagen” column specifies the type of compound or gene perturbation applied, while the “Type” column labels it as either chemical or genetic. The number of perturbagens refers to the unique compounds or genes perturbed in the dataset. The signatures with the golden standard column indicate how many signatures have associated targets that can be used for benchmarking. The signature type describes the format and content of the signature, such as full profiles or DEG lists.}
 \label{tab:tabel3}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lllllll}
@@ -184,7 +184,7 @@ They start from an important signaling molecule and end, usually with a transcri
 
 \begin{table}[]
 \centering
-\caption{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream‐derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge‐type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
+\caption[Summary table of OmniPath and MetaBase prior knowledge resources.]{Summary table of OmniPath and MetaBase prior knowledge resources. Number of nodes and edges are displayed for each resource. Network refers to the full interaction network, while regulons and linear path regulons are downstream‐derived, regulators subsets. The regulator and target columns correspond to the number of source and corresponding target nodes, respectively. Gene space counts how many of those nodes correspond specifically to genes (not proteins or others). The three edge‐type columns indicate the number of activation, inhibition, or transcriptional regulation interactions. The total number of interactions for each resource is under total column.}
 \label{tab:table4}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{cl|lll|llll}
@@ -232,7 +232,7 @@ As for the input data, the output should also have a similar shared format, so t
 
 \begin{table}[]
 \centering
-\caption{Summary of computational methods evaluated in the benchmarking study. A total of 27 algorithms categorized into the following methodological approaches: 1) Enrichment, 2) Connectivity Mapping, 3) Topology with Causal Reasoning, and 4) Topology with Node Prioritization. For each algorithm, the corresponding R package implementation and version used are reported. The “Reference” and “Query” columns indicate the required input data types to run the algorithm. The “Output” column specifies whether algorithms produce node rankings (prioritized lists of potential regulators) or subnetworks (connected components representing regulatory cascades involved in the MoA). }
+\caption[Summary of computational methods evaluated in the benchmarking study.]{Summary of computational methods evaluated in the benchmarking study. A total of 27 algorithms categorized into the following methodological approaches: 1) Enrichment, 2) Connectivity Mapping, 3) Topology with Causal Reasoning, and 4) Topology with Node Prioritization. For each algorithm, the corresponding R package implementation and version used are reported. The “Reference” and “Query” columns indicate the required input data types to run the algorithm. The “Output” column specifies whether algorithms produce node rankings (prioritized lists of potential regulators) or subnetworks (connected components representing regulatory cascades involved in the MoA). }
 \label{tab:table5}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lllllll}
@@ -285,8 +285,8 @@ For these algorithms, the regulator score measures the similarity of the query v
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=5in]{fig3.2.RCSM}
-    \caption{Flowchart representing the main steps for implementing connectivity mapping algorithms pre-built in the RCSM R package. The general computational pipeline for executing connectivity-based methods, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicate required inputs, while red highlight potential errors.}
+    \includegraphics[height=4.5in]{fig3.2.RCSM}
+    \caption[Flowchart representing the main steps for implementing connectivity mapping algorithms pre-built in the RCSM package.]{Flowchart representing the main steps for implementing connectivity mapping algorithms pre-built in the RCSM package. The general computational pipeline for executing connectivity-based methods, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.2.RCSM}
 \end{figure}
 %\end{newpdflayout}
@@ -307,7 +307,7 @@ For algorithms that support directional information, the wrapper uses the edge t
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.3.decoupleR}
-    \caption{Flowchart representing the main steps for implementing enrichment algorithms pre-built in the decoupleR package. The general computational pipeline for executing enrichment-based methods, showing the main input requirements, data preprocessing. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps for implementing enrichment algorithms pre-built in the decoupleR package.]{Flowchart representing the main steps for implementing enrichment algorithms pre-built in the decoupleR package. The general computational pipeline for executing enrichment-based methods, showing the main input requirements, data preprocessing. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.3.decoupleR}
 \end{figure}
 %\end{newpdflayout}
@@ -329,7 +329,7 @@ The network is filtered to contain a subset of the interactions, keeping only no
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.4.CARNIVAL}
-    \caption{Flowchart representing the main steps for implementing the CARNIVAL R package. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps for implementing the CARNIVAL package.]{Flowchart representing the main steps for implementing the CARNIVAL package. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.4.CARNIVAL}
 \end{figure}
 %\end{newpdflayout}
@@ -339,7 +339,7 @@ The network is filtered to contain a subset of the interactions, keeping only no
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=7in]{fig3.5.ProTINA}
-    \caption{Flowchart representing the main steps of ProTINA algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps of ProTINA algorithm implementation.]{Flowchart representing the main steps of ProTINA algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.5.ProTINA}
 \end{figure}
 %\end{newpdflayout}
@@ -352,7 +352,7 @@ After having a network as reference, CausalR requires the construction of a Comp
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.6.CausalR}
-    \caption{Flowchart representing the main steps of CausalR algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps of CausalR algorithm implementation.]{Flowchart representing the main steps of CausalR algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.6.CausalR}
 \end{figure}
 %\end{newpdflayout}
@@ -364,7 +364,7 @@ The \gls{CIE}~\cite{RN81} wrapper (Figure~\ref{fig:fig3.7.CIE}) starts by conver
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.7.CIE}
-    \caption{Flowchart representing the main steps of CIE algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps of CIE algorithm implementation.]{Flowchart representing the main steps of CIE algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.7.CIE}
 \end{figure}
 %\end{newpdflayout}
@@ -376,7 +376,7 @@ To down-weight the influence of highly connected nodes, hub correction is applie
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.8.NicheNet}
-    \caption{Flowchart representing the main steps of NicheNet algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
+    \caption[Flowchart representing the main steps of NicheNet algorithm implementation.]{Flowchart representing the main steps of NicheNet algorithm implementation. The general computational pipeline for executing this topology-based method, showing the main input requirements, data preprocessing steps, algorithm execution, and output generation. Green indicates required inputs, while red highlights potential errors.}
     \label{fig:fig3.8.NicheNet}
 \end{figure}
 %\end{newpdflayout}
@@ -386,7 +386,7 @@ The implementation of the \gls{CBDD} wrapper functions (CBDD baseline and CBDD c
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=5in]{fig3.9.CBDD}
-    \caption{Flowchart representing the main steps of the wrapper function of both the CBDD baseline and CBDD causal reasoning algorithms implementation. General computation pipeline and color coding as previously.}
+    \caption[Flowchart representing the main steps of the wrapper function of both the CBDD baseline and CBDD causal reasoning algorithms implementation.]{Flowchart representing the main steps of the wrapper function of both the CBDD baseline and CBDD causal reasoning algorithms implementation. General computation pipeline and color coding as previously.}
     \label{fig:fig3.9.CBDD}
 \end{figure}
 %\end{newpdflayout}

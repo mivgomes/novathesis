@@ -42,7 +42,7 @@ This is commonly referred as the \gls{MoA}~\cite{RN52, RN53}. These interactions
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=4in]{fig2.1.cellular_signaling_cascade}
-    \caption{Schematic representation of a compound-induced cellular signaling cascade, where binding of the perturbing compound to its extracellular receptor domain triggers downstream intracellular signal transduction events through various signaling proteins, ultimately altering gene expression levels in the nucleus. The red nodes represent upregulated genes, the green nodes represent downregulated genes, arrows denote activation events, and T-bar edges indicate inhibitory interactions.}
+    \caption[Schematic representation of a compound-induced cellular signaling cascade.]{Schematic representation of a compound-induced cellular signaling cascade, where binding of the perturbing compound to its extracellular receptor domain triggers downstream intracellular signal transduction events through various signaling proteins, ultimately altering gene expression levels in the nucleus. The red nodes represent upregulated genes, the green nodes represent downregulated genes, arrows denote activation events, and T-bar edges indicate inhibitory interactions.}
     \label{fig:fig2.1.cellular_signaling_cascade}
 \end{figure}
 
@@ -268,7 +268,7 @@ This principle also applies to drugs that cause similar transcriptional response
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=4in]{fig2.2.regulons}
-    \caption{Gene regulatory network based on regulon representation of human transcriptional interactions. CollecTRI-derived regulons were extracted from the decoupleR (v. 2.12.0) package, which provided 43,178 interactions. CollecTRI collection~\cite{RN145} is a comprehensive, curated resource of \gls{TF}s and their target genes, expanding on DoRothEA. This figure illustrates a subset of those 1,000 interactions, with edge color indicating the mode of regulation (green for activation and red for repression) using RCy3 (v. 2.26.0) R package.}
+    \caption[Gene regulatory network based on regulon representation of human transcriptional interactions.]{Gene regulatory network based on regulon representation of human transcriptional interactions. CollecTRI-derived regulons were extracted from the decoupleR (v. 2.12.0) package, which provided 43,178 interactions. CollecTRI collection~\cite{RN145} is a comprehensive, curated resource of \gls{TF}s and their target genes, expanding on DoRothEA. This figure illustrates a subset of those 1,000 interactions, with edge color indicating the mode of regulation (green for activation and red for repression) using RCy3 (v. 2.26.0) R package.}
     \label{fig:fig2.2.regulons}
 \end{figure}
 
@@ -297,7 +297,7 @@ These interactions were compiled from 12 resources, including information inferr
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=6in]{fig2.3.omnipath}
-    \caption{OmniPath molecular interactions database. This figure presents a hierarchical visualization of human molecular interactions curated by OmniPath, which compiles data from diverse resources. The sunburst graph displays the numbers of distinct interaction types, including post-translational interactions (physical \gls{PPI}), transcriptional interactions (gene regulatory interactions), post-transcriptional interactions (such as miRNA-mRNA, \gls{TF}-miRNA, and lncRNA-mRNA interactions), and other interactions involving small molecules (encompassing drug-target, ligand-receptor, enzyme-metabolite, among others).}
+    \caption[OmniPath molecular interactions database.]{OmniPath molecular interactions database. This figure presents a hierarchical visualization of human molecular interactions curated by OmniPath, which compiles data from diverse resources. The sunburst graph displays the numbers of distinct interaction types, including post-translational interactions (physical \gls{PPI}), transcriptional interactions (gene regulatory interactions), post-transcriptional interactions (such as miRNA-mRNA, \gls{TF}-miRNA, and lncRNA-mRNA interactions), and other interactions involving small molecules (encompassing drug-target, ligand-receptor, enzyme-metabolite, among others).}
     \label{fig:fig2.3.omnipath}
 \end{figure}
 
@@ -397,7 +397,6 @@ This approach not only facilitated the creation of several drug-induced molecula
 Consequently, this resulted in prediction and experimental validation of novel applications for existing drugs 
 
 
-
 \subsection{Enrichment-based tools for downstream analysis} % (fold)
 \label{sub:enrichment_based_tools}
 
@@ -437,8 +436,6 @@ Causal reasoning algorithms are widely used but have many nuances depending on t
 Improving its accuracy in predicting regulators is a key focus. Also, they are complex and computationally demanding, especially with the increase in input data. 
 
 There are evidences that topology-based methods may be more useful in DD than pathway enrichment methods. Topology-based causal reasoning takes advantage of directed and signed molecular networks to infer the most plausible upstream regulators from transcriptomic endpoints. By inferring key signaling nodes whose activity can directly explain the changes observed in the experimental data, these methods pinpoint candidate drug targets and generate mechanistic hypotheses for further validation. On the other hand, pathway enrichment methods only infer which biological processes are affected by changes in gene expression. These methods do not consider that after transcription, events such as translation and post-translational modifications will also affect protein activity~\cite{RN53}.
-
-
 
 \section{Benchmarking of computational methods for MoA inference} % (fold)
 \label{sec:benchmarking_of_computational_methods_for_MoA_inference}
