@@ -1,4 +1,4 @@
-%%%%% !TEX root=template.tex
+﻿%%%%% !TEX root=template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% template.tex
 %% NOVA thesis main document file
@@ -9,8 +9,8 @@
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Version 2025-01-23 [7.3.3]
-%% Departamento de Informática (www.di.fct.unl.pt)
-%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Departamento de Informtica (www.di.fct.unl.pt)
+%% Faculdade de Cincias e Tecnologia (www.fct.unl.pt)
 %% Universidade NOVA de Lisboa (www.unl.pt)
 %%
 %% BUGS and SUGGESTIONS: please submit an issue at the project web page
@@ -35,7 +35,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLEASE DO NOT CHANGE THIS FILE
-% ALL THE CUSTOMIZATION WAS MOVED TO THE files in the ”Config” FOLDER
+% ALL THE CUSTOMIZATION WAS MOVED TO THE files in the Config FOLDER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -43,7 +43,7 @@
 
 %%============================================================
 %%  DO NOT GO BEYOND THIS POINT!
-%%  IF YOU DO… YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
+%%  IF YOU DO YOU DESERVE WHATEVER HAPPENS AFTERWARDS!
 %%============================================================
 
 
@@ -51,8 +51,8 @@
 
 
 %%------------------------------------------------------------
-%% The novathesis class is based in “memoir”.  To set memoir
-%%  options, edit “Config/0_memoir.tex”.
+%% The novathesis class is based in memoir.  To set memoir
+%%  options, edit Config/0_memoir.tex.
 \RequirePackage{NOVAthesisFiles/fix-profiling}
 \benchmarktic
 \documentclass{novathesis}
@@ -61,49 +61,49 @@
 %============================================================
 %  MEMOIR CUSTOMIZATION
 %      Please open and edit the appropriate
-%       configuration file “Config/0_memoir.tex”
+%       configuration file Config/0_memoir.tex
 %============================================================
 
 %============================================================
 %  TEMPLATE CUSTOMIZATION / OPTIONS (document type, university, school, etc)
 %      Please open and edit the appropriate
-%       configuration file “Config/1_novathesis.tex”
+%       configuration file Config/1_novathesis.tex
 %============================================================
 
 %============================================================
 % BIBLATEX CUSTOMIZATION (citation and bibliography styles)
 %      Please open and edit the appropriate
-%       configuration file “Config/2_biblatex.tex”
+%       configuration file Config/2_biblatex.tex
 %============================================================
 
 %============================================================
 %  COVER CUSTOMIZATION (title, author, etc)
 %   Please open and edit the appropriate
-%       configuration file “Config/3_cover.tex”
+%       configuration file Config/3_cover.tex
 %============================================================
 
 %============================================================
 %  THESIS/DISSERTATION FILES
 %   Please open and edit the appropriate
-%       configuration file “Config/4_files.tex”
+%       configuration file Config/4_files.tex
 %============================================================
 
 %============================================================
 %  PERSONAL (YOUR) CUSTOMIZATION
 %   Please open and edit the appropriate
-%       configuration file “Config/5_packages.tex”
+%       configuration file Config/5_packages.tex
 %============================================================
 
 %============================================================
 %  WHICH LIST_OF TO PRINT
 %   Please open and edit the appropriate
-%       configuration file “Config/6_list_of.tex”
+%       configuration file Config/6_list_of.tex
 %============================================================
 
 %============================================================
 % SPECIAL UNIVERSITY/SCHOOL CUSTOMIZATION
 %      Please open and edit the appropriate
-%       configuration file “Config/9_UNIVERSITY.tex”
+%       configuration file Config/9_UNIVERSITY.tex
 %============================================================
 
 
@@ -120,7 +120,7 @@
 %%------------------------------------------------------------
 %% Print covers
 \benchmarktic
-\ntthesisfrontmatter      % Before the main text (TOC, etc) — Roman page numbering
+\ntthesisfrontmatter      % Before the main text (TOC, etc)  Roman page numbering
 \ntprint{covers}          % The cover page
 \benchmarktoc
 \typeout{TIME process covers=\the\pdfelapsedtime}%
@@ -133,7 +133,7 @@
 %%------------------------------------------------------------
 %% Print main matter
 \benchmarktic
-\ntthesismainmatter     % The main text — Arabic page numbering
+\ntthesismainmatter     % The main text  Arabic page numbering
 \ntprint{mainmatter}      % The default order is listed below, but can be changed
 \benchmarktoc
 \typeout{TIME process mainmatter=\the\pdfelapsedtime}%
@@ -145,4 +145,5 @@
 \typeout{TIME process backcover=\the\pdfelapsedtime}%
 %%------------------------------------------------------------
 \end{document}          % End of document
+
 

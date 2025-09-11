@@ -1,4 +1,4 @@
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+﻿  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% spine.tex
 %% NOVA thesis document template
 %%
@@ -8,7 +8,7 @@
 %% https://www.latex-project.org/lppl/lppl-1-3c/
 %%
 %% Authors / Contributors:
-%%      - João Lourenço <joao.lourenco@fct.unl.pt>
+%%      - Joo Loureno <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE spine.tex}%
@@ -167,7 +167,7 @@
 
 
 
-\newcommand{\@ntprintspine}{%x§
+\newcommand{\@ntprintspine}{%x
 % If angle is 0 revere the order of the logos
 \IfStrEqCase{\thespine(angle)}{%
     {0}{\@reverelist{\expanded{\thespine(logo)}}\@logoorder%
@@ -178,7 +178,7 @@
         % \spine(box,logo,angle):={\number\numexpr\thespine(box,logo,angle)+180\relax}%
         \@reverelist{\expanded{\thespine(order)}}\spineorder%
         \spine(order):={\spineorder}}%
-}[\CalssError{novathesis}{Invalid spine angle: \thespine(angle)! Should be wither “0” or “180”.}{}]
+}[\CalssError{novathesis}{Invalid spine angle: \thespine(angle)! Should be wither 0 or 180.}{}]
 
 
 \@checkspinelen
@@ -194,7 +194,7 @@
 \else\ifdim\@tempdima<0pt\relax%
   % spine DOES NOT FIT into paper height
     \ClassError{novathesis}{Spine is \the\@tempdima\space too long: \the\@spinelen\space instead of \the\paperheight}
-    {Get some insight with “fgrep SPINELEN *.log”}{}
+    {Get some insight with fgrep SPINELEN *.log}{}
 \fi\fi%
   % % SPINE boxes are to large for the spine size, decrease spacing in the not-explicitly defined boxes
   % \@tempdima=\dimexpr\paperheight-\@spinefixedlen\relax
@@ -304,7 +304,7 @@
     \stockwidth=\stockheight%
     \stockheight=21cm%
   }{%
-    \ClassError{novathesis}{Unknown page dimensions for “spine/layout=\option{/novathesis/spine/layout}”}
+    \ClassError{novathesis}{Unknown page dimensions for spine/layout=\option{/novathesis/spine/layout}}
   }}%
   \paperwidth=\stockwidth%
   \paperheight=\stockheight%
@@ -336,7 +336,7 @@
                       {\@DOCCLASS,bg,color},%
                       {bg,color}%
     ){\ifnotnone{\arg}{\pagecolor{\arg}}}{%
-      \ClassError{novathesis}{Undefined spine “bg,color”}{}%
+      \ClassError{novathesis}{Undefined spine bg,color}{}%
     }%
     % print frame IF DEFINED
     \ifoptionequal{/novathesis/spine/layout}{full}{%
@@ -345,7 +345,7 @@
                         {\@DOCCLASS,frame,color},%
                         {frame,color}%
       ){\ifnotnone{\arg}{\draw [color=\arg] (0,0) rectangle (\paperwidth-0.4pt,\@spinewidth-0.4pt);}}{%
-        \ClassError{novathesis}{Undefined spine “frame,color”}{}%
+        \ClassError{novathesis}{Undefined spine frame,color}{}%
       }%
     }{}%
     % print bg image IF DEFINED
@@ -365,7 +365,7 @@
                     {\includegraphics[width=\paperheight,height=\paperwidth,
                                       angle=\number\numexpr\thespine(angle)-90\relax]{\arg}};
       }}{%
-        \ClassError{novathesis}{Undefined spine “image”}{}%
+        \ClassError{novathesis}{Undefined spine image}{}%
       }%
     }%
     \@for\myi:=\expanded{\thespine(order)}\do{%
@@ -379,7 +379,7 @@
             minimum height = \@thespinewidth,
       ] (r\myi) at (\thespine(box,\myi,left),\expanded{\thespine(margin,top)}) {};
       \datamatchtf{\@align}{spine}({box,\myi,align},{\myi,align},{text,align}){}{%
-        \ClassError{novathesis}{Invalid spine text alignment for “\myi”}{}%
+        \ClassError{novathesis}{Invalid spine text alignment for \myi}{}%
       }%
       \IfStrEqCase{\@align}{%
         {l}{\node [inner sep=0, anchor=west] at (r\myi.west)
@@ -497,4 +497,5 @@
   }%
   % \PAUSETHIS
 }
+
 

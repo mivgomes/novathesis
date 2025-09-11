@@ -1,4 +1,4 @@
-%!TEX root = ../template.tex
+﻿%!TEX root = ../template.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Config/1_novathesis.tex
 %% NOVA thesis configuration file
@@ -15,13 +15,13 @@
 %%------------------------------------------------------------
 
 \ntsetup{doctype=msc}       % The type of document
-%                               %     [     phd —> PhD thesis
-%                               %       phdplan —> PhD thesis plan
-%                               %       phdprop —> PhD thesis proposal
-%                               %           msc —> MSc dissertation
-%                               %       mscplan —> MSc dissertation plan
-%                               %           bsc —> BSc report
-%                               %         plain —> Other report
+%                               %     [     phd > PhD thesis
+%                               %       phdplan > PhD thesis plan
+%                               %       phdprop > PhD thesis proposal
+%                               %           msc > MSc dissertation
+%                               %       mscplan > MSc dissertation plan
+%                               %           bsc > BSc report
+%                               %         plain > Other report
 %                               %     ]
 %                               % DEFAULT: doctype=phd
 
@@ -34,10 +34,10 @@
 %                               % DEFAULT: school=nova/fct
 
 \ntsetup{docstatus=working}     % The status of the document
-%                               %     [     working —> working version of the document
-%                                                      skips some “frontmatter” stuff,
-%                                       provisional —> submission version (no committee),
-%                                             final —> final version (with committee)
+%                               %     [     working > working version of the document
+%                                                      skips some frontmatter stuff,
+%                                       provisional > submission version (no committee),
+%                                             final > final version (with committee)
 %                                                      (if you want the book spine,
 %                                                       activete "spine=true" yourself)
 %                               %     ]
@@ -45,13 +45,13 @@
 
 \ntsetup{lang=en}             % The main language for the document text
 %                               % following ISO 3166-1 (alfa-2)
-%                               %     [ en, pt, fr, it, de, es —> valid languages
+%                               %     [ en, pt, fr, it, de, es > valid languages
 %                               %     ]
 %                               % DEFAULT: lang=en
 
 % \ntsetup{media=paper}         % The target media for the PDF
-%                               %     [ screen —> left and right margins are equal, colored links
-%                               %        paper —> left and right margins are, black links
+%                               %     [ screen > left and right margins are equal, colored links
+%                               %        paper > left and right margins are, black links
 %                               %     ]
 %                               % DEFAULT: media=screen
 
@@ -59,12 +59,12 @@
 %                                 % DEFAULT: All references in a single bibliography
 
 \ntsetup{color/links=black}% The color for the hyperlinks (URLs, cross references, citations)
-%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %     Valid color names  > look at "svgname" in the "xcolor"
 %                               %                           package documentation
 %                               % DEFAULT: a customized dark blue color
 
 \ntsetup{color/gls=black} % The color for the glossary managed hyperlinks (glossary, symbols, etc)
-%                               %     Valid color names  —> look at "svgname" in the "xcolor"
+%                               %     Valid color names  > look at "svgname" in the "xcolor"
 %                               %                           package documentation
 %                               % DEFAULT: black
 
@@ -78,7 +78,7 @@
 
 % \ntsetup{abstractorder={en,pt,fr}}   % The order for abstracts for the main language
 % \ntsetup{abstractorder={pt={en,pt,fr}}}   % The order for abstracts for a specific language
-%                               %     [ de, en, es, fr, gr, it, pt, —> valid languages
+%                               %     [ de, en, es, fr, gr, it, pt, > valid languages
 %                               %     ]
 %                               % DEFAULT for 'en':     abstractorder={en={en,pt}}
 %                               % DEFAULT for lang 'L': abstractorder={L={L,en}}
@@ -86,11 +86,11 @@
 % \ntsetup{lang/extra={de,es}}   % List of additional languages are used in the document
                                 % besides the ones used in the abstracts (above)
 %                               % following ISO 3166-1 (alfa-2)
-%                               %     [ en, pt, fr, it, de, es, gr —> valid languages
+%                               %     [ en, pt, fr, it, de, es, gr > valid languages
 %                               %     ]
 %                               % DEFAULT: lang/extra=en,pt
 
-% \ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
+\ntsetup{gnumberlist=false}   % Shall the glossary entries list the page numbers where
 %                               %     those entries are used?  (as a reverse index!)
 %                               % DEFAULT: gnumberlist=true
 
@@ -152,26 +152,27 @@
 
 % \ntsetup{lang/cover=en}       % The language for the cover (and second cover) page
 %                               %     defaults to main document language
-%                               % DEFAULT: lang/cover=<the same as “lang”>
+%                               % DEFAULT: lang/cover=<the same as lang>
 
 % \ntsetup{lang/copyright=en}   % The language for the copyright message
 %                               %     defaults to main document language
-%                               % DEFAULT: lang/copyright=<the same as “lang”>
+%                               % DEFAULT: lang/copyright=<the same as lang>
 
-%\ntsetup{spine/layout=trim}    % Print the “book spine” at the end of the document?
-%                               %     [   no —> do not print the book spine
-%                               %       full —> print the book spine in a full page
-%                               %       trim —> print and trim the page to the width
+%\ntsetup{spine/layout=trim}    % Print the book spine at the end of the document?
+%                               %     [   no > do not print the book spine
+%                               %       full > print the book spine in a full page
+%                               %       trim > print and trim the page to the width
 %                               %               of the book spine
 %                               %     ]
-%                               % DEFAULT: spine/layout=trim <— if (docstatus=final)
-%                               %          spine=no   <— otherwise
+%                               % DEFAULT: spine/layout=trim < if (docstatus=final)
+%                               %          spine=no   < otherwise
 
-%\ntsetup{spine/width=2cm}     % Force the “book spine” width
+%\ntsetup{spine/width=2cm}     % Force the book spine width
 %                               % DEFAULT: natural width of book spine for double-sided 80gr paper
 
 % \ntsetup{debug={cover,spine}}   % Cover development and debug: print rulers in the cover page
-%                               %     [ cover —> print grid in covers and spine
-%                               %       spine —> print red boxes around spine elements
+%                               %     [ cover > print grid in covers and spine
+%                               %       spine > print red boxes around spine elements
 %                               %     ]
 %                               % DEFAULT: debug={}
+
