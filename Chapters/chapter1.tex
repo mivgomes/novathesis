@@ -21,27 +21,27 @@
 \textit{This section summarizes the study's underlying motivation, rationale, and goals, emphasizing its significance in the field. It provides context by giving some background on the supporting company and the initiative, along with other contributions. Furthermore, it outlines a reading guide for this thesis.}
 
 \section{Significance and Objectives} % (fold)
-\label{sec:significance_and_objectives}
+\label{sec:significanceandobjectives}
 
 
 \gls{DD} and development is a time-consuming, resource-intensive, multidisciplinary effort that can be challenging from many points of view. 
 Over half of clinical trial failures are attributed to lack of efficacy, underscoring the importance of identifying and validating pharmacological targets, and highlighting the lack of knowledge of the drug's \gls{Mechanism of Action (MoA)} as one of the major barriers to clinical efficacy~\cite{RN3, RN1, RN2}. 
-As thorough understanding of the \gls{MoA} is such a critical step, computational methods can accelerate the identification of pharmacologically active agents by providing more efficient and cost-effective alternatives to traditional approaches (for example phenotyping screening). 
-Computation methods can accurately identify a new target or propose new indications for a known molecule, thereby reducing the time dedicated to in cell and in vitro target validation~\cite{RN29}.
+As thorough understanding of the \gls{MoA} is such a critical step, computational methods can accelerate the identification of pharmacologically active agents by providing more efficient and cost-effective alternatives to traditional approaches. 
+Computational methods can accurately identify a new target or propose new indications for a known molecule, thereby reducing the time dedicated to \textit{in vitro} target validation~\cite{RN29}.
 
 A key to understanding a compound's \gls{MoA} lies in transcriptomic profiling, which captures the changes in gene expression triggered by a perturbagen. 
-While traditional RNA sequencing methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay~\cite{RN30}, enable the cost-effective generation and analysis of large-scale omics datasets. 
+While traditional \gls{RNA-seq} methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay~\cite{RN30}, enable the cost-effective generation and analysis of large-scale omics datasets. 
 Several existing databases provide public access to transcriptomic data from experiments exposing cell lines to range of chemical and genetic perturbagens. 
 These datasets can be leveraged, using various computational tools, to establish the causal chain of gene expression changes triggered by a specific compound. 
 Three primary approaches have emerged: causal reasoning, connectivity mapping, and enrichment tools~\cite{RN31}.
 
 Causal reasoning is a topology-based method, that determines potential causes for an observed gene expression profile, starting from a perturbation signature and a biological interaction network. 
-The network is defined as a signed and directed graph describing relations between nodes (e.g., proteins or genes). 
-Efforts to compile causal molecular relation networks have increased, resulting in several publicly accessible databases (such as OmniPath), which offers curated prior knowledge networks. 
+The \gls{Molecular network} is defined as a signed and directed graph describing relations between nodes (e.g., proteins or genes). 
+Efforts to compile causal molecular relation networks have increased, resulting in several publicly accessible databases (such as OmniPath), which offers curated \gls{PKN}. 
 Among the networks commercially available~\cite{RN32} we can find MetaBase\textsuperscript{TM}, developed and curated by Clarivate.
 
 The \gls{CMap} method is instead focused on collecting and analyzing perturbation signatures. 
-In this case, a similarity score is used to compare a set of known MoA/compound reference signatures, with a query gene expression profile from a perturbagen of interest~\cite{RN34, RN31}.
+In this case, a similarity score is used to compare a set of known \gls{MoA}/compound reference signatures, with a query gene expression profile from a perturbagen of interest~\cite{RN34, RN31}.
 The principle behind \gls{CMap} is that the higher the similarity between the query and the reference signature, the more likely it is that the underlying mechanism is the same. 
 
 On the other hand, enrichment tools take perturbation signatures as query input and utilize prior knowledge, such as a regulon network or collections of perturbation-induced \gls{DEGs}, as a reference. 
@@ -52,8 +52,8 @@ With a comprehensive systematic benchmarking approach, this study guides on sele
 The evaluation process relies on three inputs:
 
 \begin{itemize}
-  \item Gene expression signatures derived from chemical or genetic perturbation experiments.
-  \item A prior knowledge network of the molecular interactions within the system. 
+  \item \gls{Gene signature}s derived from chemical or genetic perturbation experiments.
+  \item A \gls{PKN} of the molecular interactions within the system. 
   \item A golden standard dataset to serve as a reference for validation.
 \end{itemize}
 
@@ -61,36 +61,35 @@ These data are used to feed the evaluated methods, serving as the reference, que
 This study analyzes the three types of tools depicted below: 
 
 \begin{enumerate}
-\item[\textbf{Topology-based tools}] Eight algorithms for causal reasoning (\gls{CARNIVAL}, CausalR, ProTINA, \gls{CIE}, NicheNet, plus causalReasoning, SigNet, quaternaryProd from the \gls{CBDD} \gls{R} package~\cite{RN36} , and 5 algorithms for node prioritization (networkPropagation, randomWalk, Overconnectivity, hiddenNodes, interconnectivity - from \gls{CBDD}) were also included as baseline topology-based tools for node prioritization. 
-\item[\textbf{Similarity-based tools }] Six algorithms are built into the \gls{RCSM} R package.
-\item[\textbf{Enrichment-based tools}] Eight algorithms implemented under the decoupleR package~\cite{RN35}.
+\item[\textbf{Topology-based tools}] Eight causal reasoning algorithms (\gls{CARNIVAL}, CausalR, ProTINA, \gls{CIE}, NicheNet, plus causalReasoning, SigNet, quaternaryProd from the \gls{CBDD} \gls{R} package~\cite{RN36} , and five node prioritization algorithms (networkPropagation, randomWalk, overconnectivity, hiddenNodes, interconnectivity - from \gls{CBDD}). 
+\item[\textbf{Similarity-based tools }] Six algorithms from the \gls{RCSM} R package.
+\item[\textbf{Enrichment-based tools}] Eight algorithms from the decoupleR package~\cite{RN35}.
 \end{enumerate}
 
-Performance is assessed in terms of results obtained, comparing against golden standard datasets, along with the robustness, and the computational efficiency (runtime and memory footprint). 
-With this approach, the project aims at identifying tools that are the most suitable to contextualize gene expression data and proving a correct assessment of biological results.
+Performance is assessed in terms of results obtained, comparing against golden standard datasets, along with the robustness, and the computational efficiency. 
+With this approach, the project aims to identify the most appropriate tools to contextualize gene expression data and provide a correct assessment of biological results.
 
 \section{Scope} % (fold)
 \label{sec:scope}
-This project was conducted within the framework of the \gls{ABC}, a subscription-based initiative for pharmaceutical companies led by Clarivate. \gls{ABC} is dedicated to evaluating a wide range of computational tools for a variety of applications in the life sciences and healthcare field. The topic for this thesis is the development of \gls{ABC}'s tenth use case - Causal Regulation - which focuses on benchmarking tools designed to identify key regulators from transcriptomic data and prior knowledge networks.
+This project was conducted within the framework of the \gls{ABC}, a subscription-based initiative for pharmaceutical companies led by Clarivate. \gls{ABC} is dedicated to evaluating a wide range of computational tools for a variety of applications in the life sciences and healthcare field. The topic for this thesis is the development of \gls{ABC}'s tenth use case - Causal Regulation - which focuses on benchmarking tools designed to identify key regulators from transcriptomic data and \gls{PKN}.
 
 \section{Other Contributions} % (fold)
-\label{sec:other_contributions}
+\label{sec:othercontributions}
 
 This study expands the state of the art in causal reasoning using gene expression data and causal graphs, by presenting a robust framework and a systematic algorithm benchmarking approach. The study was presented during the following poster communication:
 \begin{enumerate}
 \item[\textbf{XIV Edition of Bioinformatics Open Days}] . Gomes, A. Ishkin, F. Ciceri, C. Klein. Benchmarking Causal Reasoning Algorithms for enhanced Drug Discovery: Insights from Clarivate's pre-competitive Algorithm Benchmarking Consortium. XIV Edition of Bioinformatics Open Days, 26 March 2025, Braga, Portugal.
 \end{enumerate}
 
-Beyond the topic of this thesis, during the MSc industry placement, I was also involved as developer in other activities aimed at identifying reliable solutions for several different external stakeholders in the pharmaceutical business. 
-Although not related with the topic of this thesis, these experiences enriched the consultant experience, allowing for an expansion in the expertise across various domains of computational biology and data science. 
+Beyond the topic of this thesis, during the MSc industry placement, I was also involved as developer in other activities aimed at identifying reliable solutions for several different external stakeholders in the pharmaceutical business. Although not related with the topic of this thesis, these experiences enriched my consultant experience, allowing for an expansion in the expertise across various domains of computational biology and data science. 
 These projects included:
 
 \begin{enumerate}
 \item[\textbf{Skin Microbiome Atlas}] This project involved the curation and re-analysis of publicly available skin microbiome datasets. My role in this project included conducting an in-depth scientific literature review, compiling relevant datasets, and pre-processing raw sequencing data to ensure consistency and comparability across studies. 
-\item[\textbf{Natural Language Processing}] An NLP pipeline was set up for automatic text classification of epidemiology abstracts, leveraging different versions of the BERT foundational model. Model fine-tuning on a minimal dataset was attempted by generating synthetic data using paraphrasing techniques. 
-\item[\textbf{\gls{ABC} - Spatial Niche Use Case}] As part of an internal case study for \gls{ABC}, I implemented several Python wrappers for selected algorithms relevant to spatial niche analysis. This work mainly included the development of Python wrapper functions to run those algorithms, and the integration with an \gls{R}-based pipeline and the management of Conda environments.
-\item[\textbf{Google Data Extraction Tool}] In collaboration with another team in the company, I developed an automated script for the retrieval of pharmacological information from web sources. The pipeline involved querying URLs and keywords and extracting structured data through API calls, including a language model API.
-\item[\textbf{Transcriptomic comparative analysis}] I conducted a comparative analysis of transcriptomic profiles from three types of cancer. The workflow included exploratory data analysis, identification of differentially expressed genes and hub genes, pathway enrichment analysis, and causal reasoning to infer upstream regulators. Additionally, a survival analysis was performed. All the analysis was also repeated to compare both the Human Papillomavirus status and tumor localization.
+\item[\textbf{Natural Language Processing}] A pipeline was set up for automatic text classification of epidemiology abstracts, leveraging different versions of the BERT foundational model. Model fine-tuning on a minimal dataset was attempted by generating synthetic data using paraphrasing techniques. 
+\item[\textbf{\gls{ABC} - Spatial Niche}] As part of an internal case study for \gls{ABC}, I implemented several Python wrappers for selected algorithms relevant to spatial niche analysis. My role in this use case mainly included the management of conda environments, the development of functions to run those algorithms and their integration with an \gls{R}-based pipeline.
+\item[\textbf{Google Data Extraction Tool}] In collaboration with another team in the company, I developed an automated script for retrieving pharmacological information from different web sources. The pipeline involved querying URLs and keywords and extracting structured data through API calls.
+\item[\textbf{Transcriptomic comparative analysis}] I was involved in a project to perform a comparative analysis of transcriptomic profiles from three types of cancer. The workflow included exploratory data analysis, identification of \gls{DEGs} and hub genes, pathway enrichment analysis, causal reasoning to infer upstream regulators, and a survival analysis. The analysis also included the comparison of both the Human Papillomavirus status and tumor localization.
 \item[\textbf{Proteomics analysis}] In a proteomics-focused project, I was responsible for carrying out exploratory data analysis and functional enrichment analysis to uncover biological insights from protein-level data.
 \end{enumerate}
 
@@ -98,9 +97,8 @@ These projects included:
 \label{sec:structure}
 
 This study is organized in five chapters.
-%Chapter~\ref{cha:introduction} introduces the background and motivation for the study, highlighting the importance of causal reasoning in drug discovery and the role of gene expression data in this context.
-%Chapter~\ref{cha:literature_review} provides a comprehensive review of the existing literature on causal reasoning algorithms, with a focus on their application to gene expression data. This chapter also identifies key challenges and gaps in the current state of the art.
-%Chapter~\ref{cha:materials_and_methods} outlines the methodology employed in this study, including the selection of algorithms for benchmarking, the design of the experimental framework, and the evaluation metrics used to assess algorithm performance.
-%Chapter~\ref{cha:results} presents the results of the benchmarking experiments, including a detailed analysis of algorithm performance across different datasets and use cases. This chapter also includes case studies that illustrate the practical implications of the findings.
+Afther this introductory chapter, the document is structured as follows: Chapter~\ref{cha:literaturereview} starts by describing what \gls{MoA} is and its importance in \gls{DD}, followed by a review of the data and algorithms that can be used to contextualize gene expression data. This chapter also characterizes the role of a benchmarking study when there is a wide diversity of data and methods available. 
+Chapter~\ref{cha:materialsandmethods} describes the methodology used in this study, including the selection of gene expression datasets, \gls{Molecular network}s, and algorithms for benchmarking, the design of the experimental framework, and the evaluation metrics used to assess algorithm performance.
+%Chapter~\ref{cha:results} presents the results of the benchmarking, including a detailed analysis of algorithm performance across different datasets and use cases. This chapter also includes case studies that illustrate the practical implications of the findings.
 %Chapter~\ref{cha:discussion} interprets the results in the context of the broader literature, discussing their implications for the field of drug discovery and identifying potential avenues for future research.
 %Chapter ~\ref{cha:conclusion} summarizes the key findings of the study and their significance, offering recommendations for researchers and practitioners in the field.

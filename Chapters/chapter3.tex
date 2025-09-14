@@ -10,33 +10,33 @@
 
 
 \chapter{Materials and Methods}
-\label{cha:materials_and_methods}
+\label{cha:materialsandmethods}
 
 
 \textit{The following section describes the workflow of the benchmarking study. It begins by describing the input data used, both transcriptomic data and prior knowledge data. Further emphasis is given to the implementation of the selected algorithms. Finally, the description of the algorithm's execution, as well as the methods used to assess their performance.}
 
 
 \section{Benchmarking architecture setup} % (fold)
-\label{sec:benchmarking_architecture_setup}
+\label{sec:benchmarkingarchitecturesetup}
 
 Several tools and algorithms are available for most research tasks in computational biology, and new algorithms and tools are published every week. Systematic benchmarking of tools is a time- and resource-consuming endeavor, while a lack of benchmarking carries several potential risks. Finding the right computational tool for a given research question is essential. Researchers usually carry out published benchmarking to demonstrate that their tool performs better than others. ABC is a consortium created in 2021 that aims to help members reduce R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC is a consortium established in 2021 that aims to assist members in reducing R\&D risks, saving time and resources by distributing the effort of benchmarking computational biology algorithms. ABC maintains the same workflow regardless of the case study. It consists of three main steps: (1) Voting, (2) Curation, and (3) Coding. The consortium members suggest and vote on the use case (1). Once the use case is determined, the curation phase begins, where Clarivate collects the most appropriate datasets and algorithms according to the voted use case (2). Again, the members vote on the final selection of datasets and algorithms (1). Finally, the last phases - implementation, execution, and reporting - are conducted by Clarivate (3). 
-The project description will fall within the third phase of the workflow, specifically concerning some of the algorithm's implementation and execution, where I actively participated since all the data was already collected and voted on when I started the project. A visual representation of the study workflow is provided~\ref{fig:fig3.1.ABC_workflow} and will be explained in detail in the following sections. The entire workflow was implemented in \gls{R} Statistical Software (v4.4.1) [96].
+The project description will fall within the third phase of the workflow, specifically concerning some of the algorithm's implementation and execution, where I actively participated since all the data was already collected and voted on when I started the project. A visual representation of the study workflow is provided~\ref{fig:fig3.1.ABCworkflow} and will be explained in detail in the following sections. The entire workflow was implemented in \gls{R} Statistical Software (v4.4.1) [96].
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=6in]{fig3.1.ABC_workflow}
+    \includegraphics[height=6in]{fig3.1.ABCworkflow}
     \caption[Schematic of the study architecture.]{Schematic of the study architecture. A. Perturbation signatures collected from seven public sources are used in the benchmarking framework either as reference, query, and gold standard (known targets) datasets. Prior knowledge networks, used as reference, were derived from two sources: OmniPath (public) and MetaBase (commercial). From OmniPath, a global network, and regulons were used as references. From MetaBase, it was also used a full network, regulons, and, in addition to the regular regulons, regulons derived from linear paths. B. Three classes of computational methods were evaluated: topology-based, connectivity-based, and enrichment-based, comprising a total of 27 algorithms. Depending on the method, input data may consist of a global interactome (network), curated signaling pathways, or perturbation signatures (typically directional gene sets or full transcriptomic profiles, which can be reduced to gene sets if needed). These input types are often interrelated, and the arrows in the diagram indicate the required data transformations specific to each algorithm. The output of each method is systematically compared to the gold standard targets for evaluation.}
-    \label{fig:fig3.1.ABC_workflow}
+    \label{fig:fig3.1.ABCworkflow}
 \end{figure}
 
 
 \section{Data Description} % (fold)
-\label{sec:data_description}
+\label{sec:datadescription}
 
-As represented in Figure~\ref{fig:fig3.1.ABC_workflow}, each algorithm should receive two types of inputs: query and reference dataset. The query dataset refers to the data derived from perturbed signatures (Full profiles or DEGs lists). The reference dataset can be derived either from perturbed signatures (Full profile, DEGs, or directional/regulons) or from prior knowledge (Networks or pathways/gene sets). The databases and datasets used as perturbed signatures and as prior knowledge are described below.
+As represented in Figure~\ref{fig:fig3.1.ABCworkflow}, each algorithm should receive two types of inputs: query and reference dataset. The query dataset refers to the data derived from perturbed signatures (Full profiles or DEGs lists). The reference dataset can be derived either from perturbed signatures (Full profile, DEGs, or directional/regulons) or from prior knowledge (Networks or pathways/gene sets). The databases and datasets used as perturbed signatures and as prior knowledge are described below.
 
 \subsection{Gene expression data: Perturbation signatures}
-\label{sub:gene_expression_data_perturbation_signatures}
+\label{sub:geneexpressiondataperturbationsignatures}
 
 Currently, there are several publicly available perturbation-driven gene expression datasets. This study comprehends transcriptomic datasets from 10 different public sources, summarized in Table~\ref{tab:tabel3}. Chemical and genetic perturbagens were included, analyzed by bulk microarray, bulk RNA seq, and single-cell RNA seq assays. Each dataset contains more than hundreds of perturbation signatures. For each collection, the perturbagen type, the total number of unique perturbagens profiled, and the subset for which a gold standard target annotation is available were recorded. The gold standard is necessary for the evaluation and it consists of a set of known targets (drug-protein interactions or genes deliberately perturbed), used to assess the ability of the algorithms to recover true upstream regulators from observed expression changes. 
 The LINCS expands upon the original CMap by leveraging the cost-effective L1000 platform, which directly measures 978 landmark transcripts and imputes the remaining transcriptome to reconstruct genome-wide expression profiles. LINCS comprises several distinct collections of perturbations in human cell lines: over 30,000 unique small-molecule treatments, CRISPR knockouts targeting 5,156 genes, cDNA overexpression of 3,780 genes, and shRNA knockdowns of 4,854 genes. The level 5 data were retrieved from the CLUE platform (available at \href{https://clue.io/data/CMap2020#LINCS2020}{CLUE}). This level already contains the differential expression signatures with z-scores aggregated across biological replicates without p-values. Since each perturbagen usually appears under multiple conditions (different doses, time points, and cell lines), these were condensed into a single consensus signature per perturbagen by extracting every available gene's z-score and then using the median value across signatures. For the gold standard, directional effects were assigned as follows: for chemical perturbations CDDI annotations were used to identify molecular targets inhibited by specific compounds; for CRISPR and shRNA datasets, the target genes were assigned with inhibition effect, and for OE, each target was assigned with activation effect.
@@ -152,11 +152,11 @@ Five chemical perturbation datasets (LINCS compounds, ChemPert, CDS-DB, Sci-Plex
 
 
 \subsection{Prior Knowledge: Interaction Networks} % (fold)
-\label{sec:prior_knowledge_interaction_networks}
+\label{sec:priorknowledgeinteractionnetworks}
 
 One of inputs that can serve as a reference is the prior knowledge data, required for contextualizing gene expression signatures. 
 The benchmarking framework depends on three complementary types of this data: \gls{PKN} (global interaction networks), regulons (regulator-target gene sets), and pathway-derived linear maps (Table~\ref{tab:table4}). 
-Although these resources vary in their coverage, they are interconnected, as illustrated in Figure~\ref{fig:fig3.1.ABC_workflow}. 
+Although these resources vary in their coverage, they are interconnected, as illustrated in Figure~\ref{fig:fig3.1.ABCworkflow}. 
 Including sources of different sizes and densities is particularly important for understanding how the performance of topology-based algorithms is affected by the type of the input. 
 Additionally, an increase in network size can also introduce noise that may disturb the extraction of biologically relevant information. 
 
@@ -169,7 +169,7 @@ Mechanism distinguishes generic molecular interactions (interactions from recept
 Finally, weight determines interaction confidence based, among the others, on literature support. Regardless of the database source used, the mandatory annotation for each interaction is directionality information, whereas any other information will not be used by algorithms. 
 
 OmniPath \gls{PKN} was constructed by integrating signaling and \gls{TF}-target interactions using OmniPathR (v. 3.14.0) \gls{R} package. 
-Signaling interactions were obtained using the import \_ omnipath \_ interactions function and with assigned mechanism = 0, whereas transcriptional regulatory interactions imported using import \_ transcriptional \_ interactions were annotated as mechanism = 1. 
+Signaling interactions were obtained using the import \ omnipath \ interactions function and with assigned mechanism = 0, whereas transcriptional regulatory interactions imported using import \ transcriptional \ interactions were annotated as mechanism = 1. 
 These were combined into a single network, and interactions with effect = 0 were kept only if mechanism = 0. Nodes in OmniPath are proteins or protein complexes (UniProt IDs), with the corresponding gene symbol(s). 
 For using MetaBase as another source of PKN, the global network was extracted using the networkFromMetabase function, via the metabaser (v. 5.1.0) and \gls{CBDD} (version 20.0.3) R packages. 
 Unlike OmniPath, it already includes both signaling interactions (mechanism = 0) and transcription regulation interactions (mechanism = 1). 
@@ -224,7 +224,7 @@ To carry out a systematic and robust comparative evaluation of inference algorit
 A wrapper is a function that serves as an intermediary layer. 
 These are required to handle data type conversions, parameter standardization, and result formatting, allowing diverse algorithms to be executed consistently regardless of their underlying implementation differences. This approach addresses the inherent complexity of having algorithms coming from different approaches. Here there are two types of wrappers: shared and individual. The shared wrapper architecture incorporates an already established package that bundles several algorithms inside, unlike the individual ones that incorporate single algorithms. The connectivity mapping from the RCSM package, enrichment methods from decoupleR, and topology-based algorithms from CBDD were implemented in shared wrappers. On the other hand, causal reasoning CARNIVAL, CausalR, ProTINA, CIE, and NicheNet were incorporated in individual wrappers. Table~\ref{tab:table5} provides a complete list of algorithms together with their annotations.
 
-Some supporting helper functions were also implemented to facilitate essential data conversions across all wrappers. Those functions include mapping identifiers between transcriptomic datasets and network nodes, to ensure matching IDs and converting the input data, if necessary. For the query input data, the tool may need a full signature or DEGs. When DEGs are required, the full signature can be filtered using a fold change and p-value threshold, or by simply taking the top threshold for differentially expressed genes by fold change magnitude. As reference datasets, the workflow can start with PKN or full signatures, whereas for topology, enrichment, and CMap tools respectively require networks, regulons/gene sets, and full signatures. To use this large variety of input data and tools, some conversions are required. All the conversions are indicated by the arrows in Figure~\ref{fig:fig3.1.ABC_workflow} B. 
+Some supporting helper functions were also implemented to facilitate essential data conversions across all wrappers. Those functions include mapping identifiers between transcriptomic datasets and network nodes, to ensure matching IDs and converting the input data, if necessary. For the query input data, the tool may need a full signature or DEGs. When DEGs are required, the full signature can be filtered using a fold change and p-value threshold, or by simply taking the top threshold for differentially expressed genes by fold change magnitude. As reference datasets, the workflow can start with PKN or full signatures, whereas for topology, enrichment, and CMap tools respectively require networks, regulons/gene sets, and full signatures. To use this large variety of input data and tools, some conversions are required. All the conversions are indicated by the arrows in Figure~\ref{fig:fig3.1.ABCworkflow} B. 
 The parameters selected for each algorithm can be found in Supplementary table 2.
 
 As for the input data, the output should also have a similar shared format, so to make it possible to evaluate the performance of each algorithm. For that reason, at the end of each run, all algorithm wrappers return a table with all prioritized regulators identified without any significance filtering applied. The output contains a score column, with the larger score reflects greater confidence in this regulator being causal for the observed differential expression patterns. Score may also be signed if the tools can predict directionality of perturbation. In that case, regulators are ranked by absolute value of score, and activation/repression status is stored in separate column effect (coded as -1 or 1 respectively). 
@@ -270,7 +270,7 @@ Method                                                                          
 \end{table}
 
 \subsection{Connectivity Mapping} % (fold)
-\label{sub:connectivity_mapping}
+\label{sub:connectivitymapping}
 
 Figure~\ref{fig:fig3.2.RCSM} represents the wrapper function framework for running \gls{CMap} algorithms from the \gls{RCSM} package~\cite{RN79}. 
 This package provides uniform implementations of several \gls{CMap} scoring methods including \gls{KS}, and \gls{GSEA}-based approaches. 
@@ -293,7 +293,7 @@ For these algorithms, the regulator score measures the similarity of the query v
 
 
 \subsection{Pathway Enrichment} % (fold)
-\label{sub:pathway_enrichment}
+\label{sub:pathwayenrichment}
 
 For running the enrichment-based algorithms, the decoupleR package~\cite{RN35} was used. 
 The package was initially used to benchmark approaches for \gls{TF} activity inference. 
@@ -317,7 +317,7 @@ For algorithms that support directional information, the wrapper uses the edge t
 
 
 \subsection{Topology-based methods} % (fold)
-\label{sub:topology_based_methods}
+\label{sub:topologybasedmethods}
 
 \gls{CARNIVAL}~\cite{RN41} integrates different sources of \gls{PKN}, including signed and directed \gls{PPI}, \gls{TF} targets, and pathway signatures, to yield a causal subnetwork explaining the MoA behind the observed omics data. This algorithm expects query \gls{DEGs} as input and a network as reference. \gls{CARNIVAL} wrapper (Figure 7) begins by validating essential inputs, including the CBC solver path required for the optimization engine. 
 It determines the execution mode based on whether perturbation targets and pathway weights are provided, enabling either the standard CARNIVAL or the inverse \gls{CARNIVAL} algorithms. 
@@ -369,8 +369,8 @@ The \gls{CIE}~\cite{RN81} wrapper (Figure~\ref{fig:fig3.7.CIE}) starts by conver
 %\end{newpdflayout}
 
 As the other wrappers, also the one implemented for NicheNet~\cite{RN42} (Figure~\ref{fig:fig3.8.NicheNet}) initially ensure that the input formats are correct by converting the input signatures to DEGs and reference data to networks. From the reference network, three sub-networks are created based on the regulatory mechanism: one ligand-receptor network and one signaling network from the signaling interactions (mechanism = 0) and one transcriptional network from gene regulatory interactions (mechanism = 1). Ligand-receptor and signaling networks are created based on an optional regulator's vector, providing a list of source nodes to be used for filtering signaling interactions. 
-If this the filtering vector is not provided, only unique source nodes are used to create the set of regulators. The ligand-receptor network includes only edges where the source node is a regulator, whereas the remaining edges are presented in the signaling network, with the downstream signaling cascades down to the target genes. In the next step, a weighted network is constructed (construct \_ weighted \_ networks function from nichenetr \gls{R} package~\cite{RN42}), by merging the three subnetworks into one graph structure and assigning each edge a baseline weight (1 for both gene regulatory and ligand-receptor network edges). 
-To down-weight the influence of highly connected nodes, hub correction is applied to the network (apply \_ hub \_ corrections). With the weighted network, a ligand-target matrix is built (construct \_ ligand \_ target \_ matrix) containing target genes as rows, ligands as columns and scores for each entry (inferred signaling strength), from each ligand to each gene. At this point, the inputs required to run NicheNet core function (predict \_ ligand \_ activities) are ready: a vector of DEG, the full set of genes present in the ligand-target matrix (used as the background), the ligand-target matrix of regulatory scores and the list of ligands (regulators) to prioritize. The output from NicheNet is ranked by corrected \gls{AUPR} scores and identifiers are converted back if needed.
+If this the filtering vector is not provided, only unique source nodes are used to create the set of regulators. The ligand-receptor network includes only edges where the source node is a regulator, whereas the remaining edges are presented in the signaling network, with the downstream signaling cascades down to the target genes. In the next step, a weighted network is constructed (construct \ weighted \ networks function from nichenetr \gls{R} package~\cite{RN42}), by merging the three subnetworks into one graph structure and assigning each edge a baseline weight (1 for both gene regulatory and ligand-receptor network edges). 
+To down-weight the influence of highly connected nodes, hub correction is applied to the network (apply \ hub \ corrections). With the weighted network, a ligand-target matrix is built (construct \ ligand \ target \ matrix) containing target genes as rows, ligands as columns and scores for each entry (inferred signaling strength), from each ligand to each gene. At this point, the inputs required to run NicheNet core function (predict \ ligand \ activities) are ready: a vector of DEG, the full set of genes present in the ligand-target matrix (used as the background), the ligand-target matrix of regulatory scores and the list of ligands (regulators) to prioritize. The output from NicheNet is ranked by corrected \gls{AUPR} scores and identifiers are converted back if needed.
 
 \begin{figure}[htbp]
     \centering

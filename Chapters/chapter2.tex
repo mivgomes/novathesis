@@ -9,130 +9,121 @@
 \typeout{NT FILE chapter2.tex}%
 
 \chapter{Literature Review}
-\label{cha:literature_review}
+\label{cha:literaturereview}
 
-\textit{This section provides an overview of the relevant research related to the topic of the project. 
-First, we start by highlighting the importance of understanding the mechanism of action in drug discovery, followed by a description of the two key components for MoA elucidation (transcriptomic data and biological networks). 
-A comprehensive summary of the computational methods used to apply various scoring algorithms (topology-, similarity-, and enrichment-based algorithms) is also presented, to provide all the basis for a systematic evaluation of tools for elucidating compound MoA. 
-Finally, an overview of the best practices to perform a benchmarking study is also provided.}
+\textit{This section provides an overview of the relevant research related to the topic of the project.
+First, it begins by highlighting the importance of understanding the \gls{MoA} in \gls{DD}, followed by a description of two fundamental components for \gls{MoA} elucidation: transcriptomic data and biological networks.
+Then, it is summarized the computational methods used to apply various scoring algorithms (topology-, similarity-, and enrichment-based algorithms), laying the groundwork for a systematic evaluation of tools designed to infer compound \gls{MoA}.
+Finally, the section outlines best practices for conducting a benchmarking study.}
 
 \section{Drug discovery: the importance of the compound's mechanism of action} % (fold)
-\label{sec:drug_discovery_the_importance_of_the_compounds_mechanism_of_action}
+\label{sec:drugdiscoverytheimportanceofthecompoundsmechanismofaction}
 
-Developing new drugs is an extraordinarily complex process. 
-The high prevalence of complex and polygenic diseases, which collectively account for 70\% of all the deaths in Europe and affect around 25\% of the population, is one of the challenges faced by this industry~\cite{RN43}. 
-In addition, statistics show that \textit{de novo} drug discovery has become an extensive and costly process, taking on average 13 years and \$2 billion to develop a new drug, with most of clinical trials lasting 95 months and non-clinical development 31 months~\cite{RN55,RN56,RN47}. 
-These challenges have led to fewer drug approvals by regulatory bodies, resulting in a significant gap between therapeutic demand and available treatments. Hence, as the current treatments become less effective, there is a strong interest in finding alternatives to optimize critical steps in the drug development pipeline and developing more advanced therapeutic methods~\cite{RN44}. 
+Developing new drugs is an extraordinarily complex process.
+The high prevalence of complex diseases, which collectively account for 70\% of all the deaths in Europe and affect around 25\% of the population, is one of the challenges faced by this industry~\cite{RN43}.
+In addition, statistics show that \textit{de novo} \gls{DD} has become an extensive and costly process, taking on average 13 years and 2\$ billion to develop a new drug, with most of clinical trials lasting 95 months and non-clinical development 31 months~\cite{RN55,RN56,RN47}.
+These challenges have led to fewer drug approvals by regulatory bodies, resulting in a significant gap between therapeutic demand and available treatments. Hence, as the current treatments become less effective, there is a strong interest in finding alternatives to optimize critical steps in the drug development pipeline and developing more advanced therapeutic methods~\cite{RN44}.
 Efforts to address these challenges are evident in the growing number of studies, both in industry and academia.
 
-\gls{DR} emerged as a promising cost-effective strategy to tackle the constraints faced by traditional \gls{DD} by reducing the initial cost to 1/3 and the duration to 3-9 years, and it continues to gain increasing attention, as nearly 30\% of the drugs approved by the FDA are identified using this approach~\cite{RN54,RN64}. 
+\gls{DR} emerged as a promising cost-effective strategy to tackle the constraints faced by traditional \gls{DD} by reducing the initial cost to 1/3 and the duration to 3-9 years, and it continues to gain increasing attention, as nearly 30\% of the drugs approved by the \gls{FDA} are identified using this approach~\cite{RN54,RN64}. 
 The fundamental goal of \gls{DR} is to broaden the indication of known, safe, and previously approved drugs. 
 From multiple points of view, this is a particularly interesting approach. 
 It allows to investigate therapeutic agents that have been put on hold because of failed clinical trials~\cite{RN62}, and also it enables to identify treatment for conditions with unmeet clinical needs. 
-This is the case of rare diseases, which are not providing sufficient returns to pharmaceutical companies to justify a conventional DD pipeline. 
+This is the case of rare diseases, which are not providing sufficient returns to pharmaceutical companies to justify a conventional \gls{DD} pipeline. 
 Many studies have demonstrated the success of establishing new drug-disease relationships~\cite{RN48}. 
 A well-known example is Sildenafil; initially identified in the 1980s as a candidate to treat angina pectoris, it was approved by the \gls{FDA} in 1998 to treat erectile dysfunction and later in 2005 to treat pulmonary arterial hypertension~\cite{RN54, RN64, RN94}. 
-Another classic example is Thalidomide, originally used for sedation and morning sickness, and afterward repurposed for multiple myeloma, leprosy~\cite{RN54, RN64}, and to minimize the hippocampal neuronal loss~\cite{RN50}. Moreover, the low success rate (5\%) for phase I clinical studies of cancer treatments led to increased attention in DR for oncology, resulting in several promising findings~\cite{RN64, RN63}. 
+Another classic example is Thalidomide, originally used for sedation and morning sickness, and afterward repurposed for multiple myeloma, leprosy~\cite{RN54, RN64}, and to minimize the hippocampal neuronal loss~\cite{RN50}. Moreover, the low success rate (5\%) for phase I clinical studies of cancer treatments led to increased attention in \gls{DR} for oncology, resulting in several promising findings~\cite{RN64, RN63}. 
 Noteworthy cases include the schizophrenia drug Spiperone, which has been studied for its ability to induce apoptosis in \gls{CRC} cells~\cite{RN51}, and Raloxifene, indicated for osteoporosis, which proved to be effective in reducing breast cancer risk in postmenopausal women~\cite{RN64, RN61}.
 
-Understanding how cellular signaling (Figure~\ref{fig:fig2.1.cellular_signaling_cascade}) is modulated upon a stimulus is essential for identifying potential drug targets and finding new indications for an existing drug. 
+Understanding how cellular signaling (Figure~\ref{fig:fig2.1.cellularsignalingcascade}) is modulated upon a stimulus is essential for identifying potential drug targets and finding new indications for an existing drug. 
 When a drug enters a biological system, it typically interacts directly or indirectly with cellular targets, regulating the activity of signaling networks and pathways. 
-This is commonly referred as the \gls{MoA}~\cite{RN52, RN53}. These interactions are relevant across the whole \gls{DD} process, from initial investigation to clinical trials. 
+This is commonly referred as the \gls{MoA}~\cite{RN52, RN53}. These interactions are relevant across the whole \gls{DD} process, from initial investigation to clinical trials. A deep understanding of a drug's \gls{MoA} allows to uncover drug-exposure biomarkers, anticipate early adverse effects, and even synergistic effects resulting from drug combinations. 
+Nevertheless, FDA approval can be obtained without knowing the drug's \gls{MoA} if the drug exhibits sufficient safety and efficacy~\cite{RN38, RN68}. 
+Yet, not knowing the mechanisms of the compounds can be extremely disadvantageous. This is demonstrated by the case of Dimebon. 
+Originally developed as an antihistamine drug, it later entered clinical trials (with the \gls{MoA} still unknown) for the treatment of Alzheimer's disease, failing to show meaningful clinical efficacy in phase 3 studies. 
+Later, it was clarified that it was the activity on the histamine and serotonin receptors that caused the initial observed cognitive efficacy, instead of the stabilization of mitochondria (as first hypothesized)~\cite{RN38, RN69}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=4in]{fig2.1.cellular_signaling_cascade}
+    \includegraphics[height=4in]{fig2.1.cellularsignalingcascade}
     \caption[Schematic representation of a compound-induced cellular signaling cascade.]{Schematic representation of a compound-induced cellular signaling cascade, where binding of the perturbing compound to its extracellular receptor domain triggers downstream intracellular signal transduction events through various signaling proteins, ultimately altering gene expression levels in the nucleus. The red nodes represent upregulated genes, the green nodes represent downregulated genes, arrows denote activation events, and T-bar edges indicate inhibitory interactions.}
-    \label{fig:fig2.1.cellular_signaling_cascade}
+    \label{fig:fig2.1.cellularsignalingcascade}
 \end{figure}
-
-
-A deep understanding of a drug \gls{MoA} allows to uncover drug-exposure biomarkers, anticipate early adverse effects, and even synergistic effects resulting from drug combinations. 
-Nevertheless, FDA approval can be obtained without knowing the drug's \gls{MoA} if the drug exhibits sufficient safety and efficacy~\cite{RN38, RN68}. 
-Yet, not knowing the mechanisms of the compounds can be extremely disadvantageous. This is demonstrated by the case of Dimebon. 
-Originally developed as an antihistamine drug, it later entered clinical trials (with the \gls{MoA} still unknown) for treatment for Alzheimer's disease, failing to show meaningful clinical efficacy in phase 3 studies. 
-Later, it was clarified that it was the activity on the histamine and serotonin receptors that caused the initial observed cognitive efficacy, instead of the stabilization of mitochondria (as first hypothesized)~\cite{RN38, RN69}.
 
 Although we refer to the target(s) of a compound as direct, this is often not the case. 
 From a chronological point of view, there are a series of interactions that result in modulation of biological processes, and what is detected at a given moment does not always linearly reflect what happened previously. 
-Indeed, the basic definition of MoA is just the tip of the iceberg, given the chain of biochemical reactions forming part of the cell signaling cascade. 
+Indeed, the basic definition of \gls{MoA} is just the tip of the iceberg, given the chain of biochemical reactions forming part of the cell signaling cascade. 
 This process is characterized by the signaling pathways leading to a certain cellular response. These pathways can also interact with each other through crosstalk~\cite{RN94}, forming a complex network of interconnected and distinct nodes. 
-The impact of a certain compound in the complex cell signaling cascade can be defined and observed on a system level by high throughput approaches such as genomics, \gls{Transcriptomics}, proteomics, metabolomics, and even phenomics. 
+The impact of a certain compound in the complex cell signaling cascade can be defined and observed on a system level by high throughput approaches such as Genomics, \gls{Transcriptomics}, Proteomics, Metabolomics, and even Phenomics. 
 Each of them provides a different perspective on the compound's activity. 
 Despite these technological progresses, experimental identification of targets, signaling proteins, and biological pathways (\gls{MoA}) modulated by an uncharacterized compound can be extremely difficult. 
-To facilitate this process high throughput \textit{in silico} methods have become an attractive option, given the affordability, speed and the amount of data provided. 
+To facilitate this process \gls{HTS} \textit{in silico} methods have become an attractive option, given the affordability, speed and the amount of data provided. 
 These methods act as a screening process, helping to identify and produce mechanistic hypotheses for further experimental validation~\cite{RN38}. 
-Many accessible computational resources integrate omics data with prior knowledge graphs, such as gene regulatory networks, to enhance and pinpoint the drug's potential cellular targets. 
+Many accessible computational resources integrate omics data with prior knowledge graphs, such as \gls{GRN}, to enhance and pinpoint the drug's potential cellular targets. 
 However, choosing the most suitable data and computational tool for each situation is not always simple, requiring precise identification of the scientific question that needs to be addressed. 
-By doing this, researchers can choose the most appropriate data type and bioinformatics tools to efficiently study a compound's MoA.
+By doing this, researchers can choose the most appropriate data type and bioinformatics tools to efficiently study a compound's \gls{MoA}.
 
 \section{Transcriptomic data}
-\label{sec:Transcriptomic_data}
+\label{sec:Transcriptomicdata}
 
 Transcriptomic data provides a comprehensive view of gene expression changes in response to a compound. 
-Following the compound's perturbation, this data will reflect the differential mRNA expression, by capturing modulated signaling and \gls{TF} activity changes triggered by the perturbagen. 
-For this reason, these data are crucial for understanding a compound's \gls{MoA}. 
-After a cellular disturbance, changes in gene expression levels give rise to a perturbated gene expression signature~\cite{RN114}. 
-In 2000, the first reference database was built from a compilation of \textit{Saccharomyces cerevisiae} gene expression signatures derived from pharmacological and genetic perturbations. 
-During this effort, the same authors hypothesized that, to generate a wider collection of reference signatures, less expensive gene expression experiments would be required~\cite{RN115, RN116, RN117}. 
-Since then, driven by growing interest in drug discovery optimization, several databases have emerged to aggregate and publicly provide perturbagen transcriptomic signatures. 
-These databases allow to extract information of gene expression changes in response to certain manipulations and treatments (Table~\ref{tab:transcriptomics_resources}).
-
+Following the compound's perturbation, these data will reflect the differential \gls{mRNA} expression, by capturing modulated signaling and \gls{TF} activity changes triggered by the perturbagen.
+For this reason, after a cellular disturbance, changes in gene expression levels give rise to a perturbated gene expression signature~\cite{RN114}.
+In 2000, the first reference database was built from a compilation of \textit{Saccharomyces cerevisiae} gene expression signatures derived from pharmacological and genetic perturbations.However, the same authors recognized that it would require less expensive technologies to create a larger database of gene expression responses, because the existing methods were too costly to apply at scale~\cite{RN115, RN116, RN117}.
+Since then, driven by growing interest in \gls{DD} optimization, several databases (Table~\ref{tab:transcriptomicsresources}) have emerged to aggregate and publicly provide perturbagen transcriptomic signatures.
 
 DrugMatrix was the first larger molecular toxicology database, created in 2006 by Iconix Pharmaceuticals (later acquired by the National Institute of Environmental Health Sciences) and publicly available since 2011~\cite{RN115, RN118, RN119}. 
-The database comprises the gene expression responses, detected via microarray analyses, to more than 600 perturbagens in rat tissues. 
+The database comprises the gene expression responses, detected via microarray, to more than 600 perturbagens in rat tissues. 
 Additionally, it provides information on chemical treatments related to histopathology, hematology, and clinical chemistry, enabling the investigation of specific types of toxicity~\cite{RN121}. 
 However, studies \textit{in vivo} limit the number of disturbances that can be studied, due to excessive costs that make it impractical to generate data on a large scale, as well as all the associated ethical implications~\cite{RN34}. 
 In addition, transcriptional changes are usually cell-specific, so a precise analysis of transcriptomic changes should be carried out considering the cell type, further increasing the complexity of this effort~\cite{RN86}.
 
-
-\gls{CMap} is a resource that systematically establishes connections between the \gls{MoA} of chemical compounds, diseases, and biological processes through pattern matching between signatures derived from cell lines exposed to different perturbagens. The first version of CMap (CMap 1.0) generated 453 signatures derived from 164 distinct small molecules applied at two-time points (over a range of concentrations), to four human cell lines (MCF7, PC3, HL60, and SKMEL5)~\cite{RN34}.
-Although the goal could be achieved using signatures from various -omic layers, this resource focused only on mRNA expression data through \gls{DNA} microarrays. While the concept behind this database has become extensively utilized, the data generated by this pilot project was too small for the potential applications in the \gls{DD} area. The experimental conditions tested were few and undiversified in terms of perturbagens and biological systems. 
+\gls{CMap} is a resource that systematically establishes connections between the \gls{MoA} of chemical compounds, diseases, and biological processes through pattern matching between signatures derived from cell lines exposed to different perturbagens. The first version of \gls{CMap} (\gls{CMap} 1.0) generated 453 signatures derived from 164 distinct small molecules applied at two-time points (over a range of concentrations), to four human cell lines (MCF7, PC3, HL60, and SKMEL5)~\cite{RN34}.
+Although the goal could be achieved using signatures from various -omic layers, this resource focused only on \gls{mRNA} expression data through \gls{DNA} microarrays. While the concept behind this database has become extensively utilized, the data generated by this pilot project was too small for the potential applications in the \gls{DD} area. The experimental conditions tested were few and undiversified in terms of perturbagens and biological systems. 
 The recent advances in high-throughput technology allowed large data acquisition, as in the case with the L1000 assay.
-The \gls{LINCS} program extended the CMap to a second version (CMap 2.0 or LINCS L1000) that measured the expression of 978 landmark genes (representatives of various biological processes), in cells exposed to a different set of stimuli~\cite{RN30}. 
+The \gls{LINCS} program extended the \gls{CMap} to a second version (\gls{CMap} 2.0 or \gls{LINCS} L1000) that measured the expression of 978 landmark genes (representatives of various biological processes), in cells exposed to a different set of stimuli~\cite{RN30}. 
 Using the Luminex L1000 platform, expression of these landmark genes is directly measured, and computational methods and \textit{in silico} imputation then infer the expression of 11350 additional genes, to provide wider reconstruction of the genomic profiles~\cite{RN30}. 
-In a preliminary phase, LINCS released over 6000 signatures from around 1300 small molecules, many of which were FDA-approved~\cite{RN115}. 
-As of today, LINCS includes more than one million gene expression profiles from over 20000 chemical and genetic perturbagens, tested at multiple time points and doses across various human cell lines. 
-Currently, the dataset is more than a thousand times larger than the CMap pilot dataset. 
+In a preliminary phase, \gls{LINCS} released over 6000 signatures from around 1300 small molecules, many of which were FDA-approved~\cite{RN115}. 
+As of today, \gls{LINCS} includes more than one million gene expression profiles from over 20000 chemical and genetic perturbagens, tested at multiple time points and doses across various human cell lines. 
+Currently, the dataset is more than a thousand times larger than the \gls{CMap} pilot dataset. 
 The perturbagens include pharmacologic (small molecules) and genetic modulators, such as gene knockdowns using \gls{shRNA} and/or CRISPR and induced \gls{OE}. 
-LINCS L1000 provides data on five levels. 
+\gls{LINCS} L1000 provides data on five levels. 
 Levels 1 to 4 contain data at different pre-processing stages, and Level 5 contains the final signatures, where replicates (usually three per treatment) are combined into a single differential expression vector. 
-This level is recommended for most downstream analyses~\cite{RN30}. 
-The data provided by LINCS L1000 has increased the understanding of the association between changes in gene expression and certain disorders, facilitating drug repositioning and contributing to the generation of testable hypotheses about the \gls{MoA} of less characterized compounds. 
+This level is recommended by the authors to use for downstream analyses~\cite{RN30}. 
+The data provided by \gls{LINCS} L1000 has increased the understanding of the association between changes in gene expression and certain disorders, facilitating \gls{DR} and contributing to the generation of testable hypotheses about the \gls{MoA} of less characterized compounds. 
 However, the presence of gene expression changes imputed and not measured directly can lead to some inaccuracies. 
-In addition, the inherent complexity of cellular responses must be considered, since gene expression snapshots may not fully capture the dynamic nature of biological processes and do not always correlate with protein, expression due to post-translational modifications~\cite{RN38}. 
-Despite these limitations, several computational methods have been developed to apply these data to facilitate the drug discovery process. 
+In addition, the inherent complexity of cellular responses must be considered, since gene expression snapshots may not fully capture the dynamic nature of biological processes and do not always correlate with protein expression due to post-translational modifications~\cite{RN38}. 
+Despite these limitations, several computational methods have been developed to apply these data and facilitate the \gls{DD} process. 
 These methods will be described later in this chapter. 
 
-
-The \gls{CDS-DB}~\cite{RN84} is an interactive, user-friendly resource, released in September 2023, aiming to provide data on gene expression in patient samples, following exposure to anti-cancer therapies. 
-It compiles gene expression profiles from 78 patient-derived paired pre- and post-treatment datasets, (from \gls{GEO} and ArrayExpress databases), with manually curated clinical information. These sources have been organized into 219 \gls{CDS-DB} datasets, composed of paired pre- and post-treatment gene expression profiles from multiple human samples. 
+The \gls{CDS-DB}~\cite{RN84} is an interactive, user-friendly resource, released in September 2023, aiming to provide gene expression data from patient samples, following exposure to anti-cancer therapies. 
+It compiles gene expression profiles from 78 patient-derived paired pre- and post-treatment datasets, (from \gls{GEO} and ArrayExpress databases), with manually curated clinical information. 
+These sources have been organized into 219 \gls{CDS-DB} datasets, composed of paired pre- and post-treatment gene expression profiles from multiple human samples. 
 Pairing has been performed considering a wide range of factors (therapeutic regimen, administration dosage, cancer subtype, sampling location, time, and drug response status). 
 From those, datasets containing at least two patients have been used to generate differential expression analyses, resulting in 181 gene perturbation signatures. 
-In addition, 2012 patient-level gene perturbation signatures have been derived by comparing pre- and post-treatment profiles from individual patients (e.g., baseline vs. 14-day; baseline vs. three months). 
-All transcriptomic data in \gls{CDS-DB} were uniformly re-processed from raw files (microarray or RNA-seq), the metadata was manually curated, and the terminologies for drugs, cancers, and genes were harmonized. 
-This database is a valuable resource for MoA elucidation studies as it provides well-curated gene expression data for various cancer types and treatments, including pre- and post-treatment samples obtained from both grouped and individual patients~\cite{RN84}. 
-Nonetheless, \gls{CDS-DB} and \gls{LINCS} are databased focused exclusively on cancer cells (respectively patient-derived and cell lines), so they are not ideal for addressing the challenges related to transcriptional responses in non-transformed cells~\cite{RN86}.
+In addition, 2012 patient-level perturbation signatures have been derived by comparing pre- and post-treatment profiles from individual patients (e.g., baseline vs. 14-day; baseline vs. three months). 
+All transcriptomic data in \gls{CDS-DB} were uniformly re-processed from raw files (microarray or \gls{RNA-seq}), the metadata was manually curated, and the terminologies for drugs, cancers, and genes were harmonized. 
+This database is a valuable resource for \gls{MoA} elucidation studies as it provides well-curated gene expression data for various cancer types and treatments, including pre- and post-treatment samples~\cite{RN84}. 
+Nonetheless, \gls{LINCS} mainly focuses on cancer cells, and \gls{CDS-DB} has only signatures derived from cancer patients, so they are not ideal for addressing the challenges related to transcriptional responses in non-transformed cells~\cite{RN86}.
 
 ChemPert~\cite{RN86}, emerged as a manually curated resource that maps the relationships between chemical perturbations, their protein targets, and downstream transcriptional signatures in non-transformed cells. 
 It provides a user-friendly interface that includes two sections: the database, and a web analysis tool. The database has three main components: 
 (1) Direct signaling protein targets of chemical perturbagens, curated from Drug Repurposing Hub, DrugBank, and STITCH v5.0; 
-(2) Initial gene expression profiles of untreated non-transformed cells, extracted from GEO, ArrayExpress, and LINCS L1000 (Level 3 data); 
+(2) Initial gene expression profiles of untreated non-transformed cells, extracted from GEO, ArrayExpress, and LINCS L1000 (Chemical perturbation datasets of non-cancer cells from LINCS L1000 at Level 3); 
 (3) Transcriptional responses after perturbation, categorized as upregulated or downregulated. 
 ChemPert database encompasses over 82000 transcriptional signatures from the exposure to 2566 chemical compounds across 167 different non-transformed cells and tissues. 
-It includes target data for 57818 chemical compounds, capturing activation, inhibition, or unknown effects. 
+It includes target information for 57818 chemical compounds, capturing activation, inhibition, or unknown effects. 
 Additionally, ChemPert also offers two built-in analysis tools: 
-(1) Given a perturbagen and the initial gene expression profile, the users can predict how transcription factors will respond; 
+(1) Given a perturbagen and the initial gene expression profile, the users can predict how \gls{TF} will respond; 
 (2) Given a specific transcriptional response the users can identify the potential perturbagens based on that input data.
 
 
-Bulk transcriptomic databases average gene expression across cells, potentially masking important heterogeneity in the biological responses, such as the existence of rare cell subpopulations surviving chemotherapy~\cite{RN88}. 
-To capture these variations, single-cell perturbation sequencing methods have emerged. 
+Bulk transcriptomic databases average gene expression across cells, potentially masking important heterogeneity in the biological responses, such as the existence of rare cell subpopulations surviving chemotherapy~\cite{RN88}. To capture these variations, single-cell perturbation sequencing methods have emerged. 
 Techniques like Sci-Plex (for chemical perturbations) and Perturb-seq (for genetic perturbations) leverage mass screening technologies in combination with single-cell resolution, to provide a more detailed view of cellular responses~\cite{RN97}. 
-Although traditional single-cell RNA sequencing (scRNA-seq) is essential for analyzing tissue heterogeneity, its high cost remains a barrier. Sci-Plex~\cite{RN88} was introduced to overcome this limitation, by combining two techniques: 
+Although traditional \gls{scRNA-seq} is essential for analyzing tissue heterogeneity, its high cost remains a barrier. Sci-Plex~\cite{RN88} was introduced to overcome this limitation, by combining two techniques: 
 nuclear hashing and combinatorial indexing-based RNA sequencing (sci-RNA-seq), to assess global transcriptional responses at single-cell resolution~\cite{RN125, RN126}. 
-Nuclear Hashing labels cell nuclei with unique DNA barcodes before pooling, allowing multiple treatment conditions to be multiplexed in one experiment. 
-Sci-RNA-seq uses successive rounds of combinatorial indexing to uniquely tagged transcripts from individual cells, enabling high-throughput scRNA-seq at a much lower cost. 
+Nuclear hashing labels cell nuclei with unique \gls{DNA} barcodes before pooling, allowing multiple treatment conditions to be multiplexed in one experiment. 
+Sci-RNA-seq uses successive rounds of combinatorial indexing to uniquely tagged transcripts from individual cells, enabling high-throughput \gls{scRNA-seq} at a much lower cost. 
 
 
 \begin{newpdflayout}{210mm}{297mm}%{420mm}
@@ -140,7 +131,7 @@ Sci-RNA-seq uses successive rounds of combinatorial indexing to uniquely tagged 
 \begin{center}
 \begin{longtable}{@{} p{0.15\textwidth} p{0.75\textwidth} p{0.08\textwidth} @{}}
 \caption{List of resources that provide transcriptomic data driven from perturbagen.}
-\label{tab:transcriptomics_resources} \\ 
+\label{tab:transcriptomicsresources} \\ 
 \toprule
 \textbf{Database} & \textbf{Description} & \textbf{Ref.} \\
 \midrule
@@ -244,7 +235,7 @@ However, a better understanding of the effects of a given perturbagen can be ach
 
 
 \section{Prior knowledge Network} % (fold)
-\label{sec:Prior_knowledge_Network}
+\label{sec:PriorknowledgeNetwork}
 
 Understanding molecular interactions within a biological system is crucial for contextualizing experimental data. 
 Computational methods allow the integration of omics data with prior knowledge of the interactions between biological entities~\cite{RN38}, to better understand the \gls{MoA} of specific perturbagens.  
@@ -281,7 +272,6 @@ Regulons are groups of co-regulated genes controlled by a common \gls{TF} and ar
 Databases like TissueNet~\cite{RN137} can provide molecular interactions specific to a particular cellular context. The use of large-scale causal graphs for gene expression data interpretation was first introduced by Pollard \textit{et al.}~\cite{RN131, RN135}. This study aimed to infer the molecular causes of the changes in oxidative phosphorylation gene expression in skeletal muscle from type \gls{DM2} patients. For this purpose, the gene expression data were integrated with a large-scale model created from over 210,000 molecular relationships based on \gls{DM2} literature. 
 Computer-aided causal reasoning on these complementary data identified that the observed changes are linked to decreased glucose transport, impaired insulin signaling, and increased risk of post-transplant diabetes~\cite{RN131}.
 
-
 Given the good results obtained from supplementing the studies with PKN, the identification of interactions began to receive more attention. 
 The development of high-throughput screening techniques such as yeast two-hybrid screening and DNA microarray~\cite{RN138} allowed the detection of PPI. 
 Those interactions began to be deposited in databases that provide molecular interaction data. 
@@ -302,7 +292,7 @@ These interactions were compiled from 12 resources, including information inferr
 \end{figure}
 
 MetaBase~\cite{RN33} is a proprietary, commercial database from Clarivate that offers one of the most comprehensive, manually curated systems biology datasets available. It contains over 4.2 million molecular interactions, including protein-protein, protein-RNA, compound-protein, compound-compound interactions, and transport reactions, with details on directionality, mechanisms, and effects. In addition, MetaBase provides more than 1,500 pathway maps that cover regulatory, disease, metabolic, and toxicity characteristics, alongside over 10,000 disease-related networks and 1,000+ validated networks. Each interaction is assigned a trust score that reflects its reliability, helping users distinguish well-established interactions from those obtained via high-throughput screening. MetaBase is accessible through SQL queries or via the metabaseR package in R, which simplifies visualization, functional analysis, and network manipulation. Furthermore, the CBDD R package offers 73 advanced algorithm implementations for analyzing and extracting insights from networks.
-Integrating biological knowledge with experimental data is key to understanding how cellular regulation impacts gene expression.  Known interaction networks are usually used to predict the results of regulatory events, but they can also be used in the opposite direction, to find upstream regulators that cause expression changes~\cite{RN131}. Computational tools play a crucial role here. They combine high-throughput omics data with established cellular interactions, like protein-protein interactions and signaling pathways, to give a broader context. While network data show the complete interactome of molecular interactions, pathway data arrange these interactions into cascades. Each of these data sources forms prior knowledge. 
+Integrating biological knowledge with experimental data is key to understanding how cellular regulation impacts gene expression. Known interaction networks are usually used to predict the results of regulatory events, but they can also be used in the opposite direction, to find upstream regulators that cause expression changes~\cite{RN131}. Computational tools play a crucial role here. They combine high-throughput omics data with established cellular interactions, like protein-protein interactions and signaling pathways, to give a broader context. While network data show the complete interactome of molecular interactions, pathway data arrange these interactions into cascades. Each of these data sources forms prior knowledge. 
 When combined with experimental results helps to create mechanistic hypotheses about, for instance, how a perturbation works in a system. This integration of experimental and interaction data sets the stage for some of the computational methods covered in the next chapter. These methods aim to uncover the mechanisms that cause the observed transcriptomic changes.
 
 \begin{newpdflayout}{210mm}{297mm}%{420mm}
@@ -316,7 +306,7 @@ When combined with experimental results helps to create mechanistic hypotheses a
 @{}}
 %\begin{longtable}{@{} p{3cm} p{2cm} p{16cm} p{2cm} @{}}
 \caption{List of resources that provide prior knowledge networks and pathways.}
-\label{tab:interactions_resources} \\ 
+\label{tab:interactionsresources} \\ 
 \toprule
 \textbf{Database} & \textbf{Type of data} & \textbf{Description} & \textbf{Ref.} \\
 \midrule
@@ -343,7 +333,7 @@ KEGG & Pathways &
   Kyoto Encyclopedia of Genes and Genomes (\href{https://www.genome.jp/kegg}{KEGG}) primarily features metabolic pathways but also includes signal transduction and disease-specific data. KEGG Pathway consists of manually curated pathway maps, illustrating molecular interactions, reactions, and networks across various domains, such as metabolism, cellular processes, human diseases, drug development, etc. KEGG covers 578 human pathways, 12,629 drugs (including 2,499 drug groups), and 2,894 human diseases. &
   ~\cite{RN141} \\
 MetaBase & Network & 
-   MetaBase (MetaBase) provides commercially available manually curated networks, larger (higher number of nodes) and denser (higher number of connections) than other publicly available databases. It contains 4.2 M+ molecular interactions with directionality, mechanism, and effect. Although this is primarily described as a network resource, MetaBase also includes curated pathway maps. It covers human, rat, and mouse genes. metabaseR is a software package that facilitates access to MetaBase content in the statistical programming language R. &
+   MetaBase (MetaBase) provides commercially available manually curated networks, larger (higher number of nodes) and denser (higher number of connections) than other publicly available databases. It contains 4.2 M+ molecular interactions with directionality, mechanism, and effect. Although this is primarily described as a network resource, MetaBase also includes curated pathway maps. It covers human, rat, and mouse genes. metabaseR is a software package that facilitates access to MetaBase content in \gls{R}. &
   ~\cite{RN33} \\
 OmniPath & Network & 
   \href{https://omnipathdb.org/}{OmniPath} is a freely accessible resource that integrates molecular biology data into five main databases: Interactions, Post-Translational Modifications, Complexes, Annotations, and Intercellular. The interactions database contains high-confidence data from different sources encompassing 282,504 unique interactions, organized into various subnetworks. Software tools are also provided for R (OmnipathR) and Python (pypath), together with a plug-in for network visualization (OmniPath Cytoscape)~\cite{RN146, RN92}. &
@@ -355,7 +345,7 @@ Reactome & Pathways &
   \href{https://reactome.org/}{Reactome} is a free, open-source, and peer-reviewed pathway database that is manually curated. It includes 2,769 human pathways, 23,911 interactions, 11,574 proteins, and 1,057 drugs, with over 40,000 literature references. The pathways are organized under 29 categories, such as cell-cell communication, signal transduction, etc. Reactome offers a Pathway Browser for visualizing and interacting with the data, as well as an integrated Analysis Tool~\cite{RN150} for pathway identifier mapping, over-representation, and expression analysis. It also provides two R packages, ReactomePA~\cite{RN148} for pathway analysis and ReactomeGSA~\cite{RN149} for Multi-Omics Comparative Pathway Analysis, and the ReactomeFIPlugIn for pathway visualization in Cytoscape. &
   ~\cite{RN143} \\
 STRING & Network & 
-  \href{https://string-db.org/}{STRING} is a public database that includes known and predicted \gls{PPI}, derived from genomic context predictions, high-throughput lab experiments, co-expression data, automated text mining, and existing databases. STRING currently covers over 59.3 million proteins from 12,535 organisms, providing a comprehensive PPI network with confidence scores based on various data sources. &
+  \href{https://string-db.org/}{STRING} is a public database that includes known and predicted \gls{PPI}, derived from genomic context predictions, high-throughput lab experiments, co-expression data, automated text mining, and existing databases. STRING currently covers over 59.3 million proteins from 12,535 organisms, providing a comprehensive \gls{PPI} network with confidence scores based on various data sources. &
   ~\cite{RN72} \\
 WikiPathways & Pathways &
   \href{https://www.wikipathways.org/}{WikiPathways} iis another open-source curated pathways database. It provides pathways for 27 organisms and includes 959 curated human pathways. The platform supports collaborative annotation and refinement of pathways. It also provides several software tools and workflows in R (rWikiPathways) and Python (pywikipathways), along with Cytoscape and PathVisio plug-ins for pathway visualization, among others~\cite{RN147} &
@@ -368,7 +358,7 @@ WikiPathways & Pathways &
 
 
 \section{Computational methods for MoA inference} % (fold)
-\label{sec:Computational_methods_for_MoA_inference}
+\label{sec:ComputationalmethodsforMoAinference}
 
 Due to technological advances, large-scale transcriptomics datasets can now be generated affordably for many perturbations. 
 However, extracting biological insights from this data can be complicated, requiring dedicated computational tools for the analysis. 
@@ -380,7 +370,7 @@ Node prioritization algorithms rank the nodes in the network based on connectivi
 These approaches help generating mechanistic hypotheses about the cellular targets and pathways affected by a perturbagen, in an easier and more accurate manner~\cite{RN100}. 
 
 \subsection{Connectivity-based tools for comparative analysis} % (fold)
-\label{sub:connectivity-based_methods}
+\label{sub:connectivity-basedmethods}
 
 Similarity-based approaches for \gls{CMap} focus on matching gene expression signatures from query samples to reference profiles. 
 The approach emerged from the need to connect changes caused by perturbagens, with those observed in diseased or other biological states.
@@ -399,12 +389,12 @@ A high positive score may indicate that a compound could enhance a biological co
 
 \gls{CMap} has become a powerful tool for drug repurposing and mechanistic studies because it leverages large-scale gene expression data, to connect drugs, diseases, and gene perturbations. 
 By comparing a query signature with a vast database of compound-induced profiles, candidate drugs that may reverse or mimic disease-specific transcriptional changes can be identified~\cite{RN102}. 
-This approach not only facilitated the creation of several drug-induced molecular perturbation signature databases~\cite{RN84},  but also supported studies applying the \gls{CMap} concept in drug repositioning and \gls{MoA} elucidation~\cite{RN86}. 
+This approach not only facilitated the creation of several drug-induced molecular perturbation signature databases~\cite{RN84},  but also supported studies applying the \gls{CMap} concept in \gls{DR} and \gls{MoA} elucidation~\cite{RN86}. 
 Consequently, this resulted in prediction and experimental validation of novel applications for existing drugs 
 
 
 \subsection{Enrichment-based tools for downstream analysis} % (fold)
-\label{sub:enrichment_based_tools}
+\label{sub:enrichmentbasedtools}
 
 As the number of gene expression studies increases, it becomes harder to extract relevant information. Pathway analysis helps to frame large changes in gene expression that, if isolated, lack biological context. These methods convert gene lists into a meaningful and interpretable biological process, by linking expression data to specific biological pathways.
 
@@ -416,7 +406,7 @@ Overall, enrichment-based methods help provide a broader and better view of biol
 
 
 \subsection{Topology-based methods for upstream analysis} % (fold)
-\label{sub:topology_based_methods_for_upstream_analysis}
+\label{sub:topologybasedmethodsforupstreamanalysis}
 
 While pathway enrichment methods compare gene expression data with the respective encoded proteins and the signaling pathways, on the other hand, topology-based methods treat a gene expression pattern as the result of a specific perturbation. Several algorithms fall into the category of topology-based methods, as they take advantage of a topology network as prior knowledge. A subset of them is categorized as causal reasoning algorithms. Causal reasoning can be described as the process of looking at what happened, the effects, and trying to infer the upstream causes. In this context, change in a process in response to specific stimulus is considered as a proxy for causality, in line with the following axiom A causes B if a change in A leads to a difference in B, assuming everything else stays the same.~\cite{RN157}. This thinking has deep philosophical roots, and, in systems biology, it has a more testable and specific meaning. In early medical applications of causal reasoning, A represented the treatment, and B was the outcome. 
 
@@ -444,7 +434,7 @@ Improving its accuracy in predicting regulators is a key focus. Also, they are c
 There are evidences that topology-based methods may be more useful in DD than pathway enrichment methods. Topology-based causal reasoning takes advantage of directed and signed molecular networks to infer the most plausible upstream regulators from transcriptomic endpoints. By inferring key signaling nodes whose activity can directly explain the changes observed in the experimental data, these methods pinpoint candidate drug targets and generate mechanistic hypotheses for further validation. On the other hand, pathway enrichment methods only infer which biological processes are affected by changes in gene expression. These methods do not consider that after transcription, events such as translation and post-translational modifications will also affect protein activity~\cite{RN53}.
 
 \section{Benchmarking of computational methods for MoA inference} % (fold)
-\label{sec:benchmarking_of_computational_methods_for_MoA_inference}
+\label{sec:benchmarkingofcomputationalmethodsforMoAinference}
 
 The use of computational methods to elucidate mechanisms of action is becoming increasingly indispensable for integrating and interpreting multidimensional biological data. Given the plethora of existing computational tools, choosing the appropriate data and methods to answer specific scientific questions can be challenging. When a new tool is developed and published, it is usually benchmarked against popular existing methods. Without a deep expertise in the area, distinguishing the benefits of a novel tools can be difficult. 
 
