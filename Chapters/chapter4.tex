@@ -17,28 +17,27 @@
 
 A full evaluation was conducted with 86 runs (Table~\ref{tab:table4.1}), resulting from the combination of 10 query datasets and 9 reference datasets (excluding self-comparisons). Given the extensive number of individual runs, the results will be presented as performance summaries of the four key dimensions: algorithms, datasets, reference, and target identification performance. Table~\ref{tab:table4.1} presents the runs that were evaluated, detailing which combination of query and reference datasets was used, and some characteristics of each query dataset.
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
 \begin{table}[]
 \caption[Summary of evaluated runs.]{Summary of evaluated runs. Tool category: C = Connectivity mapping tools, N = Network tools, E = Enrichment tools; Query dataset characteristics: D = Drug perturbation, G = Gene perturbation, C = Cell lines, T = Tissues/in vivo models, Sc = Single-cell data. *: Selected impact signatures from 7390 signatures, **: Generated consensus signatures from 82256 signatures.}
 \label{tab:table4.1}
-\begin{tabular}{lllllllllllll}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{cccc|ccccccccc}
 \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Query / \\ Reference\end{tabular}} & \textbf{Perturbation} & \textbf{Origin} & \textbf{Signatures} & \textbf{Metabase} & \textbf{OmniPath} & \textbf{Metabase (linear path)} & \textbf{MetaBase (regulons)} & \textbf{OmniPath (regulons)} & \textbf{LINCS CRISPR} & \textbf{LINCS OE} & \textbf{LINCS shRNA} & \textbf{GWPS Perturb-Seq} \\ \hline
-CDS-DB                                                                & D                     & T               & 181                 & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
-Sci-Plex                                                              & D                     & C (Sc)          & 405                 & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
-PertOrg                                                               & G                     & T               & 951*                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
-ChemPert                                                              & D                     & C               & 1304**              & N                 & N                 & N                               & N                            & N                            & CN                    & CN                & CN                   & CN                        \\
-GWPS                                                                  & G                     & C (Sc)          & 1980                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & -                         \\
-CREEDS                                                                & DG                    & T               & 2642                & N                 & N                 & N                               & N                            & N                            & CN                    & CN                & CN                   & CN                        \\
-LINCS Compounds                                                       & D                     & C               & 3540                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & CNE                  & CNE                       \\
-LINCS OE                                                              & G                     & C               & 3780                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & -                 & CNE                  & CNE                       \\
-LINCS shRNA                                                           & G                     & C               & 4854                & N                 & N                 & NE                              & NE                           & NE                           & CNE                   & CNE               & -                    & CNE                       \\
-LINCS CRISPR                                                          & G                     & C               & 5156                & N                 & N                 & NE                              & NE                           & NE                           & -                     & CNE               & CNE                  & CNE                       \\ \hline
-\end{tabular}
+\multicolumn{4}{c|}{\textbf{Query}} & \multicolumn{9}{c}{\textbf{Reference}} \\
+Database & Perturbation & Origin & Signatures & MetaBase & OmniPath & \begin{tabular}[c]{@{}c@{}}MetaBase\\ (Linear Path)\end{tabular} & \begin{tabular}[c]{@{}c@{}}MetaBase \\ (Regulons)\end{tabular} & \begin{tabular}[c]{@{}c@{}}OmniPath \\ (Regulons)\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ CRISPR\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ OE\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ shRNA\end{tabular} & \begin{tabular}[c]{@{}c@{}}GWPS \\ Perturb-Seq\end{tabular} \\ \hline
+CDS-DB & D & T & 181 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+Sci-Plex & D & C (Sc) & 405 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+PertOrg & G & T & 951* & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+ChemPert & D & C & 1,304** & N & N & N & N & N & CN & CN & CN & CN \\
+GWPS & G & C (Sc) & 1,980 & N & N & NE & NE & NE & CNE & CNE & CNE & - \\
+CREEDS & DG & T & 2,642 & N & N & N & N & N & CN & CN & CN & CN \\
+LINCS Compounds & D & C & 3,540 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+LINCS OE & G & C & 3,780 & N & N & NE & NE & NE & CNE & - & CNE & CNE \\
+LINCS shRNA & G & C & 4,854 & N & N & NE & NE & NE & CNE & CNE & - & CNE \\
+LINCS CRISPR & G & C & 5,156 & N & N & NE & NE & NE & - & CNE & CNE & CNE \\ \hline
+\end{tabular}%
+}
 \end{table}
-
-
 \section{Algorithms} % (fold)
 \label{sec:algorithmsresults}
 
@@ -69,34 +68,33 @@ In the research field, only a small number of predictions can be experimentally 
 \label{tab:table4.2}
 \begin{tabular}{lllllll}
 \hline
-\textbf{Algorithm} & \textbf{N success} & \textbf{N fail} & \textbf{N run} & \textbf{N skipped} & \textbf{Success rate} & \textbf{Run rate} \\ \hline
-causalReasoning    & 84                 & 2               & 86             & 0                  & 0.98                  & 1.00              \\
-randomWalk         & 84                 & 2               & 86             & 0                  & 0.98                  & 1.00              \\
-ulm                & 51                 & 1               & 52             & 0                  & 0.98                  & 1.00              \\
-overconnectivity   & 83                 & 0               & 83             & 3                  & 1.00                  & 0.97              \\
-wsum               & 43                 & 7               & 50             & 2                  & 0.86                  & 0.96              \\
-wmean              & 43                 & 8               & 51             & 1                  & 0.84                  & 0.98              \\
-SigNet             & 60                 & 18              & 78             & 8                  & 0.77                  & 0.91              \\
-KS                 & 23                 & 0               & 23             & 13                 & 1.00                  & 0.64              \\
-GSEAweight0        & 22                 & 1               & 23             & 13                 & 0.96                  & 0.64              \\
-GSEAweight1        & 22                 & 1               & 23             & 13                 & 0.96                  & 0.64              \\
-XSum               & 22                 & 1               & 23             & 13                 & 0.96                  & 0.64              \\
-Zhang              & 22                 & 1               & 23             & 13                 & 0.96                  & 0.64              \\
-udt                & 30                 & 1               & 31             & 21                 & 0.97                  & 0.60              \\
-interconnectivity  & 47                 & 0               & 47             & 39                 & 1.00                  & 0.55              \\
-networkPropagation & 47                 & 0               & 47             & 39                 & 1.00                  & 0.55              \\
-mdt                & 29                 & 2               & 31             & 21                 & 0.94                  & 0.60              \\
-XCos               & 20                 & 3               & 23             & 13                 & 0.87                  & 0.64              \\
-viper              & 20                 & 4               & 24             & 28                 & 0.83                  & 0.46              \\
-fgsea              & 13                 & 3               & 16             & 36                 & 0.81                  & 0.31              \\
-NicheNet           & 2                  & 0               & 2              & 84                 & 1.00                  & 0.02              \\
-mlm                & 8                  & 6               & 14             & 38                 & 0.57                  & 0.27              \\
-CARNIVAL           & 0                  & 10              & 10             & 76                 & 0.00                  & 0.12              \\
-CIE                & 0                  & 9               & 9              & 77                 & 0.00                  & 0.10              \\
-ProTINA            & 0                  & 0               & 0              & 66                 & -                     & 0.00              \\ \hline
+\textbf{Algorithm} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ success\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ fail\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ run\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ skipped\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Success\\ rate\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Run \\ rate\end{tabular}} \\ \hline
+causalReasoning & 84 & 2 & 86 & 0 & 0.98 & 1.00 \\
+randomWalk & 84 & 2 & 86 & 0 & 0.98 & 1.00 \\
+ulm & 51 & 1 & 52 & 0 & 0.98 & 1.00 \\
+overconnectivity & 83 & 0 & 83 & 3 & 1.00 & 0.97 \\
+wsum & 43 & 7 & 50 & 2 & 0.86 & 0.96 \\
+wmean & 43 & 8 & 51 & 1 & 0.84 & 0.98 \\
+SigNet & 60 & 18 & 78 & 8 & 0.77 & 0.91 \\
+KS & 23 & 0 & 23 & 13 & 1.00 & 0.64 \\
+GSEAweight0 & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+GSEAweight1 & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+XSum & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+Zhang & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+udt & 30 & 1 & 31 & 21 & 0.97 & 0.60 \\
+interconnectivity & 47 & 0 & 47 & 39 & 1.00 & 0.55 \\
+networkPropagation & 47 & 0 & 47 & 39 & 1.00 & 0.55 \\
+mdt & 29 & 2 & 31 & 21 & 0.94 & 0.60 \\
+XCos & 20 & 3 & 23 & 13 & 0.87 & 0.64 \\
+viper & 20 & 4 & 24 & 28 & 0.83 & 0.46 \\
+fgsea & 13 & 3 & 16 & 36 & 0.81 & 0.31 \\
+NicheNet & 2 & 0 & 2 & 84 & 1.00 & 0.02 \\
+mlm & 8 & 6 & 14 & 38 & 0.57 & 0.27 \\
+CARNIVAL & 0 & 10 & 10 & 76 & 0.00 & 0.12 \\
+CIE & 0 & 9 & 9 & 77 & 0.00 & 0.10 \\
+ProTINA & 0 & 0 & 0 & 66 & - & 0.00 \\ \hline
 \end{tabular}
 \end{table}
-
 
 \begin{figure}[htbp]
     \centering
@@ -156,7 +154,7 @@ Assessing the influence of other components on algorithm performance is also imp
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=7in]{fig4.2.referencewrapplots}
+    \includegraphics[height=6in]{fig4.2.referencewrapplots}
     \caption[Performance of nine reference datasets across four evaluation metrics.]{Performance of nine reference datasets across four evaluation metrics. A. Performance mean values. For each reference dataset, the performance is colored by metric. The mean pathway enrichment values represent the significance of overlap between true target pathways and pathways enriched with significant regulators (-log10(p-value) of the hypergeometric test) averaged across the signatures where true targets are present in one or more MetaBase pathways. B. Performance ranking with final scores. Heatmap showing reference dataset performance rankings, where higher ranks indicate better performance. Reference datasets (rows) are ordered by their final aggregate rank from best (top) to worst (bottom). Each cell displays the scaled performance score for the corresponding dataset-metric combination, with cell colors representing the rank. The evaluation metrics include Coverage, Win rate, \gls{AUC}, and Pathway Enrichment. The color gradient ranges from red (low rank/poor performance) through yellow (medium performance) to green (high rank/excellent performance).}
     \label{fig:fig4.2.referencewrapplots}
 \end{figure}
@@ -171,7 +169,7 @@ It is essential to comprehend the performance of all components used in computat
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=7in]{fig4.3.querywrapplots}
+    \includegraphics[height=6in]{fig4.3.querywrapplots}
     \caption[Query dataset performance evaluation.]{Query dataset performance evaluation. A. Bar plot displaying performance metrics (\gls{AUC} and pathway enrichment scores) for each query dataset, with values shown above bars. B. Heatmap visualization of query dataset rankings based on AUC and pathway enrichment performance, ordered by final aggregate rank from lowest (bottom) to highest (top). Cell values represent normalized scores (0-1 scale) while color intensity indicates rank position, with green representing better performance. Query datasets include both drug and genetic perturbation experiments from various sources including cell lines, tissues, and single-cell platforms.}
     \label{fig:fig4.3.querywrapplots}
 \end{figure}
@@ -183,7 +181,7 @@ The bulk versus single-cell comparison revealed no specific differences, with al
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=6in]{fig4.3.allcomparisonsfacetednorank}
+    \includegraphics[height=5.5in]{fig4.3.allcomparisonsfacetednorank}
     \caption[Comparison of algorithm performance between different signature types.]{Comparison of algorithm performance between different signature types, across two evaluation metrics (\gls{AUC} scores and Pathway Enrichment scores). Different comparison: drug perturbation vs genetic perturbation signatures (top), bulk RNA-seq vs single-cell RNA-seq data (middle), and tissue-derived vs cell-line-derived signatures (bottom). Each dot represents an algorithm, colored by category. The diagonal dashed line indicates equal performance between the two signature types being compared. Dots above the line indicate better performance on the y-axis signature type, while dots below the line indicate better performance on the x-axis signature type.}
     \label{fig:fig4.3.allcomparisonsfacetednorank}
 \end{figure}
