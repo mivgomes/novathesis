@@ -8,35 +8,17 @@
 
 \typeout{NT FILE abstract-pt.tex}%
 
-Independentemente da lngua em que a dissertao est escrita, geralmente esta contm pelo menos dois resumos: um resumo na mesma lngua do texto principal e outro resumo numa outra lngua.
-%
-\begin{verbatim}
-    \abstractorder(<MAIN_LANG>):={<LANG_1>,...,<LANG_N>}
-\end{verbatim}
-
-Por exemplo, para um documento escrito em Alemo com resumos em Alemo, Ingls e Italiano (por esta ordem), pode usar-se:
-\begin{verbatim}
-    \ntsetup{abstractorder={de={de,en,it}}}
-\end{verbatim}
-
-Relativamente ao seu contedo, os resumos no devem ultrapassar uma pgina e frequentemente tentam responder s seguintes questes ( imprescindvel a adaptao s prticas habituais da sua rea cientfica):
-
-
-% E agora vamos fazer um teste com uma quebra de linha no hfen a ver se a \LaTeX\ duplica o hfen na linha seguinte se usarmos \verb+"-+ em vez de \verb+-+.
-%
-% zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz zzz zzzz comentar"-lhe zzz zzzz zzz zzzz
-%
-% Sim!  Funciona! :)
+O desenvolvimento de medicamentos é um processo complexo, uma vez que exige a integração de informações provenientes de muitas áreas diferentes do conhecimento. Durante a fase pré-clínica, as dados de ómicas são frequentemente utilizados para elucidar as alterações fenotípicas induzidas pela exposição a um agente terapêutico. Isto permite reconstruir a cascata de alterações bioquímicas responsáveis pelo efeito farmacológico (frequentemente designada reconstrução do mecanismo de ação). Esta é uma etapa crucial na caraterização de um agente terapêutico e os investigadores recorrem a diversas ferramentas computacionais para este processo. No entanto, a quantidade de soluções disponíveis e a falta de avaliação padronizadas das mesmas criam desafios na identificação de quais as ferramentas mais fiáveis e eficientes para casa caso. Para responder a este desafio, a Clarivate lidera o Algorithm Benchmarking Consortium (ABC), baseado em subscrições pré-competitivas, que avalia ferramentas computacionais para diferentes casos de estudo. No âmbito do ABC, foram comparados vários algoritmos para identificar reguladores-chave e inferir proteínas de sinalização desreguladas a partir de dados transcriptómicos (também designados por algoritmos de raciocínio causal), a fim de fornecer uma avaliação imparcial dos métodos disponíveis. Este estudo avaliou 11 algoritmos juntamente com dados transcriptómicos derivados de sete bases de dados e redes moleculares derivadas de OmniPath e o MetabaseTM. Embora os resultados específicos permaneçam confidenciais, as métricas de desempenho incluíram a exatidão na previsão de reguladores causais, a escalabilidade computacional e a robustez às variações dos dados de entrada, proporcionando uma compreensão avançada dos pontos fortes e das limitações dos algoritmos neste domínio. A estrutura da ABC permite não só a seleção de algoritmos com base em provas para diversas tarefas, assegurando resultados fiáveis e reproduzíveis, mas também promove o desenvolvimento de fluxos de trabalho computacionais mais eficazes na descoberta de medicamentos, permitindo que os investigadores seleccionem a ferramenta mais adequada às suas necessidades. Através deste caso de utilização, a ABC realça a importância da regulação causal como uma ferramenta que permite uma compreensão mais profunda dos efeitos farmacológicos dos agentes terapêuticos. Em última análise, isto é essencial para caraterizar o perfil de segurança, para identificar novas indicações (reorientação de fármacos), potenciais estratégias combinatórias com efeitos sinérgicos e subpopulações de doentes clinicamente relevantes.
 
 % Palavras-chave do resumo em Portugus
 % \begin{keywords}
 % Palavra-chave 1, Palavra-chave 2, Palavra-chave 3, Palavra-chave 4
 % \end{keywords}
 \keywords{
-  Primeira palavra-chave \and
-  Outra palavra-chave \and
-  Mais uma palavra-chave \and
-  A ltima palavra-chave
+  Mecanismo de ação \and
+  Transcriptómica \and
+  Avaliação de algoritmos \and
+  Raciocínio causal
 }
 % to add an extra black line
 
