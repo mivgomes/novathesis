@@ -8,9 +8,31 @@
 
 \typeout{NT FILE annex1.tex}%
 
+\begin{newpdflayout}{210mm}{297mm}%{420mm}
 
-\chapter{Annex 1 Lorem Ipsum}
-\label{ann:lorem_ipsum1}
+\chapter{Supplementary Tables}
+\label{ann:SupplementaryTables}
 
-Text
+\begin{table}[]
+\caption[Summary of evaluated runs.]{Summary of evaluated runs. Tool category: C = Connectivity mapping tools, N = Network tools, E = Enrichment tools; Query dataset characteristics: D = Drug perturbation, G = Gene perturbation, C = Cell lines, T = Tissues/in vivo models, Sc = Single-cell data. *: Selected impact signatures from 7390 signatures, **: Generated consensus signatures from 82256 signatures.}
+\label{tab:tablesupplementary1}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{cccc|ccccccccc}
+\hline
+\multicolumn{4}{c|}{\textbf{Query}} & \multicolumn{9}{c}{\textbf{Reference}} \\
+Database & Perturbation & Origin & Signatures & MetaBase & OmniPath & \begin{tabular}[c]{@{}c@{}}MetaBase\\ (Linear Path)\end{tabular} & \begin{tabular}[c]{@{}c@{}}MetaBase \\ (Regulons)\end{tabular} & \begin{tabular}[c]{@{}c@{}}OmniPath \\ (Regulons)\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ CRISPR\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ OE\end{tabular} & \begin{tabular}[c]{@{}c@{}}LINCS \\ shRNA\end{tabular} & \begin{tabular}[c]{@{}c@{}}GWPS \\ Perturb-Seq\end{tabular} \\ \hline
+CDS-DB & D & T & 181 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+Sci-Plex & D & C (Sc) & 405 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+PertOrg & G & T & 951* & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+ChemPert & D & C & 1,304** & N & N & N & N & N & CN & CN & CN & CN \\
+GWPS & G & C (Sc) & 1,980 & N & N & NE & NE & NE & CNE & CNE & CNE & - \\
+CREEDS & DG & T & 2,642 & N & N & N & N & N & CN & CN & CN & CN \\
+LINCS Compounds & D & C & 3,540 & N & N & NE & NE & NE & CNE & CNE & CNE & CNE \\
+LINCS OE & G & C & 3,780 & N & N & NE & NE & NE & CNE & - & CNE & CNE \\
+LINCS shRNA & G & C & 4,854 & N & N & NE & NE & NE & CNE & CNE & - & CNE \\
+LINCS CRISPR & G & C & 5,156 & N & N & NE & NE & NE & - & CNE & CNE & CNE \\ \hline
+\end{tabular}%
+}
+\end{table}
 
+\end{newpdflayout}
