@@ -27,7 +27,8 @@ For example, in 2020, the \gls{CMap} Institute created a challenge on the Kaggle
 Along with these collective efforts, several bioinformatics tools have emerged to infer causal regulators. 
 Authors who develop a new algorithm typically perform comparative benchmarking to highlight the novelty of their discovery~\cite{RN109}. 
 However, these studies have often some limitations. The main one is that simulated data, such as the \gls{LINCS} dataset, is used instead of real experimental data. 
-This approach may fail to capture the variability and complexity of biological systems, leading to a biased evaluation of the computation tool. 
+This approach may fail to capture the variability and complexity of biological systems, leading to a biased evaluation of the computation tool. Also, the datasets used are often small and curated, which may not reflect the challenges of real-world applications.
+And finally, the evaluations often focus on a single aspect of performance, such as accuracy, without considering other important factors like scalability, robustness, and computational efficiency. 
 Benchmarking studies are therefore essential because they aim to test various components in an unbiased and realistic way, to evaluate the performance of different classes of algorithms. 
 
 This study represents the most comprehensive evaluation of \gls{MoA} recovery methods published to date. 
@@ -35,8 +36,7 @@ While previous studies have focused on specific categories of methods, limited n
 This extends previous benchmarking efforts and shows critical differences between theory and practical feasibility.
 
 Topology-based methods consistently achieved the best performance across all metrics in direct target retrieval. 
-randomWalk was almost always at the top of the ranking for \gls{AUC}, reliability, and win rate, as well as run times with around 5s per signature. 
-These results are consistent with other studies. 
+Consistent with other studies, randomWalk was at the top of all the rankings with the exception of runtime and pathway analysis.
 In Hill \textit{et al.}~\cite{RN37}, node prioritization methods, including randomWalk followed by networkPropagation and GeneMANIA, were also identified as the top performers, using a combination of interactions from STRING, MetaBase, and BioPlex as reference dataset. 
 Our study confirmed the superiority of randomWalk, together with evidences that performance depends on the choice of reference network, with the Metabase network providing the best results, probably due to its greater molecular coverage.
 
@@ -124,9 +124,8 @@ When using these networks, one of the recommendations is to ensure that the inte
 This reasoning makes sense if we consider that these large networks include all kinds of interactions, including those specific to other cells or tissues. 
 To this end, instead of using global networks, more specific and context-relevant networks can be used, which may already be prepared by the databases themselves. 
 Alternatively, databases such as TissueNet~\cite{RN137}, provide interaction networks that are specific to certain tissues. 
-Another thing that could be considered would be to integrate networks from different sources, for example, MetaBase and Network, customizing the subsets of interactions to suit the context and by keeping only those with higher reliability scores. 
-
-If we do not just focus on this type of algorithm, there are more software and tools that can be used for target identification, that leverage different computational approaches. 
+Another thing that could be considered would be to integrate networks from different sources, for example, MetaBase and OmniPath networks, customizing the subsets of interactions to suit the context and by keeping only those with higher reliability scores. 
+If the focus extends beyond the types of algorithms used in this project, additional software and tools are available for target identification that leverage different computational approaches. 
 Depending on the specific scientific questions being investigated, it could be also worth exploring them.
 One example is Drug2ways~\cite{RN132}, a software implemented in Python, to identify potential drug repositioning and predict the effects of drugs. 
 To do this, it performs causal reasoning through biological networks with three types of vertices: molecular entities, drugs, and indications. 
