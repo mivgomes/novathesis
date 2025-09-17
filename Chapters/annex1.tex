@@ -35,4 +35,39 @@ LINCS CRISPR & G & C & 5,156 & N & N & NE & NE & NE & - & CNE & CNE & CNE \\ \hl
 }
 \end{table}
 
+
+\begin{table}[]
+\caption[Algorithm execution success and run rate across all benchmarking runs.]{Algorithm execution success and run rate across all benchmarking runs. For each of the 24 algorithms evaluated, the number of successful runs, failures, total runs attempted, and runs skipped are reported. Success rate represents the proportion of successful executions among attempted runs (Number of success / Number of run). The run rate is the proportion of time where the algorithm was launched (Total number of runs / (Total number of runs + Number of skipped runs)). Algorithms are ordered by decreasing run rate.}
+\label{tab:tablesupplementary2}
+\begin{tabular}{lllllll}
+\hline
+\textbf{Algorithm} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ success\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ fail\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ run\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Number\\ skipped\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Success\\ rate\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Run \\ rate\end{tabular}} \\ \hline
+causalReasoning & 84 & 2 & 86 & 0 & 0.98 & 1.00 \\
+randomWalk & 84 & 2 & 86 & 0 & 0.98 & 1.00 \\
+ulm & 51 & 1 & 52 & 0 & 0.98 & 1.00 \\
+overconnectivity & 83 & 0 & 83 & 3 & 1.00 & 0.97 \\
+wsum & 43 & 7 & 50 & 2 & 0.86 & 0.96 \\
+wmean & 43 & 8 & 51 & 1 & 0.84 & 0.98 \\
+SigNet & 60 & 18 & 78 & 8 & 0.77 & 0.91 \\
+KS & 23 & 0 & 23 & 13 & 1.00 & 0.64 \\
+GSEAweight0 & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+GSEAweight1 & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+XSum & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+Zhang & 22 & 1 & 23 & 13 & 0.96 & 0.64 \\
+udt & 30 & 1 & 31 & 21 & 0.97 & 0.60 \\
+interconnectivity & 47 & 0 & 47 & 39 & 1.00 & 0.55 \\
+networkPropagation & 47 & 0 & 47 & 39 & 1.00 & 0.55 \\
+mdt & 29 & 2 & 31 & 21 & 0.94 & 0.60 \\
+XCos & 20 & 3 & 23 & 13 & 0.87 & 0.64 \\
+viper & 20 & 4 & 24 & 28 & 0.83 & 0.46 \\
+fgsea & 13 & 3 & 16 & 36 & 0.81 & 0.31 \\
+NicheNet & 2 & 0 & 2 & 84 & 1.00 & 0.02 \\
+mlm & 8 & 6 & 14 & 38 & 0.57 & 0.27 \\
+CARNIVAL & 0 & 10 & 10 & 76 & 0.00 & 0.12 \\
+CIE & 0 & 9 & 9 & 77 & 0.00 & 0.10 \\
+ProTINA & 0 & 0 & 0 & 66 & - & 0.00 \\ \hline
+\end{tabular}
+\end{table}
+
+
 \end{newpdflayout}
