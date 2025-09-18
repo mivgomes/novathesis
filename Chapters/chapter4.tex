@@ -15,7 +15,9 @@
 
 \textit{In the following section, the results of the benchmarking study are presented across three main levels: the algorithms, the reference and the query dataset. For each level, the metrics to assess the performance are analyzed to capture both computational feasibility and biological relevance. A final ranking combines all the scores, aiming to identify the best algorithm providing real-world applicability at each dimension of data.}
 
-
+% \section{Evaluation overview} % (fold)
+% \label{sec:evaluationoverview}
+\par
 
 A full evaluation was conducted with 86 runs (Table~\ref{tab:tablesupplementary1}), resulting from the combination of 10 query datasets and 9 reference datasets (excluding self-comparisons). Given the extensive number of individual runs, the results will be presented as performance summaries of the four key dimensions: algorithms, datasets, reference, and target identification performance. Table~\ref{tab:tablesupplementary1} presents the runs that were evaluated, detailing which combination of query and reference datasets was used, and some characteristics of each query dataset.
 
@@ -35,7 +37,7 @@ Whilst this value can be informative, a better approach to present these data is
 The final runtime score was calculated as follows. First, within each reference, each tool's per-signature times were rescaled from 0 (slower) to 1 (faster).
 Then, those values were averaged across all references and inverted, so that faster algorithms get higher scores. As shown in Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}, the majority of topology and enrichment methods topped the rankings with scores greater than 0.90, except for the enrichment methods udt and viper, which had lower scores (0.63 and 0.39, respectively).
 The topology methods, causal reasoning, interconnectivity, and network propagation, along with the enrichment methods ulm, wmean, and wsum, topped the rank with scores near 1, providing final output on average in 1-2s per signature.
-Connectivity-mapping tools stayed in the middle of the ranking with scores ranging from 0.80 to 0.90, and mean runtimes \~13-\~24s per signature.
+Connectivity-mapping tools stayed in the middle of the ranking with scores ranging from 0.80 to 0.90, and mean runtimes \textasciitilde13-\textasciitilde24s per signature.
 In contrast, methods like NicheNet and \gls{ProTINA} (respectively 416s and 126s per signature) were markedly slower, thus obtaining a score close to 0.
 
 To complement the runtime evaluation, a reliability score was also computed to assess how often each algorithm failed.
@@ -137,7 +139,7 @@ The outperformance of some of the algorithms in this benchmark should be kept in
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=4in]{fig4.1.algorithmfinalrankheatmap}
+    \includegraphics[height=4.5in]{fig4.1.algorithmfinalrankheatmap}
     \caption[Final performance evaluation of 22 algorithms across five metrics.]{Final performance evaluation of 22 algorithms across five metrics. Heatmap showing algorithm performance rankings, where higher values indicate better performance. Algorithms (rows) are ordered by their final aggregate rank from best (top) to worst (bottom). Each cell displays the normalized performance score (0-1 scale) for the corresponding algorithm-metric combination, with cell colors representing the rank (1-24). The color gradient ranges from red (low rank/poor performance) through yellow (medium performance) to green (high rank/excellent performance). }
     \label{fig:fig4.1.algorithmfinalrankheatmap}
 \end{figure}
@@ -165,7 +167,7 @@ This can indicate that although this dataset captures well the biological contex
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=6in]{fig4.2.referencewrapplots}
+    \includegraphics[height=6.5in]{fig4.2.referencewrapplots}
     \caption[Performance of nine reference datasets across four evaluation metrics.]{Performance of nine reference datasets across four evaluation metrics. A. Performance mean values. For each reference dataset, the performance is colored by metric. The mean pathway enrichment values represent the significance of overlap between true target pathways and pathways enriched with significant regulators ($-\log_{10}(\text{p-value})$ of the hypergeometric test) averaged across the signatures where true targets are present in one or more MetaBase pathways. B. Performance ranking with final scores. Heatmap showing reference dataset performance rankings, where higher ranks indicate better performance. Reference datasets (rows) are ordered by their final aggregate rank from best (top) to worst (bottom). Each cell displays the scaled performance score for the corresponding dataset-metric combination, with cell colors representing the rank. The evaluation metrics include Coverage, Win rate, \gls{AUC}, and Pathway Enrichment. The color gradient ranges from red (low rank/poor performance) through yellow (medium performance) to green (high rank/excellent performance).}
     \label{fig:fig4.2.referencewrapplots}
 \end{figure}
@@ -182,7 +184,7 @@ Then, to systematically investigate performance patterns, algorithms were evalua
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=6in]{fig4.3.querywrapplots}
+    \includegraphics[height=6.5in]{fig4.3.querywrapplots}
     \caption[Query dataset performance evaluation.]{Query dataset performance evaluation. A. Bar plot displaying performance metrics (\gls{AUC} and pathway enrichment scores) for each query dataset, with values shown above bars. B. Heatmap visualization of query dataset rankings based on AUC and pathway enrichment performance, ordered by final aggregate rank from lowest (bottom) to highest (top). Cell values represent normalized scores (0-1 scale) while color intensity indicates rank position, with green representing better performance. Query datasets include both drug and genetic perturbation experiments from various sources including cell lines, tissues, and single-cell platforms.}
     \label{fig:fig4.3.querywrapplots}
 \end{figure}
@@ -204,7 +206,7 @@ The inconsistent performance of single-cell and bulk query datasets may suggest 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[height=5.5in]{fig4.3.allcomparisonsfacetednorank}
+    \includegraphics[height=6in]{fig4.3.allcomparisonsfacetednorank}
     \caption[Comparison of algorithm performance between different signature types.]{Comparison of algorithm performance between different signature types, across two evaluation metrics (\gls{AUC} scores and Pathway Enrichment scores). Different comparison: drug perturbation vs genetic perturbation signatures (top), bulk \gls{RNA-seq} vs \gls{scRNA-seq} data (middle), and tissue-derived vs cell-line-derived signatures (bottom). Each dot represents an algorithm, colored by category. The diagonal dashed line indicates equal performance between the two signature types being compared. Dots above the line indicate better performance on the y-axis signature type, while dots below the line indicate better performance on the x-axis signature type.}
     \label{fig:fig4.3.allcomparisonsfacetednorank}
 \end{figure}

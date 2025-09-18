@@ -48,13 +48,13 @@ On the other hand, enrichment tools take perturbation signatures as query input 
 The primary function of these tools is to assess whether certain regulons or gene sets (e.g., those associated with \gls{TF}) are significantly enriched in the perturbed data. 
 Several algorithms have been developed based on this approach, each producing specific enrichment scores~\cite{RN35}.
 
-With a comprehensive systematic benchmarking approach, this study guides on selecting the most suitable tool for addressing diverse research questions and evaluating a plethora of current solutions for causal regulation assessment. 
+With a comprehensive systematic benchmarking approach, this study guides the selection of the most appropriate tool and inputs for evaluating the plethora of current solutions for causal regulation assessment.
 The evaluation process relies on three inputs:
 
 \begin{itemize}
   \item \gls{Gene signature}s derived from chemical or genetic perturbation experiments.
   \item A \gls{PKN} of the molecular interactions within the system. 
-  \item A golden standard dataset to serve as a reference for validation.
+  \item A golden standard dataset for validation of the results.
 \end{itemize}
 
 These data are used to feed the evaluated methods, serving as the reference, query, and golden standard datasets, respectively. 
@@ -66,8 +66,8 @@ This study analyzes the three types of tools depicted below:
 \item[\textbf{Enrichment-based tools}] Eight algorithms from the decoupleR package~\cite{RN35}.
 \end{enumerate}
 
-Performance is assessed in terms of results obtained, comparing against golden standard datasets, along with the robustness, and the computational efficiency. 
-With this approach, the project aims to identify the most appropriate tools to contextualize gene expression data and provide a correct assessment of biological results.
+Performance is assessed by comparing the results obtained against golden standard datasets, along with the robustness, and the computational efficiency. 
+With this approach, the project aims to identify the most appropriate tools to contextualize gene expression data and if the choice of the inputs can also have an impact on the outcomes.
 
 \section{Scope} % (fold)
 \label{sec:scope}
@@ -88,17 +88,19 @@ These projects included:
 \item[\textbf{Skin Microbiome Atlas}] This project involved the curation and re-analysis of publicly available skin microbiome datasets. My role in this project included conducting an in-depth scientific literature review, compiling relevant datasets, and pre-processing raw sequencing data to ensure consistency and comparability across studies. 
 \item[\textbf{Natural Language Processing}] A pipeline was set up for automatic text classification of epidemiology abstracts, leveraging different versions of the BERT foundational model. Model fine-tuning on a minimal dataset was attempted by generating synthetic data using paraphrasing techniques. 
 \item[\textbf{\gls{ABC} - Spatial Niche}] As part of an internal case study for \gls{ABC}, I implemented several Python wrappers for selected algorithms relevant to spatial niche analysis. My role in this use case mainly included the management of conda environments, the development of functions to run those algorithms and their integration with an \gls{R}-based pipeline.
-\item[\textbf{Google Data Extraction Tool}] In collaboration with another team in the company, I developed an automated script for retrieving pharmacological information from different web sources. The pipeline involved querying URLs and keywords and extracting structured data through API calls.
-\item[\textbf{Transcriptomic comparative analysis}] I was involved in a project to perform a comparative analysis of transcriptomic profiles from three types of cancer. The workflow included exploratory data analysis, identification of \gls{DEGs} and hub genes, pathway enrichment analysis, causal reasoning to infer upstream regulators, and a survival analysis. The analysis also included the comparison of both the Human Papillomavirus status and tumor localization.
+\item[\textbf{Google Data Extraction Tool}] In collaboration with another team in the company, I developed an automated script for retrieving pharmacological information from different web sources. The pipeline involved querying URLs and keywords and extracting structured data through Google search API calls.
+\item[\textbf{Transcriptomic comparative analysis}] I was involved in a project to perform a comparative analysis of transcriptomic profiles from three types of cancer. The workflow included exploratory data analysis, identification of \gls{DEGs} and hub genes, pathway enrichment analysis, causal reasoning to infer upstream regulators, and a survival analysis. The analysis also included the comparison of both the Human Papillomavirus status and tumor location.
 \item[\textbf{Proteomics analysis}] In a proteomics-focused project, I was responsible for carrying out exploratory data analysis and functional enrichment analysis to uncover biological insights from protein-level data.
+\item[\textbf{Single-cell atlas}] For the single-cell atlas project, I performed some downstream analysis, including enrichment analysis on a already built atlas. At this moment, I am involved in the construction of a new single-cell atlas, with the integration, pre-processing and quality control of datasets.
+\item[\textbf{Indication-Prioritization}] This project involved the development of a pipeline to integrate disease and target data annotation from several sources, and prioritize disease indications based on customer's preference criteria.
 \end{enumerate}
 
 \section{Structure} % (fold)
 \label{sec:structure}
 
 This study is organized in five chapters.
-After this introductory chapter, the document is structured as follows: Chapter~\ref{cha:literaturereview} starts by describing what \gls{MoA} is and its importance in \gls{DD}, followed by a review of the data and algorithms that can be used to contextualize gene expression data. This chapter also characterizes the role of a benchmarking study when there is a wide diversity of data and methods available. 
+After this introductory chapter, the document is structured as follows: Chapter~\ref{cha:literaturereview} starts by describing what \gls{MoA} is and its importance in \gls{DD}, followed by a review of the data and algorithms that can be used for \gls{MoA} reconstruction. This chapter also characterizes the role of a benchmarking study when there is a wide diversity of data and methods available.
 Chapter~\ref{cha:materialsandmethods} describes the methodology used in this study, including the selection of gene expression datasets, \gls{Molecular network}s, and algorithms for benchmarking, the design of the experimental framework, and the evaluation metrics used to assess algorithm performance.
 Chapter~\ref{cha:results} presents the results of the benchmarking, including the analysis of algorithm performance across different levels of the data.
 Chapter~\ref{cha:discussion} interprets the results, putting them in the context of the current literature in the field, and summarizes the key findings of the study and their significance, offering recommendations for future work.
-At the end, section~\ref{ann:SupplementaryTables} includes supplementary tables.
+At the end, section~\ref{ann:SupplementaryTables} includes the supplementary tables.
