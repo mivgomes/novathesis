@@ -92,7 +92,7 @@ Additionally, despite each perturbation is tested in triplicate and z-scores are
 Recent alternatives, such as DRUG-seq, demonstrate to have some advantages over L1000. 
 Direct comparison between the two datasets~\cite{RN130, RN105} showed that DRUG-seq directly measures more than 10,000 genes without relying on inference, at a lower cost. 
 When testing the accuracy of both, DRUG-Seq proved to be more accurate in distinguishing samples between different diseases. 
-Also, the emergence of Perturb-seq, which combines \gls{CRISPR} perturbations with single-cell RNA-seq~\cite{RN89}, offers another promising alternative with greater transcriptome coverage at a reduced cost~\cite{RN165}. 
+Also, the emergence of Perturb-seq, which incorporates \gls{CRISPR} perturbations with \gls{scRNA-seq}~\cite{RN89}, offers another promising alternative with greater transcriptome coverage at a reduced cost~\cite{RN165}. 
 Finally, the cancer cell line composition is another shortcoming of this dataset limiting applicability to other contexts. 
 This is being addressed by programs such as Neuro\gls{LINCS}~\cite{RN164}, which create signatures using patient-derived induced pluripotent stem cells~\cite{RN165}. 
 Our finding that tissue-derived signatures consistently outperformed cell line data supports the expansion of data derived from other sources.
@@ -104,7 +104,8 @@ Our results showing MetaBase Linear Path Regulons' excellent pathway enrichment,
 
 The focus on transcriptomic-based methods, in this thesis, but also other benchmarking studies, represents just one facet of \gls{MoA} inference.
 Recent multi-omics integration tools like SignalingProfiler 2.0~\cite{RN100} and COSMOS~\cite{RN99} demonstrate the value of combining transcriptomics with proteomics, metabolomics, and phosphoproteomics data. 
-COSMOS's successful application to capture relevant crosstalks within and between multiple omics layers, resulting in identification of known clear cell renal cell carcinoma drug targets, illustrates how the integration of multiple data types can generate novel biomarker hypotheses. 
+The use of COSMOS to identify known clear cell renal cell carcinoma therapeutic targets was a success.
+This was achieved by capturing crosstalks within and between different omics layers, illustrating how the integration of multiple data types can generate novel biomarker hypotheses. 
 Additionally, data capturing changes in cell morphology and the chemical structure of specific compounds~\cite{RN167} can become a valuable complement to expression data in \gls{DD} studies~\cite{RN38}. 
 
 Some considerations and future work that can be explored are related with certain adjustments or experimental directions that could have been considered, but have been left out of this study for time and resource limitations. 

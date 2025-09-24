@@ -30,7 +30,7 @@ As thorough understanding of the \gls{MoA} is such a critical step, computationa
 Computational methods can accurately identify a new target or propose new indications for a known molecule, thereby reducing the time dedicated to \textit{in vitro} target validation~\cite{RN29}.
 
 A key to understanding a compound's \gls{MoA} lies in transcriptomic profiling, which captures the changes in gene expression triggered by a perturbagen. 
-While traditional \gls{RNA-seq} methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay~\cite{RN30}, enable the cost-effective generation and analysis of large-scale omics datasets. 
+While traditional \gls{RNA-seq} methods remain too costly for large-scale expression signatures, recent \gls{HTS} advances, such as the L1000 assay~\cite{RN30}, enable affordable generation and analysis of large-scale omics datasets. 
 Several existing databases provide public access to transcriptomic data from experiments exposing cell lines to range of chemical and genetic perturbagens. 
 These datasets can be leveraged, using various computational tools, to establish the causal chain of gene expression changes triggered by a specific compound. 
 Three primary approaches have emerged: causal reasoning, connectivity mapping, and enrichment tools~\cite{RN31}.
@@ -45,10 +45,9 @@ In this case, a similarity score is used to compare a set of known \gls{MoA}/com
 The principle behind \gls{CMap} is that the higher the similarity between the query and the reference signature, the more likely it is that the underlying mechanism is the same. 
 
 On the other hand, enrichment tools take perturbation signatures as query input and utilize prior knowledge, such as a regulon network or collections of perturbation-induced \gls{DEGs}, as a reference. 
-The primary function of these tools is to assess whether certain regulons or gene sets (e.g., those associated with \gls{TF}) are significantly enriched in the perturbed data. 
-Several algorithms have been developed based on this approach, each producing specific enrichment scores~\cite{RN35}.
+The purpose of these tools is to determine whether specific gene sets or regulons (genes interacting with \gls{TF}) are enriched in the perturbed data~\cite{RN35}.
 
-With a comprehensive systematic benchmarking approach, this study guides the selection of the most appropriate tool and inputs for evaluating the plethora of current solutions for causal regulation assessment.
+With a systematic benchmarking approach, this study guides the selection of the most appropriate algorithms and inputs for evaluating the plethora of current solutions for \gls{MoA} reconstruction.
 The evaluation process relies on three inputs:
 
 \begin{itemize}
@@ -76,7 +75,7 @@ This project was conducted within the framework of the \gls{ABC}, a subscription
 \section{Other Contributions} % (fold)
 \label{sec:othercontributions}
 
-This study expands the state of the art in causal reasoning using gene expression data and causal graphs, by presenting a robust framework and a systematic algorithm benchmarking approach. The study was presented during the following poster communication:
+This study expands the state of the art in causal reasoning using gene expression data and molecular interactions, by presenting a robust framework and a systematic algorithm benchmarking approach. The study was presented during the following poster communication:
 \begin{enumerate}
 \item[\textbf{XIV Edition of Bioinformatics Open Days}] . Gomes, A. Ishkin, F. Ciceri, C. Klein. Benchmarking Causal Reasoning Algorithms for enhanced Drug Discovery: Insights from Clarivate's pre-competitive Algorithm Benchmarking Consortium. XIV Edition of Bioinformatics Open Days, 26 March 2025, Braga, Portugal.
 \end{enumerate}
