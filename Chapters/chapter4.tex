@@ -77,7 +77,7 @@ The mean scaled \gls{AUC} values obtained for each algorithm can be found in Fig
 \end{figure}
 %\end{newpdflayout}
 
-The topology-based algorithms with node prioritization occupied the top of the rank, with randomWalk showing the best performance with a mean scaled \gls{AUC} of 0.30 (score of 1), achieving 30\% recovery within the top 1\% of predictions.
+The topology-based algorithms with node prioritization occupied the top of the rank, with randomWalk showing the highest mean scaled \gls{AUC} of 0.30 (score of 1), achieving 30\% recovery within the top 1\% of predictions.
 The others (networkPropagation, interconnectivity and overconnectivity), although at the top, only achieved half the performance of the randomWalk (scaled \gls{AUC} of 0.17, 0.13 and 0.13, respectively).
 The enrichment-based methods displayed a uniform performance, with scaled \gls{AUC} values clustering between 0.07 and 0.10.
 Connectivity mapping approaches do not seem suitable for this task, with all five methods achieving scaled \gls{AUC} values below 0.08.
@@ -150,7 +150,9 @@ The outperformance of some of the algorithms in this benchmark should be kept in
 \section{Reference datasets} % (fold)
 \label{sec:referencedatasetsresults}
 
-Assessing the influence of other components on algorithm performance is also important. In order to obtain biologically relevant results it is important not only the choice of the algorithm but also the type of prior knowledge used for running the algorithm. For this reason, the nine reference datasets were evaluated to understand which allows more effective recovery of targets identified from the golden standard.
+Assessing the influence of other components on algorithm performance is also important.
+The type of prior knowledge chosen to execute the algorithm is just as critical as the algorithm itself to provide meaningful results.
+For this reason, the nine reference datasets were evaluated to understand which allows more effective recovery of targets identified from the golden standard.
 As before, four metrics were used to evaluate performance: coverage, win rate, target recovery, and pathway enrichment.
 For each reference dataset, the metric values and the final rank, with the final scores (values rescaled from 0 to 1) are represented in Figure~\ref{fig:fig4.2.referencewrapplots}.
 Evaluating the degree of coverage is crucial because if targets are not present in the prior knowledge provided to the algorithm, then they will never be returned in the results.
@@ -161,7 +163,7 @@ However, it has the highest win rate (and a \gls{WPAE} of 0.05) and pathway enri
 For MetaBase network, the coverage is in line with the number of regulatory interactions present in this database, ensuring that no causal regulators are missed because of lack in the prior knowledge dataset.
 What stands out most when considering performance of different reference datasets is the fact that topological network references generally score higher than signatures.
 Also, the clear contrast between MetaBase Network's 92\% coverage and \gls{GWPS}'s 27\% coverage directly translates to the performance differences across all other metrics evaluated.\gls{GWPS} achieved a score of zero in all metrics, showing that even sophisticated algorithms cannot overcome insufficient molecular coverage in a prior knowledge reference data set. \gls{LINCS} \gls{CRISPR} performed best among perturbation references, but scored poorly in pathway enrichment (0.50), indicating that perturbation signatures may lack pathway-level context.
-Finally, it is worth to mention that the performance of regulon-based references.
+Finally, it is important to mention that the performance of regulon-based references.
 MetaBase Linear Path Regulons achieved the best pathway enrichment (score of 1) in contrast with the poor coverage (48\%) and target recovery (\gls{AUC}: 0.18).
 This can indicate that although this dataset captures well the biological context, it probably oversimplifies the complexity needed for precise target identification.
 
@@ -207,7 +209,7 @@ The inconsistent performance of single-cell and bulk query datasets may suggest 
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=6in]{fig4.3.allcomparisonsfacetednorank}
-    \caption[Comparison of algorithm performance between different signature types.]{Comparison of algorithm performance between different signature types, across two evaluation metrics (\gls{AUC} scores and Pathway Enrichment scores). Different comparison: drug perturbation vs genetic perturbation signatures (top), bulk \gls{RNA-seq} vs \gls{scRNA-seq} data (middle), and tissue-derived vs cell-line-derived signatures (bottom). Each dot represents an algorithm, colored by category. The diagonal dashed line indicates equal performance between the two signature types being compared. Dots above the line indicate better performance on the y-axis signature type, while dots below the line indicate better performance on the x-axis signature type.}
+    \caption[Comparison of algorithm performance between different signature types.]{Comparison of algorithm performance between different signature types, across two evaluation metrics (\gls{AUC} scores and Pathway Enrichment scores). Different comparison: drug perturbation vs genetic perturbation signatures (top), bulk \gls{RNA-seq} vs \gls{scRNA-seq} data (middle), and tissue-derived vs cell-line-derived signatures (bottom). Each dot represents an algorithm, colored by category. The diagonal dashed line represents equal performance between the two signature types being compared. Dots above the line indicate better performance on the y-axis signature type, while dots below the line indicate better performance on the x-axis signature type.}
     \label{fig:fig4.3.allcomparisonsfacetednorank}
 \end{figure}
 %\end{newpdflayout}
