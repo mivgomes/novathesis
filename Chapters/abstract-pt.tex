@@ -9,19 +9,20 @@
 \typeout{NT FILE abstract-pt.tex}%
 
 O desenvolvimento de medicamentos é um processo complexo que requer a integração de informações de muitas áreas diferentes do conhecimento.
-Durante a fase pré-clínica, medições ómicas são frequentemente utilizadas para esclarecer as alterações fenotípicas causadas pela exposição a um agente terapêutico, permitindo assim a reconstrução da cascata bioquímica responsável pelo efeito farmacológico (frequentemente chamada de reconstrução do mecanismo de ação).
+Durante a fase pré-clínica, dados ómicos são frequentemente utilizados para esclarecer as alterações fenotípicas causadas pela exposição a um agente terapêutico, permitindo assim a reconstrução da cascata bioquímica responsável pelo efeito farmacológico (frequentemente chamada de reconstrução do mecanismo de ação).
 Esta etapa é crucial para caracterizar um agente terapêutico, e os investigadores dependem de inúmeras ferramentas computacionais para este processo.
 No entanto, a abundância de soluções disponíveis e a falta de estruturas de avaliação padronizadas representam desafios na identificação de ferramentas confiáveis e eficientes.
-Para resolver isso, a Clarivate lidera o Algorithm Benchmarking Consortium (ABC), um consórcio pré-competitivo baseado em assinatura que avalia ferramentas computacionais para vários casos de uso.
-Dentro da estrutura do ABC, 27 algoritmos (13 baseados em topologia, 6 baseados em conectividade e 8 baseados em enriquecimento) para identificar reguladores-chave e inferir proteínas de sinalização desreguladas a partir de dados transcriptómicos foram comparados para fornecer uma avaliação imparcial dos métodos disponíveis.
+Com isso em mente, a Clarivate lidera o Algorithm Benchmarking Consortium (ABC), um consórcio baseado em subscrição para farmacêuticas que avalia ferramentas computacionais para vários casos de estudo.
+Dentro do ABC, 27 algoritmos (13 baseados em topologia, 6 baseados em conectividade e 8 baseados em enriquecimento) para identificar reguladores-chave e inferir proteínas de sinalização desreguladas a partir de dados transcriptómicos foram comparados para fornecer uma avaliação imparcial dos métodos disponíveis.
 Os algoritmos foram avaliados juntamente com dados transcriptómicos derivados de 7 bases de dados e redes moleculares da OmniPath e MetaBase\textsuperscript{TM}.
-As métricas de desempenho incluíram precisão na previsão de reguladores causais, escalabilidade computacional e robustez em relação às variações dos dados de entrada.
+As métricas de desempenho incluíram precisão na previsão de reguladores causais, escalabilidade computacional e robustez em relação às variações dos dados utilizados pelos algoritmos.
 
-Os algoritmos de raciocínio causal randomWalk e não causal overconnectivity apresentaram resultados superiores em geral para a recuperação direta de alvos.
+Os algoritmos de raciocínio causal, randomWalk, e não causal, overconnectivity, apresentaram resultados superiores em geral para a recuperação direta de alvos.
 Entre as ferramentas baseadas em enriquecimento, o wmean foi o que apresentou melhor desempenho.
-A nível de dados de referência, a rede molecular MetaBase apresentou melhores resultados. E a nível de dados de consulta, as assinaturas derivadas de tecidos superaram as derivadas de linhas celulares.
-Através deste caso de uso, a ABC enfatiza a importância da reconstrução do MoA como um meio de obter uma melhor compreensão dos efeitos farmacológicos dos agentes terapêuticos.
-Em última análise, isso é essencial para caracterizar perfis de segurança, identificar novas indicações (reaproveitamento de medicamentos), explorar estratégias combinatórias potenciais com efeitos sinérgicos e direcionar subpopulações de pacientes clinicamente relevantes.
+A nível de dados de referência, a rede molecular MetaBase apresentou melhores resultados.
+E a nível de dados de consulta, as assinaturas derivadas de tecidos superaram as derivadas de linhas celulares.
+Através deste caso de uso, o ABC enfatiza a importância da reconstrução do mecanismo de ação de uma perturbação para obter uma melhor compreensão dos efeitos farmacológicos dos agentes terapêuticos.
+Em última análise, isso é essencial para caracterizar perfis de segurança, identificar novas indicações (reposicionamento de medicamentos) e explorar estratégias combinatórias potenciais com efeitos sinérgicos.
 
 % Palavras-chave do resumo em Portugus
 % \begin{keywords}
