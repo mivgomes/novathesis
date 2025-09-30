@@ -11,7 +11,7 @@
 \chapter{Discussion}
 \label{cha:discussion}
 
-\textit{This chapter discusses the results by highlighting their implications and comparing them with the existing literature. Finally, the key findings are summarized into conclusions and suggestions for some future perspectives.}
+\textit{This chapter discusses the results by highlighting their implications and comparing them with the existing literature. Finally, the key findings are summarized with conclusions and suggestions for some future perspectives.}
 
 The \gls{MoA} of a small molecule involves its interaction with specific molecular targets. When these primary targets are activated or inhibited, they trigger changes in downstream signaling pathways, modulating the activity of \gls{TF}s and therefore the expression of individual genes. 
 All these changes will ultimately produce the desired drug effect together with any additional undesired side effects. 
@@ -25,20 +25,21 @@ For example, in 2020, the \gls{CMap} Institute created a challenge on the Kaggle
 Along with these collective efforts, several bioinformatics tools have emerged to infer causal regulators. 
 Authors who develop a new algorithm typically perform comparative benchmarking to highlight the novelty of their discovery~\cite{RN109}. 
 However, these studies often have some limitations. The main one is that simulated data, such as the \gls{LINCS} dataset, is used instead of real experimental data. 
-This approach may fail to capture the variability and complexity of biological systems, leading to a biased evaluation of the computation tool. Also, the datasets used are often small and curated, which may not reflect the challenges of real-world applications.
+This approach may fail to capture the variability and complexity of biological systems, leading to a biased evaluation of the computation tool.
+Also, the datasets used are often small and curated, which may not reflect the challenges of real-world applications.
 Finally, the evaluations often focus on a single aspect of performance, such as accuracy, without considering other important factors like scalability, robustness, and computational efficiency. 
-Benchmarking studies are therefore essential because they aim to test various components in an unbiased and realistic way, to assess how well distinct algorithm classes perform.
+Benchmarking studies are therefore essential because they aim to test various components in an unbiased and realistic way, to assess how well different algorithm classes perform.
 
-This study represents the most comprehensive evaluation of \gls{MoA} recovery methods published to date. 
+This study represents one of the most comprehensive evaluations of \gls{MoA} recovery methods published to date to our knowledge. 
 While previous studies have focused on specific categories of methods, limited network sources, or small selected datasets, this study covered 27 algorithms, including topology-based, enrichment, and \gls{CMap} methods, incorporating public and commercial reference datasets, and experimental and simulated data from seven distinct sources. 
 This extends previous benchmarking efforts and shows critical differences between theory and practical feasibility.
 
 Topology-based methods consistently achieved the best performance across all metrics in direct target retrieval. 
 Consistent with other studies, randomWalk was at the top of all the rankings with the exception of runtime and pathway analysis.
 In Hill \textit{et al.}~\cite{RN37}, node prioritization methods, including randomWalk followed by networkPropagation and GeneMANIA, were also identified as the top performers, using a combination of interactions from STRING, MetaBase, and BioPlex as reference dataset. 
-Our study confirmed the superiority of randomWalk, together with evidences that performance depends on the choice of reference network, with the Metabase network providing the best results, probably due to its greater molecular coverage.
+Our study confirmed the superiority of randomWalk, together with evidence that performance depends on the choice of reference network, with the Metabase network providing the best results, probably due to its greater molecular coverage.
 
-The similar performance of randomWalk with different reference datasets demonstrate the accuracy of the algorithm. 
+The similar performance of randomWalk with different reference datasets demonstrates the accuracy of the algorithm. 
 The overconnectivity and networkPropagation algorithms also performed well in our study. 
 However, each one had some limitations in terms of accuracy, reliability, or run time. 
 For example, networkPropagation obtained results similar to randomWalk in terms of \gls{AUC}, but with reduced reliability in large-scale executions, suggesting possible concerns with scalability.
@@ -47,15 +48,15 @@ Our study reveals an important trade-off between direct recovery and the biologi
 Methods that achieved the highest pathway enrichment scores, such as wmean and wsum, also obtained negative \gls{WPAE} values, indicating that they do not outperform direct target classification methods. 
 On the other hand, although randomWalk performs well in target identification, it seems to compromise pathway enrichment performance, by obtaining half the scores of wmean and wsum. 
 This inverse relationship suggests that algorithms designed to capture biological context end up sacrificing accuracy in identifying individual causal nodes. 
-As a consequence, methods selection goes beyond simple performance rankings, as it should also account the need to a deeper understanding of the biological context surrounding a specific target. 
+As a consequence, methods selection goes beyond simple performance rankings, as it should also account for the need for a deeper understanding of the biological context surrounding a specific target. 
 If understanding the broader biological context is more important than identifying single targets, these enrichment methods can provide better results, despite lower accuracy. 
 In contrast, when experimental validation resources limit testing to a few candidates, the accuracy of randomWalk seems to be more appropriate.
 
 A study by Lin, K., \textit{et al.}~\cite{RN79} and others [108] identified ZhangScore as the best algorithm among \gls{CMap} methods. 
 However, in our study, this algorithm performed poorly. 
 In general, all \gls{CMap} algorithm achieved low \gls{AUC} values (< 0.08), win rate values (< 0.03), and pathway enrichment scores (0.20  0.31). 
-Among the \gls{CMap} algorithms, GSEAweight1 showed the best results, followed by \gls{KS}, with Zhang only distinguishing itself because of the worst computational efficiency, having the highest runtime. 
-This huge difference compared with published results can be interpreted considering the task being evaluated. 
+Among the \gls{CMap} algorithms, GSEAweight1 showed the best results, followed by \gls{KS}, with Zhang algorithm distinguished itself only by having the worst computational efficiency (highest runtime). 
+This huge difference compared to published results can be interpreted considering the task being evaluated. 
 While the studies mentioned above were assessing the similarity between signatures, in this study we are evaluating the ability to identify the true target responsible for the perturbation signatures. 
 These results suggest that similarity-based algorithm fails to capture the causal regulatory relationships underlying perturbation responses, meaning that gene expression pattern relationship does not necessarily reflects shared regulatory mechanism.
 
