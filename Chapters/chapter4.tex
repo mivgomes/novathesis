@@ -66,7 +66,7 @@ In the research field, only a small number of predictions can be experimentally 
 Hence, the choice of the algorithms to identify potential target genes should prioritize those that are most likely to include the true target.
 To evaluate that, the metric \gls{AUC} was used to assess performance in recovering the true target among the top 1\% of the predicted regulators.
 The \gls{AUC} scaled mean was first calculated by taking the \gls{AUC} mean across all query signatures. Then, for each reference dataset, these means were scaled from 0 to 1 and averaged across all runs for each algorithm.
-The final \gls{AUC} scores with values close to 1 mean better performance.
+The final \gls{AUC} scores with values close to 1 indicating better performance.
 The mean scaled \gls{AUC} values obtained for each algorithm can be found in Figure~\ref{fig:fig4.1.algorithmAUC}, and the final \gls{AUC} scores in Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}. 
 
 \begin{figure}[htbp]
@@ -85,7 +85,7 @@ The XSum method performed worst overall (scaled \gls{AUC}: 0.05, score: 0.16), w
 These results suggest that methods designed for perturbation signature matching lack the mechanistic reasoning necessary for an accurate target identification.
 
 The win rate and the \gls{WPAE} were two metrics used to evaluate how often an algorithm ranks the true targets and the performance over a random selection of target genes.
-A win rate of 0.5 means that out of 25 different query datasets, the true target is ranked among the top regulators in 25 of them.
+A win rate of 0.5 means that out of 10 different query datasets, the true target is ranked among the top regulators in 5 of them.
 The \gls{WPAE} is a normalization, to account for a different number of competing tools in different runs.
 
 A positive \gls{WPAE} means that the performance was better than chance, and a negative indicates an underperformance of the tool compared to a random selection of target genes.
