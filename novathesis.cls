@@ -2755,13 +2755,12 @@
     \theschool(\@LANG@COPYRIGHT), \theuniversity(\@LANG@COPYRIGHT).\\%
     \thecopyrighttextstring(\@LANG@COPYRIGHT)%
     % \ntselectlang{\@LANG@MAIN}%
-    \medskip
-    \noindent
-    \textbf{Declaration on the use of artificial intelligence tools}
-    \\
-    This work used generative artificial intelligence tools, namely \href{https://quillbot.com}{QuillBot}~\cite{QuillBot} and \href{https://copilot.microsoft.com/}{Microsoft Copilot}~\cite{Copilot}, to assist with text paraphrasing.
-    These tools were used under the author's supervision, and all generated content was checked for accuracy.
-    Authorship and content validation remained the author's responsibility, and the use of artificial intelligence complies with institutional standards of academic integrity.
+  \medskip
+  
+  \noindent\textbf{Declaration on the use of artificial intelligence tools}
+  
+  \par\noindent
+  This work used generative artificial intelligence tools, namely \href{https://quillbot.com}{QuillBot}~\cite{QuillBot} and \href{https://copilot.microsoft.com/}{Microsoft Copilot}~\cite{Copilot}, to assist with text paraphrasing. These tools were used under the author's supervision, and all generated content was checked for accuracy. Authorship and content validation remained the author's responsibility, and the use of artificial intelligence complies with institutional standards of academic integrity.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
