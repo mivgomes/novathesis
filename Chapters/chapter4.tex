@@ -13,7 +13,7 @@
 \chapter{Results}
 \label{cha:results}
 
-\textit{In the following section, the results of the benchmarking study are presented across three main levels: the algorithms, the reference and the query dataset. For each level, the metrics to assess the performance are analyzed to capture both computational feasibility and biological relevance. A final ranking combines all the scores, aiming to identify the best algorithm providing real-world applicability at each dimension of data.}
+\textit{In the following section, the results of the benchmarking study are presented across three main levels: the algorithms, the reference and the query datasets. For each level, the metrics to assess the performance are analyzed to capture both computational feasibility and biological relevance. A final ranking combines all the scores, aiming to identify the best algorithm providing real-world applicability at each dimension of data.}
 
 % \section{Evaluation overview} % (fold)
 % \label{sec:evaluationoverview}
@@ -31,21 +31,21 @@ To evaluate the biological relevance of the predictions, the \gls{AUC}, the win 
 
 Execution time and algorithm failures can prevent the use of algorithms in research settings.
 For this reason, evaluating those metrics is important for understanding the feasibility of each computational approach.
-The runtime represents the time in seconds that each tool took to execute, and it is directly correlated with query and reference datasets size.
+The runtime represents the time in seconds that each tool took to execute, and it is directly correlated with the size of the query and reference datasets.
 In this context, a mean runtime captures how long on average each tool takes to generate the desired output.
 Whilst this value can be informative, a better approach to present these data is to consider mean runtime per signature (Figure~\ref{fig:fig4.1.algorithmRunTime}) or a value normalized considering the size of the reference dataset (the final runtime score in Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}).
 The final runtime score was calculated as follows. First, within each reference, each tool's per-signature times were rescaled from 0 (slower) to 1 (faster).
 Then, those values were averaged across all references and inverted, so that faster algorithms get higher scores. As shown in Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}, the majority of topology and enrichment methods topped the rankings with scores greater than 0.90, except for the enrichment methods udt and viper, which had lower scores (0.63 and 0.39, respectively).
-The topology methods, causal reasoning, interconnectivity, and network propagation, along with the enrichment methods ulm, wmean, and wsum, topped the rank with scores near 1, providing final output on average in 1-2s per signature.
-Connectivity-mapping tools stayed in the middle of the ranking with scores ranging from 0.80 to 0.90, and mean runtimes \textasciitilde13-\textasciitilde24s per signature.
-In contrast, methods like NicheNet and \gls{ProTINA} (respectively 416s and 126s per signature) were markedly slower, thus obtaining a score close to 0.
+The topology methods, causal reasoning, interconnectivity, and network propagation, along with the enrichment methods ulm, wmean, and wsum, topped the rank with scores near 1, providing final output on average in 1-2 s per signature.
+Connectivity-mapping tools stayed in the middle of the ranking with scores ranging from 0.80 to 0.90, and mean runtimes \textasciitilde13-\textasciitilde24 s per signature.
+In contrast, methods like NicheNet and \gls{ProTINA} (respectively 416 s and 126 s per signature) were markedly slower, thus obtaining a score close to 0.
 
 To complement the runtime evaluation, a reliability score was also computed to assess how often each algorithm failed.
 The final reliability score is an average of a success rate (runs that returned results) and a run rate (runs launched) from a scale of 0 to 1, where scores close to 1 indicate more reliable algorithms.
 Details of the rates can be found in Table~\ref{tab:tablesupplementary2}, and the final reliability scores are represented in Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}.
 At the top of the rank, some of the topology and enrichment methods, with causalReasoning, randomWalk, and ulm topped scoring close to 0.99 (i.e. returning results in 98\% of the launched runs).
 Next in the ranking it can be found overconnectivity (score of 0.98) and wmean/wsum (scores of 0.91).
-Consistent with the runtime, the connectivity methods are in the middle with scores between 0.80 and 0.82, with XCos further down with 0.75.
+Consistent with the runtime, the connectivity methods are in the middle with scores between 0.80 and 0.82, with \gls{xCos} further down with 0.75.
 At the bottom of the ranking, NicheNet, which although it achieved total success when launched, only ran in 2 out of 86 runs (run rate of 0.02), resulting in a reliability score of 0.51.
 The lowest-performing algorithms in this category were \gls{CARNIVAL} (score of 0.06) and \gls{CIE} (score of 0.05), which were skipped or failed in every single run. 
 
@@ -99,7 +99,7 @@ Only two other topology-based methods achieved positive WPAE values, overconnect
 Most algorithms (19 out of 22) showed negative \gls{WPAE} values, indicating they win less frequently than random chance would predict, revealing that they rarely identify the true target.
 networkPropagation, despite showing a good \gls{AUC} performance, achieved a slightly negative \gls{WPAE} (-0.05), and won only 8\% of comparisons.
 This discrepancy suggests the algorithm excels at enriching true targets within its top predictions, but rarely ranks them at the absolute top position.
-The win rate score (Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}) close to 1 for randomWalk (calculated as mean \gls{WPAE} rescaled between 0 and 1), reinforce the superiority of this approach against the other comparators considered.
+The win rate score (Figure~\ref{fig:fig4.1.algorithmfinalrankheatmap}) close to 1 for randomWalk (calculated as mean \gls{WPAE} rescaled between 0 and 1), reinforces the superiority of this approach against the other comparators considered.
 
 % In~\ref{fig:fig4.1.algorithmwin}
 % In~\ref{fig:fig4.1.algorithmWPAE}
@@ -124,7 +124,7 @@ The wmean and wsum methods achieved the best pathway scores (1.00), with average
 The ulm follows with a mean enrichment of 1.98 (score of 0.92).
 In contrast to these are viper, mlm, fgsea, mdt, and udt, which performed poorly with values between 1 and 0.24 (scores between 0.45 and 0.08), respectively.
 Within topology-based methods, causalReasoning achieved the second-highest overall performance (enrichment: 1.97, score: 0.91), followed by overconnectivity (enrichment: 1.72, score: 0.79).
-Similar moderate performance was shown by networkPropagation, SigNet, and randomWalk (scores in the 0.54 - 0.55 range).
+Similar moderate performance was shown by networkPropagation, SigNet, and randomWalk (scores in the 0.54-0.55 range).
 Connectivity-mapping approaches uniformly failed at pathway enrichment, with all five methods achieving scores below 0.11.
 
 \begin{figure}[htbp]
@@ -135,7 +135,7 @@ Connectivity-mapping approaches uniformly failed at pathway enrichment, with all
 \end{figure}
 %\end{newpdflayout}
 
-The outperformance of some of the algorithms in this benchmark should be kept in mind when selecting the best computation approach to understand broad biological context rather than simply identifying single causal nodes. 
+The outperformance of some of the algorithms in this benchmark should be kept in mind when selecting the best computational approach to understand broad biological context rather than simply identifying single causal nodes. 
 
 \begin{figure}[htbp]
     \centering
