@@ -279,7 +279,7 @@ OmniPath data can be accessed through the OmnipathR \gls{R} package~\cite{RN92}.
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=6in]{fig2.3.omnipath}
-    \caption[OmniPath molecular interactions database.]{OmniPath molecular interactions database. This figure presents a hierarchical visualization of human molecular interactions curated by OmniPath, which compiles data from diverse resources. The graph displays the numbers of distinct interaction types, including post-translational interactions (\gls{PPI}), transcriptional interactions (\gls{GRN}), post-transcriptional interactions (such as miRNA-\gls{mRNA}, \gls{TF}-miRNA, and lncRNA-\gls{mRNA} interactions), and other interactions involving small molecules (encompassing drug-target, ligand-receptor, enzyme-metabolite, among others).}
+    \caption[OmniPath molecular interactions database.]{OmniPath molecular interactions database. This figure presents the relationships of the molecular interactions curated by OmniPath, which compiles data from diverse resources. The graph displays the numbers of distinct interaction types, including post-translational interactions (\gls{PPI}), transcriptional interactions (\gls{GRN}), post-transcriptional interactions (such as miRNA-\gls{mRNA}, \gls{TF}-miRNA, and lncRNA-\gls{mRNA} interactions), and other interactions involving small molecules (encompassing drug-target, ligand-receptor, enzyme-metabolite, among others).}
     \label{fig:fig2.3.omnipath}
 \end{figure}
 
@@ -360,7 +360,7 @@ For example, in Hill \textit{et al.}'s study,~\cite{RN37} three types of topolog
 Node prioritization algorithms rank the nodes in the network based on the distance from start nodes and the connection between them; causal regulation algorithms infer and rank upstream nodes in the network by combining the direction of edges, and subnetwork identification algorithms extract regions of the input network that are enriched for perturbed nodes. 
 These approaches help generating mechanistic hypotheses about the cellular targets and pathways affected by a perturbagen, more efficiently and accurately~\cite{RN100}. 
 
-\subsection{Connectivity-based tools for comparative analysis} % (fold)
+\subsection{Connectivity-based tools} % (fold)
 \label{sub:connectivity-basedmethods}
 
 Similarity-based approaches for \gls{CMap} focus on matching gene expression signatures from query to reference signatures. 
@@ -382,10 +382,10 @@ A high positive score may indicate that a compound could enhance a biological co
 By comparing a query signature with a database of perturbagen signatures, candidate drugs that may reverse or have similar transcriptional changes patterns can be identified~\cite{RN102}. The \gls{CMap} concept not only facilitated the creation of several drug-induced molecular perturbation signature databases~\cite{RN84}, but also supported studies applying similarity-based algorithms in \gls{DR} and \gls{MoA} elucidation~\cite{RN86}. 
 % Consequently, this resulted in prediction and experimental validation of novel applications for existing drugs.
 
-\subsection{Enrichment-based tools for downstream analysis} % (fold)
+\subsection{Enrichment-based tools} % (fold)
 \label{sub:enrichmentbasedtools}
 
-As the number of gene expression studies increases, it becomes harder to extract relevant information from it. Pathway analysis helps to frame large changes in gene expression that, if isolated, lack biological context. These methods convert gene lists into a meaningful and interpretable biological process, by linking expression data to specific biological pathways.
+As the number of gene expression data increases, it becomes harder to extract relevant information from it. Pathway analysis helps to frame large changes in gene expression that, if isolated, lack biological context. These methods convert gene lists into a meaningful and interpretable biological process, by linking expression data to specific biological pathways.
 
 Biological pathways are identified by characterizing the cascade of interactions occurring in the system in response to a given perturbation. These interactions can be observed in transcriptomic data and translated into significantly enriched pathways, to capture how changes in gene expression are preferentially affecting some pathways more than others. However, pathway analysis does not trace the causal paths leading to observed gene expression. One commonly used method to detect these relevant pathways is \gls{GSEA}. The input for \gls{GSEA} is a ranked list of genes, based on metrics like fold-change and a predefined gene set.
 The algorithm then produces an \gls{ES} by determining whether each gene from the gene sets clusters at the top or bottom of the ranking list.
@@ -403,8 +403,8 @@ One way to understand the how and why those changes are observed in the gene exp
 These algorithms can combine transcriptomic data with network information to predict drug or disease targets.
 
 
-\subsection{Topology-based methods for upstream analysis} % (fold)
-\label{sub:topologybasedmethodsforupstreamanalysis}
+\subsection{Topology-based methods} % (fold)
+\label{sub:topologybasedmethods}
 
 While pathway enrichment methods compare gene expression data with the respective encoded proteins and the signaling pathways, on the other hand, topology-based methods treat a gene expression pattern as the result of a specific perturbation. 
 Several algorithms fall into the category of topology-based methods, as they take advantage of a topology network as prior knowledge. 
